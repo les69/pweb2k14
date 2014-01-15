@@ -4,3 +4,4 @@
 *.jar
 *.war
 *.ear
+/pweb2k14/nbproject/private/
