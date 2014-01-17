@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Confirm</title>
+</head>
+
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen" />
+
+<style>
+ .form-signin {
+
+		text-align:center;
+        max-width: 350px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+
+.form-signin input[type="text"],
+.form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+body{
+	background-color:#f5f5f5;
+	padding-top:40px;
+	padding-bottom:40px;
+	}
+
+#msgBox{
+   max-width: 350px;
+   margin-left: auto ;
+  margin-right: auto ;
+}
+
+</style>
+
+<script>
+function confirm(){
+	var username=document.getElementById("username").value;
+	var password=document.getElementById("password").value;
+	var email=getURLParameter("email").replace("%40","@");
+	var key=getURLParameter("key");
+	var msg="";
+	if(username==""){
+		msg="Inserire il nome utente";
+		}else if(password==""){
+		msg="Inserire password";
+		}else if(password.length<8){
+		msg="Password sbagliata";
+		}
+	if(msg!=""){	
+	showError(msg);
+	return;
+	}
+
+    $.ajax({
+      type: "POST",
+      url: "",
+      data: {username:username,password:password,email:email,key:key} ,
+      success: function(data) {
+	  var msg="";
+	  console.log(data);
+	  if(data>0){
+		  msg="Attivazione riuscita";
+		  showConfirm(msg);
+		  return;
+		  }else if(data==-1){
+			  msg="Username non presente";
+			  }else if(data==-2){
+				  msg="Password Sbagliata";
+				  }else{
+					  msg="Errore";
+					  }
+				showError(msg);  
+      }
+    });
+
+	
+	}
+	
+function showConfirm(msg){
+	msg="<strong>"+msg+"</strong>";
+	document.getElementById("msgBox").className+="alert alert-success";
+	document.getElementById("msgBox").innerHTML=msg;
+	}	
+		
+function showError(msg){
+			msg="<strong>"+msg+"</strong>";
+	document.getElementById("msgBox").className+="alert alert-error";
+	document.getElementById("msgBox").innerHTML=msg;
+	}
+	
+function getURLParameter(name) {
+    return decodeURI(
+        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+    );
+}
+</script>
+
+<body>
+<div class="container">
+<div id="msgBox"></div>
+      <div class="form-signin">
+        <h2 class="form-signin-heading">Confirm</h2>
+        <input id="username" type="text" class="form-control" placeholder="Username">
+        <input id="password" type="password" class="form-control" placeholder="Password">
+        <button class="btn btn-large btn-success" onclick="confirm()">Confirm</button>
+      </div>
+    </div>
+    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>

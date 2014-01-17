@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="../icons/titleIcon.png">
+<title>Login</title>
+</head>
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<style>
+ .form-signin {
+
+		text-align:center;
+        max-width: 350px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+
+.form-signin input[type="text"],
+.form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+body{
+	background-color:#f5f5f5;
+	padding-top:40px;
+	padding-bottom:40px;
+	}
+
+#msgBox{
+   max-width: 350px;
+   margin-left: auto ;
+  margin-right: auto ;
+}
+
+</style>
+<script>
+function login(){
+	var username=document.getElementById("username").value;
+	var password=document.getElementById("password").value;
+	var msg="";
+	if(username==""){
+		msg="Inserire il nome utente";
+		}else if(password==""){
+		msg="Inserire password";
+		}else if(password.length<8){
+		msg="Password non valida";
+		}
+	if(msg!=""){	
+	showError(msg);
+	return;
+	}
+    $.ajax({
+      type: "POST",
+      url: "",
+      data: {username:username,password:password} ,
+      success: function(data) {
+	  var msg;
+      if(data>0){window.location.href = "mainUser.php";return;}
+	  else if(data==-1){
+		  	msg="Nome utente non presente";
+		  }else if(data==-2){
+			  	msg="Password sbagliata";
+			  }else{
+				  	msg="Errore";
+				  }
+				showError(msg);  
+      }
+    });
+	
+	}
+	
+function showError(msg){
+			msg="<strong>"+msg+"</strong>";
+	document.getElementById("msgBox").className+="alert alert-error";
+	document.getElementById("msgBox").innerHTML=msg;
+	}	
+</script>
+<body>
+<a href="register.html"><button class="btn btn-warning" style="float:right;margin-right:3%;margin-top:-1%" >Register</button></a>
+<div class="container">
+<div id="msgBox"></div>
+      <div class="form-signin">
+        <h2 class="form-signin-heading">Sign in</h2>
+        <input id="username" type="text" class="form-control" placeholder="Username">
+        <input id="password" type="password" class="form-control" placeholder="Password">
+        <button class="btn btn-large btn-primary" onclick="login()">Sign in</button>
+      </div>
+    </div>
+    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap.min.js"></script>
+</body>
+</html>
