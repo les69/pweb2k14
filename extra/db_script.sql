@@ -1,16 +1,22 @@
 create table Users (
     id_user int not null primary key generated always as identity (start with 1, increment by 1),
     username varchar(255) unique not null,
-    password varchar(255) not null
+    password varchar(255) not null,
+	email varchar(255) not null,
+	avatar varchar(255) not null
+	moderator boolean not null default false,
+	last_activity timestamp
 );
 
 create table Groups (
     id_group int not null primary key generated always as identity (start with 1, increment by 1),
     name varchar(255) unique not null,
     active boolean not null  default true,
+	is_public boolean not null  default true,
     id_owner int not null,
     foreign key(id_owner) references Users(id_user)
 );
+
 create table FileDB (
     hashed_name varchar(255) not null,
     id_group int not null,
@@ -22,6 +28,7 @@ create table FileDB (
     foreign key(id_user) references Users(id_user)
 
 );
+
 create table GroupUser (
     id_group int not null,
     id_user int not null,
