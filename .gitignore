@@ -6,3 +6,5 @@
 *.war
 *.ear
 /pweb2k14/nbproject/private/
+/pweb2k14/build/
+/pweb2k14/dist/
