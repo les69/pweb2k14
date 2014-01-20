@@ -32,6 +32,7 @@
         <servlet-name>ControllerServlet</servlet-name>
         <url-pattern>/CyberController</url-pattern>
     </servlet-mapping>
+
     <session-config>
         <session-timeout>
             30

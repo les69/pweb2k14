@@ -3,25 +3,15 @@ create table Users (
     username varchar(255) unique not null,
     password varchar(255) not null,
     email varchar(255) not null,
-<<<<<<< HEAD
     avatar   varchar(255) not null,
     ismoderator boolean not null default false,
     date_login timestamp
-=======
-    avatar varchar(255) not null,
-    moderator boolean not null default false,
-    last_activity timestamp
->>>>>>> b9dde0f958f0803d14522849f59f9b399f9065ef
 );
 create table Groups (
     id_group int not null primary key generated always as identity (start with 1, increment by 1),
     name varchar(255) unique not null,
     active boolean not null  default true,
-<<<<<<< HEAD
 	is_public boolean not null  default true,
-=======
-    is_public boolean not null  default true,
->>>>>>> b9dde0f958f0803d14522849f59f9b399f9065ef
     id_owner int not null,
     foreign key(id_owner) references Users(id_user)
 );
