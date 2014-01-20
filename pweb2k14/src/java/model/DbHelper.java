@@ -14,6 +14,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -97,7 +98,7 @@ public class DbHelper implements Serializable
                 {
                     usr = new User();
                     usr.setId(rs.getInt("id_user"));
-                    usr.setLastLogin(ServletHelperClass.formatDate(rs.getDate("date_login")));
+                    usr.setLastLogin(ServletHelperClass.formatDate(rs.getTimestamp("date_login")));
                     usr.setEmail(rs.getString("email"));
                     usr.setAvatar(rs.getString("avatar"));
                     usr.setUsername(username);
@@ -1511,7 +1512,7 @@ public class DbHelper implements Serializable
         }
         return false;
     }
-    public void setUserLastLogin(User u, Date date)
+    public void setUserLastLogin(User u, Timestamp date)
     {
         PreparedStatement stm = null;
         try
@@ -1521,7 +1522,7 @@ public class DbHelper implements Serializable
                 throw new RuntimeException("Connection must be estabilished before a statement");
             }
             stm = _connection.prepareStatement("Update PWEB.USERS SET date_login=? where id_user=?");
-            stm.setDate(1, date);
+            stm.setTimestamp(1, date);
             stm.setInt(2, u.getId());
             try
             {

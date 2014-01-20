@@ -51,13 +51,13 @@ public class LoginServlet extends HttpServlet {
         try {
             if (username == null || password == null) {
                 request.setAttribute("failedLogin", true);
-                response.sendRedirect("login.jsp?error=\"Missing credenditals\"");
+                response.sendRedirect("login.jsp?error=Missing credenditals");
             } else {
                 User user = this.helper.authenticate(username, password);
 
                 if (user == null) {
                     request.setAttribute("failedLogin", true);
-                    response.sendRedirect("login.jsp?error=\"Wrong credentials\"");
+                    response.sendRedirect("login.jsp?error=Wrong credentials");
 
                 } else {
                                
@@ -79,7 +79,7 @@ public class LoginServlet extends HttpServlet {
     private void setLastLogin(User usr, DbHelper helper) {
         
         Date date = new Date();
-        helper.setUserLastLogin(usr, new java.sql.Date(date.getTime()));
+        helper.setUserLastLogin(usr, new java.sql.Timestamp(date.getTime()));
         
         
       }
