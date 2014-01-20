@@ -1,14 +1,21 @@
 create table Users (
     id_user int not null primary key generated always as identity (start with 1, increment by 1),
     username varchar(255) unique not null,
-    password varchar(255) not null
+    password varchar(255) not null,
+    avatar   varchar(255) not null,
+    date_login date
 );
-
+create table Moderator(
+	id_user int not null primary key,
+	active boolean not null default true,
+	foreign key(id_user) references Users(id_user)
+);
 create table Groups (
     id_group int not null primary key generated always as identity (start with 1, increment by 1),
     name varchar(255) unique not null,
     active boolean not null  default true,
     id_owner int not null,
+    ispublic boolean not null default true,
     foreign key(id_owner) references Users(id_user)
 );
 create table FileDB (
