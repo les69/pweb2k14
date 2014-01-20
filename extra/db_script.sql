@@ -13,7 +13,6 @@ create table Groups (
     active boolean not null  default true,
 	is_public boolean not null  default true,
     id_owner int not null,
-    ispublic boolean not null default true,
     foreign key(id_owner) references Users(id_user)
 );
 
