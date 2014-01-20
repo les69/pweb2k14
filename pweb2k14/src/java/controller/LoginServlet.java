@@ -48,26 +48,25 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String username = (String) request.getParameter("username");
         String password = (String) request.getParameter("password");
-        RequestDispatcher rd = null;
         try {
             if (username == null || password == null) {
                 request.setAttribute("failedLogin", true);
-                rd = request.getRequestDispatcher("/login.jsp");
+                response.sendRedirect("login.jsp?error=\"Missing credenditals\"");
             } else {
                 User user = this.helper.authenticate(username, password);
 
                 if (user == null) {
                     request.setAttribute("failedLogin", true);
-                    rd = request.getRequestDispatcher("/login.jsp");
+                    response.sendRedirect("login.jsp?error=\"Wrong credentials\"");
 
                 } else {
                                
                     request.getSession().setAttribute("last-login", user.getLastLogin());
                     request.getSession().setAttribute("username", username);
                     setLastLogin(user, helper);
-                    rd = request.getRequestDispatcher("/Home.jsp"); 
+                    response.sendRedirect("User/home.jsp"); 
                 }
-                rd.forward(request, response);
+
             }
             
 

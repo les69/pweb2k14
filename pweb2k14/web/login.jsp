@@ -16,7 +16,7 @@
     </head>
     <body>
         <div class="container">
-            <% if (request.getAttribute("failedLogin") != null)
+            <% if (request.getParameter("error") != null)
         {
             out.println("<p><font color='red'>Combinazione nome utente/password errati</font></p>");
         }
