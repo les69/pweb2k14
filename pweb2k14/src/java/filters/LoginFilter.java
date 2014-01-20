@@ -134,7 +134,7 @@ public class LoginFilter implements Filter {
                     }
                 } else {
                     if (((HttpServletRequest) request).getRequestURI().contains("login.jsp")) {
-                        ((HttpServletResponse) response).sendRedirect("/pweb2k14/User/HomeServlet");
+                        ((HttpServletResponse) response).sendRedirect("/pweb2k14/User/home.jsp");
                     }
                 }
             }

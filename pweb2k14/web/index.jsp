@@ -16,6 +16,11 @@
         <title>Home Page</title>
     </head>
     <body>
+        <% 
+            String username = (String) request.getSession().getAttribute("username");
+            String dateLogin = (String) request.getSession().getAttribute("last-login");
+        
+        %>
         <div class="container">
         <div class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
@@ -46,18 +51,12 @@
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="./">Default</a></li>
-            <li><a href="../navbar-static-top/">Static top</a></li>
-            <li><a href="../navbar-fixed-top/">Fixed top</a></li>
-          </ul>
+            <li><a href="#"><%= username %></a></li>
+                      </ul>
         </div><!--/.nav-collapse -->
       </div>
-        <% 
-            String username = (String) request.getSession().getAttribute("username");
-            String dateLogin = (String) request.getSession().getAttribute("last-login");
         
-        %>
-        <h1>Hello <%= username %>!</h1>  last login at <%= dateLogin %>
+        <h1>Welcome back!</h1>  Last login at <%= dateLogin %>
         </div>
     </body>
 </html>

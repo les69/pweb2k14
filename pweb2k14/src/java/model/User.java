@@ -16,6 +16,8 @@ public class User {
     private String _username;
     private String _avatar;
     private String _lastLogin;
+    private String _email;
+    private boolean _ismoderator;
 
     /**
      * @return the _id
@@ -85,6 +87,34 @@ public class User {
      */
     public void setLastLogin(String _lastLogin) {
         this._lastLogin = _lastLogin;
+    }
+
+    /**
+     * @return the _ismoderator
+     */
+    public boolean isIsmoderator() {
+        return _ismoderator;
+    }
+
+    /**
+     * @return the _email
+     */
+    public String getEmail() {
+        return _email;
+    }
+
+    /**
+     * @param _email the _email to set
+     */
+    public void setEmail(String _email) {
+        this._email = _email;
+    }
+
+    /**
+     * @param _ismoderator the _ismoderator to set
+     */
+    public void setIsmoderator(boolean _ismoderator) {
+        this._ismoderator = _ismoderator;
     }
     
 }

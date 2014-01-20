@@ -6,6 +6,7 @@
 //TODO[Lotto] implement logging in the right way
 package model;
 
+import helpers.ServletHelperClass;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Date;
@@ -95,8 +96,13 @@ public class DbHelper implements Serializable
                 if (rs.next())
                 {
                     usr = new User();
+                    usr.setId(rs.getInt("id_user"));
+                    usr.setLastLogin(ServletHelperClass.formatDate(rs.getDate("date_login")));
+                    usr.setEmail(rs.getString("email"));
+                    usr.setAvatar(rs.getString("avatar"));
                     usr.setUsername(username);
                     usr.setPassword(password);
+                    usr.setIsmoderator(rs.getBoolean("ismoderator"));
                 }
             }
             catch (SQLException sqlex)
@@ -1504,5 +1510,50 @@ public class DbHelper implements Serializable
             }
         }
         return false;
+    }
+    public void setUserLastLogin(User u, Date date)
+    {
+        PreparedStatement stm = null;
+        try
+        {
+            if (_connection == null || _connection.isClosed())
+            {
+                throw new RuntimeException("Connection must be estabilished before a statement");
+            }
+            stm = _connection.prepareStatement("Update PWEB.USERS SET date_login=? where id_user=?");
+            stm.setDate(1, date);
+            stm.setInt(2, u.getId());
+            try
+            {
+                stm.executeUpdate();
+                Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
+                    "User date login update successful");
+            }
+            catch (SQLException sqlex)
+            {
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                        "Error while executing update query", sqlex);
+            }
+        }
+        catch (SQLException | RuntimeException ex)
+        {
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    "Error while creating query or establishing database connection", ex);
+        }
+        finally
+        {
+            if (stm != null)
+            {
+                try
+                {
+                    stm.close();
+                }
+                catch (SQLException sex)
+                {
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                            "Error while closing connection", sex);
+                }
+            }
+        }
     }
 }

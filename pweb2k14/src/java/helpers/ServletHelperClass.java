@@ -12,7 +12,10 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Formatter;
 import java.util.List;
 import java.util.logging.Level;
@@ -333,5 +336,10 @@ public class ServletHelperClass {
         String result = formatter.toString();
         formatter.close();
         return result;
+    }
+    public static String formatDate(Date date)
+    {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");       
+        return dateFormat.format(date);
     }
 }
