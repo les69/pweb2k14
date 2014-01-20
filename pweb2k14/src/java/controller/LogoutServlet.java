@@ -4,34 +4,20 @@
  * and open the template in the editor.
  */
 
-package control;
+package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.DbHelper;
-import model.User;
 
 /**
  *
  * @author les
  */
-public class LoginServlet extends HttpServlet {
-    private DbHelper helper;
-
-    @Override
-    public void init() throws ServletException {
-        this.helper = (DbHelper) super.getServletContext().getAttribute("dbmanager");
-    }
+public class LogoutServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,40 +31,9 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String username = (String) request.getParameter("username");
-        String password = (String) request.getParameter("password");
-
-        try {
-            if (username == null || password == null) {
-                response.sendRedirect("/pweb2k14/login.jsp?error=\"Missing credentials\"");
-            } else {
-                User user = this.helper.authenticate(username, password);
-
-                if (user == null) {
-                    response.sendRedirect("/pweb2k14/login.jsp?error=\"Wrong credentials\"");
-
-                } else {
-                    request.getSession().setAttribute("username", username);
-                    setLastLogin(user, helper);
-                   
-                    request.getSession().setAttribute("last-login", user.getLastLogin());
-                    response.sendRedirect("/pweb2k14/User/home.jsp");
-                }
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE,
-                    "Error while printing login page", ex);
-        }
-     
+        request.getSession().invalidate();
+        response.sendRedirect("pweb2k14/login.jsp");
     }
-    private void setLastLogin(User usr, DbHelper helper) {
-        
-        Date date = new Date();
-        helper.setUserLastLogin(usr, new java.sql.Date(date.getTime()));
-        
-        
-      }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

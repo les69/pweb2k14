@@ -13,6 +13,6 @@
         <title>Logged homepage</title>
     </head>
     <body>
-        <h1><% out.println("Welcome to your home, " + ((User)request.getAttribute("user")).getUsername() + "!"); %></h1>
+        <h1><% out.println("Welcome to your home, " + ((String)request.getSession().getAttribute("username")) + "!"); %></h1>
     </body>
 </html>

@@ -43,13 +43,13 @@ public class ControllerServlet extends HttpServlet {
         
         String operation = request.getParameter("oper");
         if(operation == null)
-            forward(request,response,"/LoginPage.jsp");
+            forward(request,response,"/login.jsp");
         
         SetUpDBConnection();
         
         switch(operation)
         {
-            case "getlogin": forward(request,response,"/LoginPage.jsp"); break;
+            case "getlogin": forward(request,response,"/login.jsp"); break;
             case "getpost": forward(request,response,"/NotSupported.jsp"); break;
             default: forward(request,response,"/NotSupported.jsp"); break;
         }
@@ -68,13 +68,13 @@ public class ControllerServlet extends HttpServlet {
             throws ServletException, IOException {
        String operation = request.getParameter("oper");
         if(operation == null)
-            forward(request,response,"/LoginPage.jsp");
+            forward(request,response,"/login.jsp");
         
         SetUpDBConnection();
         
         switch(operation)
         {
-            case "doLogin": forward(request,response,"/LoginServlet"); break;
+            case "doLogin": forward(request,response,"/Login"); break;
             case "getpost": forward(request,response,"/NotSupported.jsp"); break;
             default: forward(request,response,"/NotSupported.jsp"); break;
         }
