@@ -3,7 +3,7 @@ create table Users (
     username varchar(255) unique not null,
     password varchar(255) not null,
     email varchar(255) not null,
-    avatar varchar(255) not null
+    avatar varchar(255) not null,
     moderator boolean not null default false,
     last_activity timestamp
 );
