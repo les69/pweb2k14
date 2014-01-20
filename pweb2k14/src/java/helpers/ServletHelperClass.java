@@ -75,94 +75,9 @@ public class ServletHelperClass {
     {
         return (String)session.getAttribute("username");
     }
-        /**
-     * Prints the html page header
-     *
-     * @param out the writer
-     * @param title the title of the page
-     * @param returnToServlet the url to go in the previous page
-     * @param titleBack the name associated to returnToServlet
-     * 
-     */
-    public static void printHead(PrintWriter out, String title,String returnToServlet, String titleBack) {
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<link href=\"../css/bootstrap.css\" type=\"text/css\" rel=\"stylesheet\" />");
-        out.println("<link href=\"../css/bootstrap-responsive.css\" type=\"text/css\" rel=\"stylesheet\" />");
-        out.println("<title>"+title+"</title>");
-        out.println("</head>");
-        out.println("<body style=\"padding-top: 60px;\">");
-        out.println("<div class=\"navbar navbar-inverse navbar-fixed-top\">\n" +
-"      <div class=\"navbar-inner\">\n" +
-"        <div class=\"container\">\n" +
-"          <button type=\"button\" class=\"btn btn-navbar\" data-toggle=\"collapse\" data-target=\".nav-collapse\">\n" +
-"            <span class=\"icon-bar\"></span>\n" +
-"            <span class=\"icon-bar\"></span>\n" +
-"            <span class=\"icon-bar\"></span>\n" +
-"          </button>\n" +
-"          <a class=\"brand\" href=\"/ProgettoPpw/User/HomeServlet\">Web Programming Project</a>\n" +
-"          <div class=\"nav-collapse collapse\">\n" +
-"            <ul class=\"nav\">\n" +
-"              <li class=\"active\"><a href=\""+returnToServlet+"\">"+titleBack+"</a></li>\n" +
-"            </ul>\n" +
-"          </div><!--/.nav-collapse -->\n" +
-"        </div>\n" +
-"      </div>\n" +
-"    </div>");
-      out.println("<div class=\"container\">");
-    }
-        /**
-     * Prints the html page footer
-     *
-     * @param out the writer
-     * 
-     */
-    public static void printFoot(PrintWriter out) {
-        out.println("</div> <!-- container -->");
-        out.println("</body>");
-        out.println("</html>");
-    }
-        /**
-     * Prints the html for a table head
-     *
-     * @param out the writer
-     * @param tableCols the columns for the table
-     * 
-     */
-    public static void printTableHead(PrintWriter out, String... tableCols) {
-        printTableHead(out, true, tableCols);
-    }
-        /**
-     * Prints the html for a table head with border
-     *
-     * @param out the writer
-     * @param border if there's the need for borders
-     * @param tableCols the columns for the table
-     * 
-     */
-    public static void printTableHead(PrintWriter out, boolean border, String... tableCols) {
-        if (!border) {
-            out.println("<table>");
-        } else {
-            out.println("<table border=\"1\">");
-        }
-        out.println("<tr>");
-        for (String col : tableCols) {
-            out.println("<th><b>" + col + "</b></th>");
-        }
-        out.println("</tr>");
-    }
-        /**
-     * Prints the html for a table close tag
-     *
-     * @param out the writer
-     * 
-     */
-    public static void printTableClose(PrintWriter out) {
-        out.println("</table>");
+  
 
-    }
+
         /**
      * Main method for parsing text.Given a file with $$filename$$ or $$url$$ it returns a parsed text with html references to the elements
      *

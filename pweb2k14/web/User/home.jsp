@@ -32,13 +32,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="#">Web Programming v2.0</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
+            <li><a href="#">My Groups</a></li>
+            <li class="active"><a href="#">Groups</a></li>
+            <li><a href="#">Invites</a></li>
+            
            
           </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -50,7 +51,7 @@
                 <li class="divider"></li>
                 <li><a href="#">Change Password</a></li>
                 <li><a href="#"></a></li>
-                <li><a href="/pweb2k14/Logout">Log out</a></li>
+                <li><a href="/pweb2k14/CyberController?oper=getlogout">Log out</a></li>
 
               </ul>
             </li>

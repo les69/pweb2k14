@@ -50,6 +50,7 @@ public class ControllerServlet extends HttpServlet {
         switch(operation)
         {
             case "getlogin": forward(request,response,"/login.jsp"); break;
+            case "getlogout": forward(request,response,"/Logout"); break;
             case "getpost": forward(request,response,"/NotSupported.jsp"); break;
             default: forward(request,response,"/NotSupported.jsp"); break;
         }
