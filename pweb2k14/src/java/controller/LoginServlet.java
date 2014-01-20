@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import logic.Authenticator;
+import model.DbHelper;
 import model.User;
 
 /**
@@ -23,16 +24,14 @@ import model.User;
  */
 public class LoginServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+     private DbHelper helper;
 
+    @Override
+    public void init() throws ServletException
+    {
+        this.helper = (DbHelper) super.getServletContext().getAttribute("dbmanager");
+    }
+    
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -47,12 +46,13 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         RequestDispatcher rd = null;
- 
+
+        
         Authenticator authenticator = new Authenticator();
-        User result = authenticator.authenticate(username, password);
+        User result = authenticator.authenticate(username, password, helper);
         if (result != null) {
             rd = request.getRequestDispatcher("/Home.jsp");            
-            request.setAttribute("user", result);
+            request.setAttribute("user", result);   
         } else {
             request.setAttribute("failedLogin", true);
             rd = request.getRequestDispatcher("/LoginPage.jsp");

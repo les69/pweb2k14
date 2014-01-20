@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.DbHelper;
 
 /**
  *
@@ -20,6 +21,13 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ControllerServlet extends HttpServlet {
 
+    protected void SetUpDBConnection()
+    {
+        String dburl = getServletContext().getInitParameter("dburl");
+        DbHelper helper = new DbHelper(dburl);
+        getServletContext().setAttribute("dbmanager", helper);
+    }
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -36,6 +44,8 @@ public class ControllerServlet extends HttpServlet {
         String operation = request.getParameter("oper");
         if(operation == null)
             forward(request,response,"/LoginPage.jsp");
+        
+        SetUpDBConnection();
         
         switch(operation)
         {
@@ -59,6 +69,8 @@ public class ControllerServlet extends HttpServlet {
        String operation = request.getParameter("oper");
         if(operation == null)
             forward(request,response,"/LoginPage.jsp");
+        
+        SetUpDBConnection();
         
         switch(operation)
         {

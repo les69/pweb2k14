@@ -13,6 +13,11 @@
     </head>
     <body>
         <h1>Bitte login!</h1>
+        <% if (request.getAttribute("failedLogin") != null)
+        {
+            out.println("<p><font color='red'>Combinazione nome utente/password errati</font></p>");
+        }
+            %>
         <form action="CyberController?oper=doLogin" method="post">
             Username<br/> 
             <input type="text" class="span2" name="username"/> <br/>
