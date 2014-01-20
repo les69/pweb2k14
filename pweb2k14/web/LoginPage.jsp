@@ -13,7 +13,7 @@
     </head>
     <body>
         <h1>Bitte login!</h1>
-        <form class="navbar-form pull-down" action="LoginServlet" method="post">
+        <form action="CyberController?oper=doLogin" method="post">
             Username<br/> 
             <input type="text" class="span2" name="username"/> <br/>
             Password<br/> 

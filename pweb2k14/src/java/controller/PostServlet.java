@@ -7,9 +7,9 @@
 package controller;
 
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +18,34 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author lorenzo
  */
-public class ControllerServlet extends HttpServlet {
+@WebServlet(name = "PostServlet", urlPatterns = {"/PostServlet"})
+public class PostServlet extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet PostServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet PostServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -32,17 +59,7 @@ public class ControllerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String operation = request.getParameter("oper");
-        if(operation == null)
-            forward(request,response,"/LoginPage.jsp");
-        
-        switch(operation)
-        {
-            case "getlogin": forward(request,response,"/LoginPage.jsp"); break;
-            case "getpost": forward(request,response,"/NotSupported.jsp"); break;
-            default: forward(request,response,"/NotSupported.jsp"); break;
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -56,16 +73,7 @@ public class ControllerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       String operation = request.getParameter("oper");
-        if(operation == null)
-            forward(request,response,"/LoginPage.jsp");
-        
-        switch(operation)
-        {
-            case "doLogin": forward(request,response,"/LoginServlet"); break;
-            case "getpost": forward(request,response,"/NotSupported.jsp"); break;
-            default: forward(request,response,"/NotSupported.jsp"); break;
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -77,13 +85,5 @@ public class ControllerServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
-    private void forward(HttpServletRequest request, HttpServletResponse response, String page) 
-       throws ServletException, IOException
-    {
-        ServletContext sc = getServletContext();
-        RequestDispatcher rd = sc.getRequestDispatcher(page);
-        rd.forward(request,response);
-  }
 
 }
