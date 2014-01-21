@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import logic.AvatarManager;
 import model.DbHelper;
 import model.User;
 
@@ -48,7 +49,7 @@ public class NewUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String relativeWebPath = "/WEB-INF/Avatars";
+        String relativeWebPath = "/Avatars";
         String absoluteFilePath = getServletContext().getRealPath(relativeWebPath) + File.separator;
         checkPath(absoluteFilePath);
         
@@ -60,43 +61,14 @@ public class NewUserServlet extends HttpServlet {
             String password = request.getParameter("password"); 
             String email = request.getParameter("email"); 
             Part filePart = request.getPart("avatar");              
-            InputStream filecontent = filePart.getInputStream();
             
-            String fileName = getFileName(filePart);
-            String fileExtension = fileName.substring(fileName.lastIndexOf('.'));
-            
-            String hash = ServletHelperClass.encryptPassword(username+fileName)+fileExtension;
-            
-            File avatarFile = new File(absoluteFilePath + "/" + hash);
-            OutputStream fos = null;
-            
-            //Uncomment line below if we want to preserve old avatars
-            
-            //if (!avatarFile.exists())
-                try {
-                    fos = new FileOutputStream(avatarFile);
-                    int read = 0;
-                    final byte[] bytes = new byte[1024];
-                    while ((read = filecontent.read(bytes)) != -1) {
-                        fos.write(bytes, 0, read);
-                    }
-
-                } catch (IOException e) {
-                    String s = e.getMessage();
-                    response.sendRedirect("/NotSupported.jsp");
-                } finally {
-                    if (fos != null) {
-                        fos.close();
-                    }
-                    filecontent.close();
-                }
+            String hash = AvatarManager.SaveAvatar(filePart, username, absoluteFilePath, response);
                 
             newUser = new User();
             newUser.setUsername(username);
             newUser.setAvatar(hash);
             newUser.setEmail(email);
-            newUser.setPassword(password);
-            
+            newUser.setPassword(password);            
             
             helper.addUser(newUser);
             
@@ -108,6 +80,8 @@ public class NewUserServlet extends HttpServlet {
         }
     }
 
+    
+
     /**
      * Returns a short description of the servlet.
      *
@@ -118,17 +92,7 @@ public class NewUserServlet extends HttpServlet {
         return "Short description";
     }
     
-    private String getFileName(final Part part) {
-    final String partHeader = part.getHeader("content-disposition");
     
-    for (String content : part.getHeader("content-disposition").split(";")) {
-        if (content.trim().startsWith("filename")) {
-            return content.substring(
-                    content.indexOf('=') + 1).trim().replace("\"", "");
-        }
-    }
-    return null;
-}
     
     private void checkPath(String path)
     {

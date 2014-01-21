@@ -473,6 +473,7 @@ public class DbHelper implements Serializable
                     usr.setId(rs.getInt("id_user"));
                     usr.setPassword(rs.getString("password"));
                     usr.setUsername(rs.getString("username"));
+                    usr.setAvatar(rs.getString("avatar"));
                 }
             }
             catch (SQLException sqlex)
@@ -1240,6 +1241,53 @@ public class DbHelper implements Serializable
                 }
             }
         }
+    }
+    
+    public boolean editUser(User usr)
+    {
+        boolean success = false;
+        PreparedStatement stm = null;
+        try
+        {
+            if (_connection == null || _connection.isClosed())
+            {
+                throw new RuntimeException("Connection must be estabilished before a statement");
+            }
+            stm = _connection.prepareStatement("UPDATE PWEB.USERS SET PASSWORD = ?, AVATAR = ? "
+                    + "WHERE ID_USER = ?");
+            
+            stm.setString(1, usr.getPassword());            
+            stm.setString(2, usr.getAvatar());
+            stm.setInt(3, usr.getId());
+            
+            int res = stm.executeUpdate();
+            Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
+                    "New user created successfully");
+            
+            success = true;
+        }
+        catch (SQLException | RuntimeException ex)
+        {
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    "Error while creating query or establishing database connection", ex);
+            
+        }
+        finally
+        {
+            if (stm != null)
+            {
+                try
+                {
+                    stm.close();
+                }
+                catch (SQLException sex)
+                {
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                            "Error while closing connection", sex);
+                }
+            }
+        }
+        return success;
     }
 
     /**

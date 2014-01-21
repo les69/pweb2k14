@@ -49,6 +49,7 @@ public class ControllerServlet extends HttpServlet {
         
         switch(operation)
         {
+            case "getAccount": forward(request, response, "/EditUserServlet"); break;
             case "getlogin": forward(request,response,"/login.jsp"); break;
             case "getlogout": forward(request,response,"/Logout"); break;
             case "getpost": forward(request,response,"/NotSupported.jsp"); break;
@@ -75,6 +76,7 @@ public class ControllerServlet extends HttpServlet {
         
         switch(operation)
         {
+            case "editAccount": forward(request,response,"/EditUserServlet"); break;
             case "doLogin": forward(request,response,"/Login"); break;
             case "addUser": forward(request, response, "/NewUserServlet"); break;
             case "getpost": forward(request,response,"/NotSupported.jsp"); break;

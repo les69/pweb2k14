@@ -56,8 +56,7 @@
               
                 <li class="dropdown-header">Account</li>
                 <li class="divider"></li>
-                <li><a href="/pweb2k14/CyberController?oper=getchangepassword">Change Password</a></li>
-                <li><a href="/pweb2k14/CyberController?oper=getchangeavatar">Change Avatar</a></li>
+                <li><a href="/pweb2k14/CyberController?oper=getAccount">User settings</a></li>
                 <li><a href="/pweb2k14/CyberController?oper=getlogout">Log out</a></li>
 
               </ul>
