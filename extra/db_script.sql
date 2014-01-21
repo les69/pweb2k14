@@ -11,7 +11,7 @@ create table Groups (
     id_group int not null primary key generated always as identity (start with 1, increment by 1),
     name varchar(255) unique not null,
     active boolean not null  default true,
-	is_public boolean not null  default true,
+    is_public boolean not null  default true,
     id_owner int not null,
     foreign key(id_owner) references Users(id_user)
 );

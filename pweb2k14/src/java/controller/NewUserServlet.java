@@ -49,8 +49,8 @@ public class NewUserServlet extends HttpServlet {
             throws ServletException, IOException {
         
         String relativeWebPath = "/WEB-INF/Avatars";
-        checkPath(relativeWebPath);
         String absoluteFilePath = getServletContext().getRealPath(relativeWebPath) + File.separator;
+        checkPath(absoluteFilePath);
         
         String username = request.getParameter("username");
         
@@ -58,32 +58,47 @@ public class NewUserServlet extends HttpServlet {
         
         if(newUser == null){
             String password = request.getParameter("password"); 
+            String email = request.getParameter("email"); 
             Part filePart = request.getPart("avatar");              
             InputStream filecontent = filePart.getInputStream();
-            String hash = ServletHelperClass.encryptPassword(username+getFileName(filePart));
+            
+            String fileName = getFileName(filePart);
+            String fileExtension = fileName.substring(fileName.lastIndexOf('.'));
+            
+            String hash = ServletHelperClass.encryptPassword(username+fileName)+fileExtension;
+            
             File avatarFile = new File(absoluteFilePath + "/" + hash);
-            FileOutputStream fos = null;
-            if (!avatarFile.exists())
-            {
-                try{
+            OutputStream fos = null;
+            
+            //Uncomment line below if we want to preserve old avatars
+            
+            //if (!avatarFile.exists())
+                try {
                     fos = new FileOutputStream(avatarFile);
                     int read = 0;
                     final byte[] bytes = new byte[1024];
-                    while ((read = filecontent.read(bytes)) != -1) 
+                    while ((read = filecontent.read(bytes)) != -1) {
                         fos.write(bytes, 0, read);
-                    
-                }
-                catch(IOException e)
-                {     
-                        }
-                finally{
-                    if(fos != null)
+                    }
+
+                } catch (IOException e) {
+                    String s = e.getMessage();
+                    response.sendRedirect("/NotSupported.jsp");
+                } finally {
+                    if (fos != null) {
                         fos.close();
+                    }
                     filecontent.close();
                 }
-                        
-            }
+                
+            newUser = new User();
+            newUser.setUsername(username);
+            newUser.setAvatar(hash);
+            newUser.setEmail(email);
+            newUser.setPassword(password);
             
+            
+            helper.addUser(newUser);
             
             response.sendRedirect("login.jsp?success=Account created successfully! you can now login");
         }

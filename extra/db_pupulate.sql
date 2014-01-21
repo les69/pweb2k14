@@ -1,12 +1,12 @@
 -- adding users
 
-INSERT INTO PWEB.USERS (USERNAME, PASSWORD, EMAIL, AVATAR, ISMODERATOR, LAST_ACTIVITY) VALUES ('sec', 'exterminate', 'sec@cos.dk', 'uploads/defaults/default.png', true, CURRENT_TIMESTAMP);
-INSERT INTO PWEB.USERS (USERNAME, PASSWORD, EMAIL, AVATAR, ISMODERATOR, LAST_ACTIVITY) VALUES ('davros', 'dalek', 'davros@skaro.tw', 'uploads/defaults/default.png', true, CURRENT_TIMESTAMP);
-INSERT INTO PWEB.USERS (USERNAME, PASSWORD, EMAIL, AVATAR, ISMODERATOR, LAST_ACTIVITY) VALUES ('boxxy', 'yousee', 'imboxxy@you.see', 'uploads/defaults/default.png', true, CURRENT_TIMESTAMP);
-INSERT INTO PWEB.USERS (USERNAME, PASSWORD, EMAIL, AVATAR, ISMODERATOR, LAST_ACTIVITY) VALUES ('paolo', 'rossi', 'paolossi@msn.it', 'uploads/defaults/default.png', false, CURRENT_TIMESTAMP);
-INSERT INTO PWEB.USERS (USERNAME, PASSWORD, EMAIL, AVATAR, ISMODERATOR, LAST_ACTIVITY) VALUES ('jast', 'rotcod', 'jast@cos.dk', 'uploads/defaults/default.png', false, CURRENT_TIMESTAMP);
-INSERT INTO PWEB.USERS (USERNAME, PASSWORD, EMAIL, AVATAR, ISMODERATOR, LAST_ACTIVITY) VALUES ('caan', 'timewar', 'caan@cos.dk', 'uploads/defaults/default.png', false, CURRENT_TIMESTAMP);
-INSERT INTO PWEB.USERS (USERNAME, PASSWORD, EMAIL, AVATAR, ISMODERATOR, LAST_ACTIVITY) VALUES ('marco', 'polo', 'aoempolo@virgilio.it', 'uploads/defaults/default.png', false, CURRENT_TIMESTAMP);
+INSERT INTO PWEB.USERS (USERNAME, PASSWORD, EMAIL, AVATAR, ISMODERATOR, DATE_LOGIN) VALUES ('sec', 'exterminate', 'sec@cos.dk', 'uploads/defaults/default.png', true, CURRENT_TIMESTAMP);
+INSERT INTO PWEB.USERS (USERNAME, PASSWORD, EMAIL, AVATAR, ISMODERATOR, DATE_LOGIN) VALUES ('davros', 'dalek', 'davros@skaro.tw', 'uploads/defaults/default.png', true, CURRENT_TIMESTAMP);
+INSERT INTO PWEB.USERS (USERNAME, PASSWORD, EMAIL, AVATAR, ISMODERATOR, DATE_LOGIN) VALUES ('boxxy', 'yousee', 'imboxxy@you.see', 'uploads/defaults/default.png', true, CURRENT_TIMESTAMP);
+INSERT INTO PWEB.USERS (USERNAME, PASSWORD, EMAIL, AVATAR, ISMODERATOR, DATE_LOGIN) VALUES ('paolo', 'rossi', 'paolossi@msn.it', 'uploads/defaults/default.png', false, CURRENT_TIMESTAMP);
+INSERT INTO PWEB.USERS (USERNAME, PASSWORD, EMAIL, AVATAR, ISMODERATOR, DATE_LOGIN) VALUES ('jast', 'rotcod', 'jast@cos.dk', 'uploads/defaults/default.png', false, CURRENT_TIMESTAMP);
+INSERT INTO PWEB.USERS (USERNAME, PASSWORD, EMAIL, AVATAR, ISMODERATOR, DATE_LOGIN) VALUES ('caan', 'timewar', 'caan@cos.dk', 'uploads/defaults/default.png', false, CURRENT_TIMESTAMP);
+INSERT INTO PWEB.USERS (USERNAME, PASSWORD, EMAIL, AVATAR, ISMODERATOR, DATE_LOGIN) VALUES ('marco', 'polo', 'aoempolo@virgilio.it', 'uploads/defaults/default.png', false, CURRENT_TIMESTAMP);
 
 -- adding groups
 

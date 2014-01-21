@@ -1197,6 +1197,49 @@ public class DbHelper implements Serializable
             }
         }
     }
+    
+    public void addUser(User usr)
+    {
+        PreparedStatement stm = null;
+        try
+        {
+            if (_connection == null || _connection.isClosed())
+            {
+                throw new RuntimeException("Connection must be estabilished before a statement");
+            }
+            stm = _connection.prepareStatement("INSERT INTO PWEB.USERS(USERNAME, PASSWORD, EMAIL, AVATAR, ISMODERATOR, DATE_LOGIN) "
+                    + "VALUES (?, ?, ?, ?, false, CURRENT_TIMESTAMP)");
+            stm.setString(1, usr.getUsername());
+            stm.setString(2, usr.getPassword());
+            stm.setString(3, usr.getEmail());
+            stm.setString(4, usr.getAvatar());
+
+            
+            int res = stm.executeUpdate();
+            Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
+                    "New user created successfully");
+        }
+        catch (SQLException | RuntimeException ex)
+        {
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    "Error while creating query or establishing database connection", ex);
+        }
+        finally
+        {
+            if (stm != null)
+            {
+                try
+                {
+                    stm.close();
+                }
+                catch (SQLException sex)
+                {
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                            "Error while closing connection", sex);
+                }
+            }
+        }
+    }
 
     /**
      * Gets the date of the last post made by an User in a Group
