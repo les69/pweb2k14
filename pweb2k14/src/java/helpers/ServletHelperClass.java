@@ -5,11 +5,14 @@
  */
 package helpers;
 
+import java.io.OutputStreamWriter;
 import model.DbHelper;
 import model.Group;
 import model.User;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
@@ -256,5 +259,35 @@ public class ServletHelperClass {
     {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");       
         return dateFormat.format(date);
+    }
+    
+    public static final String webMasterMail = "no-reply@pweb.com";
+    private static final String mailhost = "localhost";
+
+    public static void sendMail(String from, String to, String subject, String line) {
+        try {
+
+            System.getProperties().put("mail.host", mailhost);
+            // Establish a network connection for sending mail
+            URL u = new URL("mailto:" + to);      // Create a mailto: URL 
+            URLConnection c = u.openConnection(); // Create a URLConnection for it
+            c.setDoInput(false);                  // Specify no input from this URL
+            c.setDoOutput(true);                  // Specify we'll do output
+            c.connect();                          // Connect to mail host
+            PrintWriter out = // Get output stream to mail host
+                    new PrintWriter(new OutputStreamWriter(c.getOutputStream()));
+            out.println("From: " + from);
+            out.println("To: " + to);
+            out.println("Subject: " + subject);
+            out.println();  // blank line to end the list of headers
+            out.println(line);
+            // Close the stream to terminate the message 
+            out.close();
+            // Tell the user it was successfully sent.
+        } catch (Exception e) {  // Handle any exceptions, print error message.
+            System.err.println(e);
+            System.err.println("Usage: java SendMail [<mailhost>]");
+        }
+
     }
 }

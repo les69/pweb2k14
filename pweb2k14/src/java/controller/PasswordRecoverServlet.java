@@ -6,6 +6,7 @@
 package controller;
 
 import com.sun.xml.rpc.processor.util.StringUtils;
+import helpers.ServletHelperClass;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.SecureRandom;
@@ -52,14 +53,16 @@ public class PasswordRecoverServlet extends HttpServlet {
             throws ServletException, IOException {
         String username = request.getParameter("username");
         User user = helper.getUser(username);
-
         if (user == null) {
             forward(request, response, "/PasswordRecover.jsp?error=No user found");
         } else {
             String email = user.getEmail();
             String newpassword = generateRandomPassword();
             helper.setUserPassword(username,newpassword);
-            
+            ServletHelperClass.sendMail(ServletHelperClass.webMasterMail, email, "Password reset on pweb", 
+                    "The password for the "+username+" account on pweb has been resetted."
+            + "The new password is: "+newpassword
+            );
             forward(request, response, "/PasswordRecover.jsp?success=An email with a new password sent to " + email);
         }
         // processRequest(request, response);
