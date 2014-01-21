@@ -1,7 +1,7 @@
 <%-- 
-    Document   : login
-    Created on : Jan 19, 2014, 9:47:03 PM
-    Author     : les
+    Document   : addUser
+    Created on : Jan 21, 2014, 11:29:56 AM
+    Author     : lorenzo
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -16,28 +16,24 @@
     <body>
         <div class="container">
            
-        <form class="form-signin" role="form" method="post" action="CyberController?oper=doLogin">
-            <%  String error = request.getParameter("error");
+        <form class="form-signin" role="form" method="post" enctype="multipart/form-data" action="CyberController?oper=addUser">
+         <%  String error=request.getParameter("error");
              if (error != null)
         {
             out.println("<div class=\"alert alert-danger\"><strong>Oh snap! </strong>"+error+".</div>");
         }
-            String succ = request.getParameter("success");
-             if (succ != null)
-        {
-            out.println("<div class=\"alert alert-success\"><strong>Success! </strong>"+succ+".</div>");
-        }
             %>
-        <h2 class="form-signin-heading">Please sign in</h2>
+        <h2 class="form-signin-heading">Please fill in the following form</h2>
         <input type="text" name="username" class="form-control" placeholder="Username" required="" autofocus="">
         <input type="password" name="password" class="form-control" placeholder="Password" required="">
-
-        <button class="btn btn-lg btn-primary btn-block" type="submit" >Sign in</button>
-        <p class="text-info center-block">Don't have an account yet? Click <a href='addUser.jsp'>here</a>!</p>
-      </form>
-        
+        <input type="email" name="email" class="form-control" placeholder="Email" required="">
+        <br /> 
+        <p class="text-left">Please pick an image that will represent you</p>        
+        <input type="file" name="avatar" class="form-control" required="">
+        <br />
+        <button class="btn btn-lg btn-primary btn-block" type="submit" >Create account</button>
+      </form>        
 
     </div>
-        
     </body>
 </html>

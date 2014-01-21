@@ -28,7 +28,7 @@ public class ControllerServlet extends HttpServlet {
         getServletContext().setAttribute("dbmanager", helper);
     }
     
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -76,6 +76,7 @@ public class ControllerServlet extends HttpServlet {
         switch(operation)
         {
             case "doLogin": forward(request,response,"/Login"); break;
+            case "addUser": forward(request, response, "/NewUserServlet"); break;
             case "getpost": forward(request,response,"/NotSupported.jsp"); break;
             default: forward(request,response,"/NotSupported.jsp"); break;
         }
@@ -89,7 +90,7 @@ public class ControllerServlet extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
     
     private void forward(HttpServletRequest request, HttpServletResponse response, String page) 
        throws ServletException, IOException

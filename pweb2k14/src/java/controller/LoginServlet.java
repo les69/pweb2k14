@@ -50,14 +50,13 @@ public class LoginServlet extends HttpServlet {
         String password = (String) request.getParameter("password");
         try {
             if (username == null || password == null) {
-                request.setAttribute("failedLogin", true);
                 response.sendRedirect("login.jsp?error=Missing credenditals");
             } else {
                 User user = this.helper.authenticate(username, password);
 
                 if (user == null) {
-                    request.setAttribute("failedLogin", true);
-                    response.sendRedirect("login.jsp?error=Wrong credentials");
+                    
+                    response.sendRedirect("login.jsp?error=Wrong Username/Password combination");
 
                 } else {
                                
