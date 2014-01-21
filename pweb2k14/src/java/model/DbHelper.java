@@ -16,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -98,7 +99,7 @@ public class DbHelper implements Serializable
                 {
                     usr = new User();
                     usr.setId(rs.getInt("id_user"));
-                    usr.setLastLogin(ServletHelperClass.formatDate(rs.getTimestamp("date_login")));
+                    usr.setLastLogin(rs.getTimestamp("date_login"));
                     usr.setEmail(rs.getString("email"));
                     usr.setAvatar(rs.getString("avatar"));
                     usr.setUsername(username);
@@ -1599,5 +1600,138 @@ public class DbHelper implements Serializable
                 }
             }
         }
+    }
+    public HashMap updatedGroups(User u, Timestamp tmstp)
+    {
+        PreparedStatement stm = null;
+        //List<Group> groupList = new ArrayList<Group>();
+        HashMap map = new HashMap();
+        try
+        {
+            if (_connection == null || _connection.isClosed())
+            {
+                throw new RuntimeException("Connection must be estabilished before a statement");
+            }
+            stm = _connection.prepareStatement("select * \n" +
+                                               "from GROUPUSER inner join GROUPS on (GROUPUSER.ID_GROUP = GROUPS.ID_GROUP)\n" +
+                                               "WHERE GROUPUSER.ID_USER = ? and LAST_ACTIVITY > ? ");
+            stm.setInt(1, u.getId());
+            stm.setTimestamp(2, tmstp);
+            ResultSet rs = null;
+
+            try
+            {
+                rs = stm.executeQuery();
+                while (rs.next())
+                {
+                    Group g = new Group();
+
+                    g.setId(rs.getInt("id_group"));
+                    g.setName(rs.getString("name"));
+                    g.setOwner(rs.getInt("id_owner"));
+                    g.setActive(rs.getBoolean("active"));
+                    g.setPublic(rs.getBoolean("is_public"));
+                    g.setLast_activity(rs.getTimestamp("last_activity"));
+                    //groupList.add(g);
+                    map.put(g,getPostCountSinceDate(g, tmstp));
+                           
+                }
+            }
+            catch (SQLException sqlex)
+            {
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                        "Error while executing query or parsing result data", sqlex);
+            }
+            finally
+            {
+                if (rs != null)
+                {
+                    rs.close();
+                }
+            }
+        }
+        catch (SQLException | RuntimeException ex)
+        {
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    "Error while creating query or establishing database connection", ex);
+        }
+        finally
+        {
+            if (stm != null)
+            {
+                try
+                {
+                    stm.close();
+                }
+                catch (SQLException sex)
+                {
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                            "Error while closing connection", sex);
+                }
+            }
+        }
+        //return groupList;
+        return map;
+    }
+    public int getPostCountSinceDate(Group g, Timestamp tmstp)
+    {
+        return getPostCountSinceDate(g.getId(), tmstp);
+    }
+    public int getPostCountSinceDate(Integer id_group, Timestamp tmstp)
+    {
+        PreparedStatement stm = null;
+        int retval = 0;
+        try
+        {
+            if (_connection == null || _connection.isClosed())
+            {
+                throw new RuntimeException("Connection must be estabilished before a statement");
+            }
+            stm = _connection.prepareStatement("select count(*) as tot_post from post join users on post.ID_USER = USERS.ID_USER where id_group = ? and date_post > ?");
+            stm.setInt(1, id_group);
+            stm.setTimestamp(2,tmstp);
+            ResultSet rs = null;
+
+            try
+            {
+                rs = stm.executeQuery();
+                if (rs.next())
+                    retval=rs.getInt("tot_post");
+                
+            }
+            catch (SQLException sqlex)
+            {
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                        "Error while executing query or parsing result data", sqlex);
+            }
+            finally
+            {
+                if (rs != null)
+                {
+                    rs.close();
+                }
+            }
+        }
+        catch (SQLException | RuntimeException ex)
+        {
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    "Error while creating query or establishing database connection", ex);
+        }
+        finally
+        {
+            if (stm != null)
+            {
+                try
+                {
+                    stm.close();
+                }
+                catch (SQLException sex)
+                {
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                            "Error while closing connection", sex);
+                }
+            }
+        }
+        return retval;
     }
 }

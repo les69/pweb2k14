@@ -6,6 +6,10 @@
 
 package model;
 
+import helpers.ServletHelperClass;
+import java.sql.Timestamp;
+import java.util.List;
+
 /**
  *
  * @author les
@@ -15,7 +19,7 @@ public class User {
     private String _password;
     private String _username;
     private String _avatar;
-    private String _lastLogin;
+    private Timestamp _lastLogin;
     private String _email;
     private boolean _ismoderator;
 
@@ -78,14 +82,14 @@ public class User {
     /**
      * @return the _lastLogin
      */
-    public String getLastLogin() {
+    public Timestamp getLastLogin() {
         return _lastLogin;
     }
 
     /**
      * @param _lastLogin the _lastLogin to set
      */
-    public void setLastLogin(String _lastLogin) {
+    public void setLastLogin(Timestamp _lastLogin) {
         this._lastLogin = _lastLogin;
     }
 
@@ -115,6 +119,10 @@ public class User {
      */
     public void setIsmoderator(boolean _ismoderator) {
         this._ismoderator = _ismoderator;
+    }
+    public String getFormatDate()
+    {
+        return ServletHelperClass.formatDate(_lastLogin);
     }
     
 }

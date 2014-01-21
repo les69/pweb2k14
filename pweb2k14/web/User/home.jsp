@@ -3,7 +3,13 @@
     Created on : Jan 17, 2014, 10:26:52 PM
     Author     : les
 --%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.Map.Entry"%>
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.HashMap"%>
 
+<%@page import="model.User" %>
+<%@page import="model.Group" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -19,8 +25,9 @@
     </head>
     <body>
         <% 
-            String username = (String) request.getSession().getAttribute("username");
+            User user = (User) request.getSession().getAttribute("username");
             String dateLogin = (String) request.getSession().getAttribute("last-login");
+            HashMap updatedGroups = (HashMap) request.getSession().getAttribute("updatedGroups");
         
         %>
         <div class="container">
@@ -44,7 +51,7 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
              <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= username %> <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= user.getUsername() %> <b class="caret"></b></a>
               <ul class="dropdown-menu">
               
                 <li class="dropdown-header">Account</li>
@@ -59,7 +66,26 @@
         </div><!--/.nav-collapse -->
       </div>
         
-        <h1>Welcome back!</h1>  Last login at <%= dateLogin %>
+        <div class="row">
+            
+            <div class="col-lg-12" style="background-color: #fff;">
+                <h2>Welcome back!</h2>  Last login at <%= dateLogin %>
+            <h4> What's hot?</h4>
+            <%
+                if(updatedGroups.size() > 0)
+                {
+                    out.println("<ul class=\"list-group\">");
+                    Iterator it = updatedGroups.entrySet().iterator();
+                    while(it.hasNext())
+                    {
+                        Map.Entry entry = (Map.Entry) it.next();
+                        out.println("<li class=\"list-group-item\">"+((Group)entry.getKey()).getName()+"<span class=\"badge\">"+entry.getValue()+"</span></li>");
+                    }
+                }
+            %>
+        </div>
+        </div>
+        </div>
         </div>
     </body>
 </html>

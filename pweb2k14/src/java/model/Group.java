@@ -6,6 +6,8 @@
 
 package model;
 
+import java.sql.Timestamp;
+
 
 /**
  *
@@ -17,6 +19,7 @@ public class Group {
     private boolean _active;
     private int _owner;
     private boolean _public;
+    private Timestamp _last_activity;
 
     /**
      * @return the _id
@@ -86,6 +89,34 @@ public class Group {
      */
     public void setPublic(boolean _public) {
         this._public = _public;
+    }
+
+    /**
+     * @return the _last_activity
+     */
+    public Timestamp getLast_activity() {
+        return _last_activity;
+    }
+
+    /**
+     * @param _last_activity the _last_activity to set
+     */
+    public void setLast_activity(Timestamp _last_activity) {
+        this._last_activity = _last_activity;
+    }
+    @Override
+    public boolean equals(Object obj)
+    {
+        if(this ==  obj)
+            return true;
+        if(obj == null)
+            return false;
+        if(getClass() != obj.getClass())
+            return false;
+        Group g = (Group) obj;
+        if(this.getId() == g.getId())
+            return true;
+        return false;
     }
 
     

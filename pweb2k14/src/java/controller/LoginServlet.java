@@ -60,8 +60,9 @@ public class LoginServlet extends HttpServlet {
 
                 } else {
                                
-                    request.getSession().setAttribute("last-login", user.getLastLogin());
-                    request.getSession().setAttribute("username", username);
+                    request.getSession().setAttribute("last-login", user.getFormatDate());
+                    request.getSession().setAttribute("username", user);
+                    request.getSession().setAttribute("updatedGroups", helper.updatedGroups(user, user.getLastLogin()));
                     setLastLogin(user, helper);
                     response.sendRedirect("User/home.jsp"); 
                 }
