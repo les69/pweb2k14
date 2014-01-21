@@ -73,7 +73,7 @@
                         <p class="text-left form-control-static">
                             Your avatar:<br>
 
-                            <img width="240" src="<% out.println("/pweb2k14/Avatars/" + user.getAvatar()); %>" alt="Your avatar" />
+                            <img width="240" src="<% out.println("../uploads/Avatars/" + user.getAvatar()); %>" alt="Your avatar" />
                             <input class="form-control" type="file" name="avatar">
                             <br>
                             email: <% out.println(user.getEmail());%>

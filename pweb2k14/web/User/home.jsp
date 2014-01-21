@@ -27,7 +27,9 @@
         <jsp:useBean id="user" class="model.User" scope="session" />
         <% 
             user = (User) request.getSession().getAttribute("username");
-            String dateLogin = (String) request.getSession().getAttribute("last-login");
+            if(user == null)
+                response.sendRedirect("/pweb2k14/login.jsp");
+            //String dateLogin = (String) request.getSession().getAttribute("last-login");
             HashMap updatedGroups = (HashMap) request.getSession().getAttribute("updatedGroups");
         
         %>
@@ -40,19 +42,19 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Web Programming v2.0</a>
+          <a class="navbar-brand" href="/pweb2k14/CyberController?oper=getHome">Web Programming v2.0</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="#">My Groups</a></li>
-            <li><a href="#">Groups</a></li>
-            <li><a href="#">Invites</a></li>
+            <li><a href="/pweb2k14/CyberController?oper=getMyGroups">My Groups</a></li>
+            <li><a href="/pweb2k14/CyberController?oper=getGroups">Groups</a></li>
+            <li><a href="/pweb2k14/CyberController?oper=getInvites">Invites</a></li>
             
            
           </ul>
           <ul class="nav navbar-nav navbar-right">
              <li class="dropdown">
-                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <jsp:getProperty name="user" property="username" /> <b class="caret"></b></a>
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= user.getUsername() %> <b class="caret"></b></a>
               <ul class="dropdown-menu">
               
                 <li class="dropdown-header">Account</li>
