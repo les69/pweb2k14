@@ -27,6 +27,14 @@
         </multipart-config>
     </servlet>
     <servlet>
+        <servlet-name>PasswordRecoverServlet</servlet-name>
+        <servlet-class>controller.PasswordRecoverServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PasswordRecoverServlet</servlet-name>
+        <url-pattern>/PassResetController</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>EditUserServlet</servlet-name>
         <servlet-class>controller.EditUserServlet</servlet-class>
         <multipart-config>

@@ -1,7 +1,7 @@
 <%-- 
-    Document   : login
-    Created on : Jan 19, 2014, 9:47:03 PM
-    Author     : les
+    Document   : passwordRecover
+    Created on : 21-gen-2014, 14.48.18
+    Author     : mb
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -9,14 +9,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet" />
+         <link href="bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet" />
         <link href="bootstrap/css/pages.css" type="text/css" rel="stylesheet" />
-        <title>JSP Page</title>
     </head>
     <body>
-        <div class="container">
-           
-        <form class="form-signin" role="form" method="post" action="CyberController?oper=doLogin">
+         <div class="container">
+        <form class="form-signin" role="form" method="post" action="PassResetController">
             <%  String error = request.getParameter("error");
              if (error != null)
         {
@@ -28,16 +26,17 @@
             out.println("<div class=\"alert alert-success\"><strong>Success! </strong>"+succ+".</div>");
         }
             %>
-        <h2 class="form-signin-heading">Please sign in</h2>
+        <h2 class="form-signin-heading">Forgot your password?</h2>
+        <p class="text-info center-block">Insert username</p>
         <input type="text" name="username" class="form-control" placeholder="Username" required="" autofocus="">
-        <input type="password" name="password" class="form-control" placeholder="Password" required="">
-        <p class="text-info center-block">Forgot your password? Click <a href='PassResetController'>here</a>!</p>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" >Sign in</button>
-        <p class="text-info center-block">Don't have an account yet? Click <a href='addUser.jsp'>here</a>!</p>
+         <p class="text-info center-block">An email to the related address will be sent with a new password</p>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" >Confirm</button>
+
+        
       </form>
         
 
     </div>
-        
+         
     </body>
 </html>

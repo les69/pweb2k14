@@ -473,6 +473,7 @@ public class DbHelper implements Serializable
                     usr.setId(rs.getInt("id_user"));
                     usr.setPassword(rs.getString("password"));
                     usr.setUsername(rs.getString("username"));
+                    usr.setEmail(rs.getString("email"));
                     usr.setAvatar(rs.getString("avatar"));
                 }
             }
@@ -1604,6 +1605,7 @@ public class DbHelper implements Serializable
         }
         return false;
     }
+    
     public void setUserLastLogin(User u, Timestamp date)
     {
         PreparedStatement stm = null;
@@ -1649,6 +1651,56 @@ public class DbHelper implements Serializable
             }
         }
     }
+    
+    
+        public void setUserPassword(String username, String password)
+    {
+        PreparedStatement stm = null;
+        try
+        {
+            if (_connection == null || _connection.isClosed())
+            {
+                throw new RuntimeException("Connection must be estabilished before a statement");
+            }
+            stm = _connection.prepareStatement("Update PWEB.USERS SET password=? where username=?");
+            stm.setString(1, password);
+            stm.setString(2, username);
+            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            try
+            {
+                stm.executeUpdate();
+                Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
+                    "User date login update successful");
+            }
+            catch (SQLException sqlex)
+            {
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                        "Error while executing update query", sqlex);
+            }
+        }
+        catch (SQLException | RuntimeException ex)
+        {
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    "Error while creating query or establishing database connection", ex);
+        }
+        finally
+        {
+            if (stm != null)
+            {
+                try
+                {
+                    stm.close();
+                }
+                catch (SQLException sex)
+                {
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                            "Error while closing connection", sex);
+                }
+            }
+        }
+    }
+        
+
     public HashMap updatedGroups(User u, Timestamp tmstp)
     {
         PreparedStatement stm = null;
@@ -1721,10 +1773,12 @@ public class DbHelper implements Serializable
         //return groupList;
         return map;
     }
+    
     public int getPostCountSinceDate(Group g, Timestamp tmstp)
     {
         return getPostCountSinceDate(g.getId(), tmstp);
     }
+    
     public int getPostCountSinceDate(Integer id_group, Timestamp tmstp)
     {
         PreparedStatement stm = null;
