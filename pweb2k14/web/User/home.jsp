@@ -37,7 +37,7 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="#">My Groups</a></li>
-            <li class="active"><a href="#">Groups</a></li>
+            <li><a href="#">Groups</a></li>
             <li><a href="#">Invites</a></li>
             
            
@@ -49,8 +49,8 @@
               
                 <li class="dropdown-header">Account</li>
                 <li class="divider"></li>
-                <li><a href="#">Change Password</a></li>
-                <li><a href="#"></a></li>
+                <li><a href="/pweb2k14/CyberController?oper=getchangepassword">Change Password</a></li>
+                <li><a href="/pweb2k14/CyberController?oper=getchangeavatar">Change Avatar</a></li>
                 <li><a href="/pweb2k14/CyberController?oper=getlogout">Log out</a></li>
 
               </ul>
