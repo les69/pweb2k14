@@ -35,6 +35,7 @@
         <servlet-class>controller.ListGroupsServlet</servlet-class>
     </servlet>
     <servlet>
+<<<<<<< HEAD
 
         <servlet-name>InviteServlet</servlet-name>
         <servlet-class>controller.InviteServlet</servlet-class>
@@ -42,7 +43,10 @@
     <servlet>
         <servlet-name>ListMyGroupServlet</servlet-name>
         <servlet-class>controller.ListMyGroupServlet</servlet-class>
-
+    </servlet>
+    <servlet>
+        <servlet-name>ListMyGroupServlet</servlet-name>
+        <servlet-class>controller.ListMyGroupServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PasswordRecoverServlet</servlet-name>
