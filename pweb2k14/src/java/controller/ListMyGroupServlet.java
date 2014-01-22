@@ -8,22 +8,20 @@ package controller;
 
 import helpers.ServletHelperClass;
 import java.io.IOException;
-import java.rmi.ServerException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.DbHelper;
-import model.User;
 
 /**
  *
  * @author les
  */
-public class ListGroupsServlet extends HttpServlet {
-
-     private DbHelper helper;
-
+public class ListMyGroupServlet extends HttpServlet {
+    private DbHelper helper;
+    
     @Override
     public void init() throws ServletException {
         this.helper = (DbHelper) super.getServletContext().getAttribute("dbmanager");
@@ -40,16 +38,9 @@ public class ListGroupsServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         User usr = ServletHelperClass.getUserFromSession(request);
-         if (usr == null) {
-                  response.sendRedirect("/NotSupported.jsp");
-         }
-        if (this.helper == null) {
-            response.sendRedirect("/NotSupported.jsp");
-            }
-        //List<Group> groups = helper.getUserGroups(usr);
-        request.getSession().setAttribute("groups", helper.getUserGroups(usr));
-        response.sendRedirect("/pweb2k14/Group/showGroups.jsp");
+        
+        request.getSession().setAttribute("myGroup", helper.getGroupsByOwner(ServletHelperClass.getUserFromSession(request)));
+        response.sendRedirect("/pweb2k14/MyGroup/showMyGroup.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

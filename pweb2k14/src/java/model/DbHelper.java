@@ -252,10 +252,12 @@ public class DbHelper implements Serializable
                     //TODO potrebbe non essere una cosa cattiva farlo dal costruttore
 
                     //PER BLèKMIRKO, imposta tutti i valori e non solo il nome o si rompe tutto
-                    g.setId(rs.getInt("id_group"));
-                    g.setName(rs.getString("name"));
-                    g.setOwner(rs.getInt("id_owner"));
-                    g.setPublic(rs.getBoolean("active"));
+                    g.setId(rs.getInt("ID_GROUP"));
+                    g.setName(rs.getString("NAME"));
+                    g.setActive(rs.getBoolean("ACTIVE"));
+                    g.setOwner(rs.getInt("ID_OWNER"));
+                    g.setPublic(rs.getBoolean("IS_PUBLIC"));
+                    g.setLast_activity(rs.getTimestamp("last_activity"));
                     groupList.add(g);
                 }
             }
