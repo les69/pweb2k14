@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import logic.AvatarManager;
+import helpers.AvatarManager;
 import model.DbHelper;
 import model.User;
 
@@ -61,10 +61,14 @@ public class NewUserServlet extends HttpServlet {
             String password = request.getParameter("password"); 
             String email = request.getParameter("email"); 
             Part filePart = request.getPart("avatar");              
-            
-            String hash = AvatarManager.SaveAvatar(filePart, username, absoluteFilePath, response);
-                
             newUser = new User();
+            String hash;
+            if(filePart.getSubmittedFileName() != "")
+                 hash = AvatarManager.SaveAvatar(filePart, username, absoluteFilePath, response);
+            else
+                 hash = "default.png";
+                
+            
             newUser.setUsername(username);
             newUser.setAvatar(hash);
             newUser.setEmail(email);

@@ -543,6 +543,8 @@ public class DbHelper implements Serializable
                     grp.setName(rs.getString("NAME"));
                     grp.setActive(rs.getBoolean("ACTIVE"));
                     grp.setOwner(rs.getInt("ID_OWNER"));
+                    grp.setPublic(rs.getBoolean("IS_PUBLIC"));
+                    grp.setLast_activity(rs.getTimestamp("last_activity"));
                 }
             }
             catch (SQLException sqlex)
@@ -611,6 +613,8 @@ public class DbHelper implements Serializable
                     grp.setName(groupName);
                     grp.setActive(rs.getBoolean("ACTIVE"));
                     grp.setOwner(rs.getInt("ID_OWNER"));
+                    grp.setPublic(rs.getBoolean("IS_PUBLIC"));
+                    grp.setLast_activity(rs.getTimestamp("last_activity"));
                 }
             }
             catch (SQLException sqlex)

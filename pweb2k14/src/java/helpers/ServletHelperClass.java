@@ -262,7 +262,7 @@ public class ServletHelperClass {
     }
     
     public static final String webMasterMail = "no-reply@pweb.com";
-    private static final String mailhost = "localhost";
+    private static final String mailhost = "mailserver.ssnet.it ";
 
     public static void sendMail(String from, String to, String subject, String line) {
         try {
@@ -289,5 +289,9 @@ public class ServletHelperClass {
             System.err.println("Usage: java SendMail [<mailhost>]");
         }
 
+    }
+    public static User getUserFromSession(HttpServletRequest request)
+    {
+        return (User)request.getSession().getAttribute("username");
     }
 }

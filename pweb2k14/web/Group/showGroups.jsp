@@ -1,14 +1,11 @@
 <%-- 
     Document   : index
-    Created on : Jan 17, 2014, 10:26:52 PM
+    Created on : Jan 22, 2014, 10:26:52 PM
     Author     : les
 --%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@page import="java.util.Map"%>
-<%@page import="java.util.Map.Entry"%>
-<%@page import="java.util.Iterator"%>
-<%@page import="java.util.HashMap"%>
 
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page import="model.User" %>
 <%@page import="model.Group" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -26,15 +23,10 @@
     </head>
     <body>
         <jsp:useBean id="user" class="model.User" scope="session" />
-        <c:set var="usr" value="${sessionScope.username}" />
-        <%--<c:set var="groups" value="${sessionScope.updatedGroups}" /> --%>
         <% 
             user = (User) request.getSession().getAttribute("username");
             if(user == null)
-                response.sendRedirect("/pweb2k14/login.jsp");
-            //String dateLogin = (String) request.getSession().getAttribute("last-login");
-            HashMap updatedGroups = (HashMap) request.getSession().getAttribute("updatedGroups");
-        
+                response.sendRedirect("/pweb2k14/login.jsp");        
         %>
         <div class="container">
         <div class="navbar navbar-default" role="navigation">
@@ -57,7 +49,7 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
              <li class="dropdown">
-                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <c:out value="${usr.username}" /> <b class="caret"></b></a>
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= user.getUsername() %> <b class="caret"></b></a>
               <ul class="dropdown-menu">
               
                 <li class="dropdown-header">Account</li>
@@ -74,23 +66,42 @@
         <div class="row">
             
             <div class="col-lg-12" style="background-color: #fff;">
-                <h2>Welcome back!</h2>  Last login at <%= user.getFormatDate() %>
-            <h4> What's hot?</h4>
-            <%
-                if(updatedGroups != null && updatedGroups.size() > 0)
-                {
-                    out.println("<ul class=\"list-group\">");
-                    Iterator it = updatedGroups.entrySet().iterator();
-                    while(it.hasNext())
-                    {
-                        Map.Entry entry = (Map.Entry) it.next();
-                        out.println("<li class=\"list-group-item\">"+((Group)entry.getKey()).getName()+"<span class=\"badge\">"+entry.getValue()+"</span></li>");
-                    }
-                }
-            %>
-            <%--  <c:forEach items="groups" var="group">
-                <c:out value="${group.key}"/><c:out value="${group.value}" />
-</c:forEach> --%>
+                <h2>The Groups you're following</h2>  
+                
+                <div class="panel panel-default">
+                  <!-- Default panel contents -->
+                  <div class="panel-heading">Groups</div>
+                  <div class="panel-body">
+                    <p>Here there is a brief list of the groups you are following!</p>
+                  </div>
+
+                  <!-- Table -->
+                  <table class="table">
+                      <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Active</th>
+                            <th>Public</th>
+                            <th>Last activity</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                           <c:forEach items="${sessionScope.groups}" var="group">
+                               <tr>
+                                   <td><c:out value="${group.id}" /></td>
+                                   <td><a href="/pweb2k14/CyberController?oper=showGroup&g=${group.id}"><c:out value="${group.name}" /></a></td>
+                                   <td><c:out value="${group.active}" /></td>
+                                   <td><c:out value="${group.public}" /></td>
+                                   <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${group.last_activity}" /></td>
+                               </tr>
+                    
+                            </c:forEach>
+                      </tbody>
+                  </table>
+                </div>
+               
+     
         </div>
         </div>
         </div>

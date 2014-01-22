@@ -7,30 +7,55 @@
 package controller;
 
 import helpers.ServletHelperClass;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.rmi.ServerException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
-import helpers.AvatarManager;
 import model.DbHelper;
+import model.Group;
 import model.User;
 
 /**
  *
- * @author lorenzo
+ * @author les
  */
-public class EditUserServlet extends HttpServlet {
-    private DbHelper helper;
+public class ListGroupsServlet extends HttpServlet {
+
+     private DbHelper helper;
 
     @Override
     public void init() throws ServletException {
         this.helper = (DbHelper) super.getServletContext().getAttribute("dbmanager");
     }
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+         User usr = ServletHelperClass.getUserFromSession(request);
+         if (usr == null) {
+            throw new ServerException("Bad Error: Username is not defined when it MUST be");
+            }
+        if (this.helper == null) {
+            throw new ServerException("Bad Error: dbHelper is not defined when it MUST be");
+            }
+        //List<Group> groups = helper.getUserGroups(usr);
+        request.getSession().setAttribute("groups", helper.getUserGroups(usr));
+        response.sendRedirect("/pweb2k14/Group/showGroups.jsp");
+    }
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -42,10 +67,7 @@ public class EditUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        //TODO: add useless things like post count to response
-        
-        response.sendRedirect("User/userinfo.jsp");
+        processRequest(request, response);
     }
 
     /**
@@ -59,39 +81,7 @@ public class EditUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String relativeWebPath = "/Avatars";
-        String absoluteFilePath = getServletContext().getRealPath(relativeWebPath) + File.separator;
-        
-        
-        User newUser = (User) request.getSession().getAttribute("username");
-        String password = request.getParameter("oldpass"); 
-
-            if(helper.authenticate(newUser.getUsername(), password)!= null)
-            {
-                Part filePart = request.getPart("avatar");              
-                if(filePart.getSize() >0)  {
-                    
-                    String hash = AvatarManager.SaveAvatar(filePart, newUser.getUsername(), absoluteFilePath, response);
-                    newUser.setAvatar(hash);
-                }
-                
-                password = request.getParameter("newpass");
-                
-                if(password != null && !password.equalsIgnoreCase(""))
-                    newUser.setPassword(password);
-            
-                if(helper.editUser(newUser))
-                    request.getSession().setAttribute("username", newUser);
-                else
-                    response.sendRedirect("User/userinfo.jsp?error=invalid data provided");
-                response.sendRedirect("User/userinfo.jsp");
-            }
-            else
-            {
-                response.sendRedirect("User/userinfo.jsp?error=wrong password");
-            }
-
-            
+        processRequest(request, response);
     }
 
     /**
@@ -102,6 +92,6 @@ public class EditUserServlet extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }
+    }// </editor-fold>
 
 }

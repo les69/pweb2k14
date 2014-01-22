@@ -30,6 +30,10 @@
         <servlet-name>PasswordRecoverServlet</servlet-name>
         <servlet-class>controller.PasswordRecoverServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ListGroupsServlet</servlet-name>
+        <servlet-class>controller.ListGroupsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PasswordRecoverServlet</servlet-name>
         <url-pattern>/PassResetController</url-pattern>
@@ -73,6 +77,10 @@
     <servlet-mapping>
         <servlet-name>EditUserServlet</servlet-name>
         <url-pattern>/EditUserServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListGroupsServlet</servlet-name>
+        <url-pattern>/ListGroups</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
