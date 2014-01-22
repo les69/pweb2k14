@@ -54,6 +54,7 @@ public class ControllerServlet extends HttpServlet {
             case "getlogout": forward(request,response,"/Logout"); break;
             case "getHome": response.sendRedirect("/pweb2k14/User/home.jsp");  break;
             case "getGroups": forward(request, response, "/ListGroups"); break;
+            case "getMyGroups":forward(request, response, "/ListMyGroup"); break;
             case "getpost": forward(request,response,"/NotSupported.jsp"); break;
             default: forward(request,response,"/NotSupported.jsp"); break;
         }
