@@ -59,7 +59,7 @@ public class EditUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String relativeWebPath = "/Avatars";
+        String relativeWebPath = "/uploads/Avatars";
         String absoluteFilePath = getServletContext().getRealPath(relativeWebPath) + File.separator;
         
         
