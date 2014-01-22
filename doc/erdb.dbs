@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="pweb2k14" id="Project8591982" database="Derby" >
+	<schema name="APP" schemaname="APP" defo="y" >
+		<table name="FILEDB" >
+			<column name="HASHED_NAME" type="varchar" length="255" jt="12" mandatory="y" />
+			<column name="ID_GROUP" type="integer" length="10" jt="4" mandatory="y" />
+			<column name="ID_USER" type="integer" length="10" jt="4" mandatory="y" />
+			<column name="ORIGINAL_NAME" type="varchar" length="255" jt="12" mandatory="y" />
+			<column name="TYPE" type="varchar" length="255" jt="12" mandatory="y" />
+			<index name="SQL140122120949830" unique="PRIMARY_KEY" >
+				<column name="HASHED_NAME" />
+				<column name="ID_GROUP" />
+				<column name="ID_USER" />
+			</index>
+			<index name="SQL140122120949831" unique="NORMAL" >
+				<column name="ID_GROUP" />
+			</index>
+			<index name="SQL140122120949832" unique="NORMAL" >
+				<column name="ID_USER" />
+			</index>
+			<fk name="SQL140122120949831" to_schema="APP" to_table="GROUPS" >
+				<fk_column name="ID_GROUP" pk="ID_GROUP" />
+			</fk>
+			<fk name="SQL140122120949832" to_schema="APP" to_table="USERS" >
+				<fk_column name="ID_USER" pk="ID_USER" />
+			</fk>
+		</table>
+		<table name="GROUPS" >
+			<column name="ID_GROUP" type="integer" length="10" jt="4" mandatory="y" autoincrement="y" />
+			<column name="NAME" type="varchar" length="255" jt="12" mandatory="y" />
+			<column name="ACTIVE" type="boolean" length="1" jt="16" mandatory="y" >
+				<defo>true</defo>
+			</column>
+			<column name="IS_PUBLIC" type="boolean" length="1" jt="16" mandatory="y" >
+				<defo>true</defo>
+			</column>
+			<column name="ID_OWNER" type="integer" length="10" jt="4" mandatory="y" />
+			<column name="LAST_ACTIVITY" type="timestamp" length="29" decimal="9" jt="93" />
+			<index name="SQL140122120913950" unique="PRIMARY_KEY" >
+				<column name="ID_GROUP" />
+			</index>
+			<index name="SQL140122120913951" unique="UNIQUE" >
+				<column name="NAME" />
+			</index>
+			<index name="SQL140122120913952" unique="NORMAL" >
+				<column name="ID_OWNER" />
+			</index>
+			<fk name="SQL140122120913952" to_schema="APP" to_table="USERS" >
+				<fk_column name="ID_OWNER" pk="ID_USER" />
+			</fk>
+		</table>
+		<table name="GROUPUSER" >
+			<column name="ID_GROUP" type="integer" length="10" jt="4" mandatory="y" />
+			<column name="ID_USER" type="integer" length="10" jt="4" mandatory="y" />
+			<column name="ACTIVE" type="boolean" length="1" jt="16" mandatory="y" >
+				<defo>true</defo>
+			</column>
+			<index name="SQL140122121020560" unique="PRIMARY_KEY" >
+				<column name="ID_GROUP" />
+				<column name="ID_USER" />
+			</index>
+			<index name="SQL140122121020561" unique="NORMAL" >
+				<column name="ID_GROUP" />
+			</index>
+			<index name="SQL140122121020562" unique="NORMAL" >
+				<column name="ID_USER" />
+			</index>
+			<fk name="SQL140122121020561" to_schema="APP" to_table="GROUPS" >
+				<fk_column name="ID_GROUP" pk="ID_GROUP" />
+			</fk>
+			<fk name="SQL140122121020562" to_schema="APP" to_table="USERS" >
+				<fk_column name="ID_USER" pk="ID_USER" />
+			</fk>
+		</table>
+		<table name="INVITE" >
+			<column name="ID_GROUP" type="integer" length="10" jt="4" mandatory="y" />
+			<column name="ID_USER" type="integer" length="10" jt="4" mandatory="y" />
+			<column name="INVITE_DATE" type="date" length="10" jt="91" mandatory="y" />
+			<column name="VISIBLE" type="boolean" length="1" jt="16" mandatory="y" />
+			<index name="SQL140122121020740" unique="PRIMARY_KEY" >
+				<column name="ID_GROUP" />
+				<column name="ID_USER" />
+			</index>
+			<index name="SQL140122121020741" unique="NORMAL" >
+				<column name="ID_GROUP" />
+			</index>
+			<index name="SQL140122121020742" unique="NORMAL" >
+				<column name="ID_USER" />
+			</index>
+			<fk name="SQL140122121020741" to_schema="APP" to_table="GROUPS" >
+				<fk_column name="ID_GROUP" pk="ID_GROUP" />
+			</fk>
+			<fk name="SQL140122121020742" to_schema="APP" to_table="USERS" >
+				<fk_column name="ID_USER" pk="ID_USER" />
+			</fk>
+		</table>
+		<table name="POST" >
+			<column name="ID_POST" type="integer" length="10" jt="4" mandatory="y" autoincrement="y" />
+			<column name="VISIBLE" type="boolean" length="1" jt="16" >
+				<defo>true</defo>
+			</column>
+			<column name="DATE_POST" type="timestamp" length="29" decimal="9" jt="93" />
+			<column name="MESSAGE" type="long varchar" length="32700" jt="-1" />
+			<column name="ID_GROUP" type="integer" length="10" jt="4" mandatory="y" />
+			<column name="ID_USER" type="integer" length="10" jt="4" mandatory="y" />
+			<index name="SQL140122121020670" unique="PRIMARY_KEY" >
+				<column name="ID_POST" />
+			</index>
+			<index name="SQL140122121020671" unique="NORMAL" >
+				<column name="ID_GROUP" />
+			</index>
+			<index name="SQL140122121020672" unique="NORMAL" >
+				<column name="ID_USER" />
+			</index>
+			<fk name="SQL140122121020671" to_schema="APP" to_table="GROUPS" >
+				<fk_column name="ID_GROUP" pk="ID_GROUP" />
+			</fk>
+			<fk name="SQL140122121020672" to_schema="APP" to_table="USERS" >
+				<fk_column name="ID_USER" pk="ID_USER" />
+			</fk>
+		</table>
+		<table name="USERS" >
+			<column name="ID_USER" type="integer" length="10" jt="4" mandatory="y" autoincrement="y" />
+			<column name="USERNAME" type="varchar" length="255" jt="12" mandatory="y" />
+			<column name="PASSWORD" type="varchar" length="255" jt="12" mandatory="y" />
+			<column name="EMAIL" type="varchar" length="255" jt="12" mandatory="y" />
+			<column name="AVATAR" type="varchar" length="255" jt="12" mandatory="y" />
+			<column name="ISMODERATOR" type="boolean" length="1" jt="16" mandatory="y" >
+				<defo>false</defo>
+			</column>
+			<column name="DATE_LOGIN" type="timestamp" length="29" decimal="9" jt="93" />
+			<index name="SQL140122120721500" unique="PRIMARY_KEY" >
+				<column name="ID_USER" />
+			</index>
+			<index name="SQL140122120721501" unique="UNIQUE" >
+				<column name="USERNAME" />
+			</index>
+		</table>
+	</schema>
+	<schema name="NULLID" schemaname="NULLID" defo="y" />
+	<schema name="PWEB2K14" schemaname="PWEB2K14" defo="y" />
+	<schema name="SQLJ" schemaname="SQLJ" defo="y" >
+		<procedure name="INSTALL_JAR" id="Procedure8860028" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.INSTALL_JAR]]></comment>
+		</procedure>
+		<procedure name="REMOVE_JAR" id="Procedure8860028" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.REMOVE_JAR]]></comment>
+		</procedure>
+		<procedure name="REPLACE_JAR" id="Procedure8860031" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.REPLACE_JAR]]></comment>
+		</procedure>
+	</schema>
+	<schema name="SYS" schemaname="SYS" defo="y" />
+	<schema name="SYSCAT" schemaname="SYSCAT" defo="y" />
+	<schema name="SYSCS_DIAG" schemaname="SYSCS_DIAG" defo="y" />
+	<schema name="SYSCS_UTIL" schemaname="SYSCS_UTIL" defo="y" >
+		<procedure name="SYSCS_BACKUP_DATABASE" id="Procedure8860032" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_BACKUP_DATABASE]]></comment>
+		</procedure>
+		<procedure name="SYSCS_BACKUP_DATABASE_AND_ENABLE_LOG_ARCHIVE_MODE" id="Procedure8860032" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_BACKUP_DATABASE_AND_ENABLE_LOG_ARCHIVE_MODE]]></comment>
+		</procedure>
+		<procedure name="SYSCS_BACKUP_DATABASE_AND_ENABLE_LOG_ARCHIVE_MODE_NOWAIT" id="Procedure8860035" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_BACKUP_DATABASE_AND_ENABLE_LOG_ARCHIVE_MODE_NOWAIT]]></comment>
+		</procedure>
+		<procedure name="SYSCS_BACKUP_DATABASE_NOWAIT" id="Procedure8860035" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_BACKUP_DATABASE_NOWAIT]]></comment>
+		</procedure>
+		<procedure name="SYSCS_BULK_INSERT" id="Procedure8860035" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_BULK_INSERT]]></comment>
+		</procedure>
+		<procedure name="SYSCS_CHECKPOINT_DATABASE" id="Procedure8860035" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_CHECKPOINT_DATABASE]]></comment>
+		</procedure>
+		<procedure name="SYSCS_COMPRESS_TABLE" id="Procedure8860035" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_COMPRESS_TABLE]]></comment>
+		</procedure>
+		<procedure name="SYSCS_DISABLE_LOG_ARCHIVE_MODE" id="Procedure8860035" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_DISABLE_LOG_ARCHIVE_MODE]]></comment>
+		</procedure>
+		<procedure name="SYSCS_EMPTY_STATEMENT_CACHE" id="Procedure8860035" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_EMPTY_STATEMENT_CACHE]]></comment>
+		</procedure>
+		<procedure name="SYSCS_EXPORT_QUERY" id="Procedure8860039" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_EXPORT_QUERY]]></comment>
+		</procedure>
+		<procedure name="SYSCS_EXPORT_QUERY_LOBS_TO_EXTFILE" id="Procedure8860039" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_EXPORT_QUERY_LOBS_TO_EXTFILE]]></comment>
+		</procedure>
+		<procedure name="SYSCS_EXPORT_TABLE" id="Procedure8860039" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_EXPORT_TABLE]]></comment>
+		</procedure>
+		<procedure name="SYSCS_EXPORT_TABLE_LOBS_TO_EXTFILE" id="Procedure8860039" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_EXPORT_TABLE_LOBS_TO_EXTFILE]]></comment>
+		</procedure>
+		<procedure name="SYSCS_FREEZE_DATABASE" id="Procedure8860039" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_FREEZE_DATABASE]]></comment>
+		</procedure>
+		<procedure name="SYSCS_IMPORT_DATA" id="Procedure8860039" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_IMPORT_DATA]]></comment>
+		</procedure>
+		<procedure name="SYSCS_IMPORT_DATA_LOBS_FROM_EXTFILE" id="Procedure8860040" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_IMPORT_DATA_LOBS_FROM_EXTFILE]]></comment>
+		</procedure>
+		<procedure name="SYSCS_IMPORT_TABLE" id="Procedure8860040" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_IMPORT_TABLE]]></comment>
+		</procedure>
+		<procedure name="SYSCS_IMPORT_TABLE_LOBS_FROM_EXTFILE" id="Procedure8860040" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_IMPORT_TABLE_LOBS_FROM_EXTFILE]]></comment>
+		</procedure>
+		<procedure name="SYSCS_INPLACE_COMPRESS_TABLE" id="Procedure8860040" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_INPLACE_COMPRESS_TABLE]]></comment>
+		</procedure>
+		<procedure name="SYSCS_RELOAD_SECURITY_POLICY" id="Procedure8860040" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_RELOAD_SECURITY_POLICY]]></comment>
+		</procedure>
+		<procedure name="SYSCS_SET_DATABASE_PROPERTY" id="Procedure8860040" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_SET_DATABASE_PROPERTY]]></comment>
+		</procedure>
+		<procedure name="SYSCS_SET_RUNTIMESTATISTICS" id="Procedure8860040" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_SET_RUNTIMESTATISTICS]]></comment>
+		</procedure>
+		<procedure name="SYSCS_SET_STATISTICS_TIMING" id="Procedure8860040" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_SET_STATISTICS_TIMING]]></comment>
+		</procedure>
+		<procedure name="SYSCS_SET_USER_ACCESS" id="Procedure8860041" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_SET_USER_ACCESS]]></comment>
+		</procedure>
+		<procedure name="SYSCS_SET_XPLAIN_MODE" id="Procedure8860041" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_SET_XPLAIN_MODE]]></comment>
+		</procedure>
+		<procedure name="SYSCS_SET_XPLAIN_SCHEMA" id="Procedure8860041" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_SET_XPLAIN_SCHEMA]]></comment>
+		</procedure>
+		<procedure name="SYSCS_UNFREEZE_DATABASE" id="Procedure8860041" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_UNFREEZE_DATABASE]]></comment>
+		</procedure>
+		<procedure name="SYSCS_UPDATE_STATISTICS" id="Procedure8860041" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SYSCS_UPDATE_STATISTICS]]></comment>
+		</procedure>
+	</schema>
+	<schema name="SYSFUN" schemaname="SYSFUN" defo="y" />
+	<schema name="SYSIBM" schemaname="SYSIBM" defo="y" >
+		<procedure name="BLOBRELEASELOCATOR" id="Procedure8860042" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.impl.jdbc.LOBStoredProcedure.BLOBRELEASELOCATOR]]></comment>
+		</procedure>
+		<procedure name="BLOBSETBYTES" id="Procedure8860042" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.impl.jdbc.LOBStoredProcedure.BLOBSETBYTES]]></comment>
+		</procedure>
+		<procedure name="BLOBTRUNCATE" id="Procedure8860042" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.impl.jdbc.LOBStoredProcedure.BLOBTRUNCATE]]></comment>
+		</procedure>
+		<procedure name="CLOBRELEASELOCATOR" id="Procedure8860042" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.impl.jdbc.LOBStoredProcedure.CLOBRELEASELOCATOR]]></comment>
+		</procedure>
+		<procedure name="CLOBSETSTRING" id="Procedure8860043" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.impl.jdbc.LOBStoredProcedure.CLOBSETSTRING]]></comment>
+		</procedure>
+		<procedure name="CLOBTRUNCATE" id="Procedure8860043" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.impl.jdbc.LOBStoredProcedure.CLOBTRUNCATE]]></comment>
+		</procedure>
+		<procedure name="METADATA" id="Procedure8860043" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.METADATA]]></comment>
+		</procedure>
+		<procedure name="SQLCAMESSAGE" id="Procedure8860043" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SQLCAMESSAGE]]></comment>
+		</procedure>
+		<procedure name="SQLCOLPRIVILEGES" id="Procedure8860043" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SQLCOLPRIVILEGES]]></comment>
+		</procedure>
+		<procedure name="SQLCOLUMNS" id="Procedure8860043" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SQLCOLUMNS]]></comment>
+		</procedure>
+		<procedure name="SQLFOREIGNKEYS" id="Procedure8860044" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SQLFOREIGNKEYS]]></comment>
+		</procedure>
+		<procedure name="SQLFUNCTIONPARAMS" id="Procedure8860044" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SQLFUNCTIONPARAMS]]></comment>
+		</procedure>
+		<procedure name="SQLFUNCTIONS" id="Procedure8860044" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SQLFUNCTIONS]]></comment>
+		</procedure>
+		<procedure name="SQLGETTYPEINFO" id="Procedure8860045" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SQLGETTYPEINFO]]></comment>
+		</procedure>
+		<procedure name="SQLPRIMARYKEYS" id="Procedure8860045" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SQLPRIMARYKEYS]]></comment>
+		</procedure>
+		<procedure name="SQLPROCEDURECOLS" id="Procedure8860045" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SQLPROCEDURECOLS]]></comment>
+		</procedure>
+		<procedure name="SQLPROCEDURES" id="Procedure8860045" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SQLPROCEDURES]]></comment>
+		</procedure>
+		<procedure name="SQLSPECIALCOLUMNS" id="Procedure8860045" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SQLSPECIALCOLUMNS]]></comment>
+		</procedure>
+		<procedure name="SQLSTATISTICS" id="Procedure8860045" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SQLSTATISTICS]]></comment>
+		</procedure>
+		<procedure name="SQLTABLEPRIVILEGES" id="Procedure8860046" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SQLTABLEPRIVILEGES]]></comment>
+		</procedure>
+		<procedure name="SQLTABLES" id="Procedure8860046" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SQLTABLES]]></comment>
+		</procedure>
+		<procedure name="SQLUDTS" id="Procedure8860046" isSystem="false" >
+			<comment><![CDATA[org.apache.derby.catalog.SystemProcedures.SQLUDTS]]></comment>
+		</procedure>
+	</schema>
+	<schema name="SYSPROC" schemaname="SYSPROC" defo="y" />
+	<schema name="SYSSTAT" schemaname="SYSSTAT" defo="y" />
+	<connector name="Derby" database="Derby" driver_class="org.apache.derby.jdbc.EmbeddedDriver" driver_jar="derby.jar" host="localhost" port="1527" instance="/tmp/tempDB" schema_mapping="" />
+	<layout id="Layout8591985" name="pweb2k14" joined_routing="y" show_column_type="y" show_relation_columns="y" >
+		<entity schema="APP" name="USERS" color="d0def5" x="75" y="90" />
+		<entity schema="APP" name="POST" color="d0def5" x="45" y="375" />
+		<entity schema="APP" name="FILEDB" color="d0def5" x="360" y="225" />
+		<entity schema="APP" name="GROUPUSER" color="d0def5" x="540" y="45" />
+		<entity schema="APP" name="INVITE" color="d0def5" x="810" y="150" />
+		<entity schema="APP" name="GROUPS" color="d0def5" x="615" y="420" />
+	</layout>
+</project>
