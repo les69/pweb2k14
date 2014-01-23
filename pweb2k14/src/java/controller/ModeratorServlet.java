@@ -9,11 +9,14 @@ package controller;
 import helpers.ServletHelperClass;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.DbHelper;
+import model.Group;
+import model.GroupToShow;
 import model.User;
 
 /**
@@ -61,6 +64,9 @@ public class ModeratorServlet extends HttpServlet
     {
         User usr = ServletHelperClass.getUserFromSession(request);
         processRequest(request, response, usr);
+        List<GroupToShow> gruppi = helper.getGroupsForAdmin();
+        request.getSession().setAttribute("allGroups", gruppi);
+        response.sendRedirect("User/moderate.jsp");
     }
 
     /**

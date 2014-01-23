@@ -303,10 +303,10 @@ public class DbHelper implements Serializable
      * @param 
      * @return A list with all the existing groups. used for moderator accounts only
      */
-    public List<Group> getGroupsForAdmin()
+    public List<GroupToShow> getGroupsForAdmin()
     {
         PreparedStatement stm = null;
-        List<Group> groupList = new ArrayList<Group>();
+        List<GroupToShow> groupList = new ArrayList<>();
         try
         {
             if (_connection == null || _connection.isClosed())
@@ -314,7 +314,12 @@ public class DbHelper implements Serializable
                 throw new RuntimeException("Connection must be estabilished before a statement");
             }
             
-            stm = _connection.prepareStatement("select * from Groups ");
+            stm = _connection.prepareStatement("select Groups.ID_GROUP, \"NAME\", ACTIVE, IS_PUBLIC, ID_OWNER, LAST_ACTIVITY, "
+                    + "Howmany, utonti from Groups "
+                    + "INNER JOIN ( select count(ID_POST) as howmany, ID_GROUP from POST GROUP BY ID_GROUP) "
+                    + "as tab on Groups.ID_GROUP = tab.ID_GROUP "
+                    + "INNER JOIN (SELECT count (ID_USER) as utonti, ID_GROUP from GROUPUSER group by ID_GROUP) "
+                    + "as ut ON ut.ID_GROUP = GROUPS.ID_GROUP");
             
             ResultSet rs = null;
 
@@ -323,7 +328,7 @@ public class DbHelper implements Serializable
                 rs = stm.executeQuery();
                 while (rs.next())
                 {
-                    Group g = new Group();
+                    GroupToShow g = new GroupToShow();
                     //TODO potrebbe non essere una cosa cattiva farlo dal costruttore
 
                     //PER BLèKMIRKO, imposta tutti i valori e non solo il nome o si rompe tutto
@@ -333,6 +338,8 @@ public class DbHelper implements Serializable
                     g.setOwner(rs.getInt("ID_OWNER"));
                     g.setPublic(rs.getBoolean("IS_PUBLIC"));
                     g.setLast_activity(rs.getTimestamp("last_activity"));
+                    g.setPostCount(rs.getInt("howmany"));
+                    g.setParticipantCount(rs.getInt("utonti"));
                     groupList.add(g);
                 }
             }

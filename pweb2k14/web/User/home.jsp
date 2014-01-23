@@ -26,7 +26,7 @@
     </head>
     <body>
         <jsp:useBean id="username" class="model.User" scope="session" />
-        <c:set var="usr" value="${sessionScope.username}" />
+        
         <%--<c:set var="groups" value="${sessionScope.updatedGroups}" /> --%>
         <% 
             //user = (User) request.getSession().getAttribute("username");
@@ -60,7 +60,7 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
              <li class="dropdown">
-                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <c:out value="${usr.username}" /> <b class="caret"></b></a>
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <c:out value="${username.username}" /> <b class="caret"></b></a>
               <ul class="dropdown-menu">
               
                 <li class="dropdown-header">Account</li>
