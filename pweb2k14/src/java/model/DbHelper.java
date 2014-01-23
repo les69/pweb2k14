@@ -1620,6 +1620,62 @@ public class DbHelper implements Serializable
         }
     }
 
+    
+     /**
+     * Updates group informations
+     *
+     * @param idGroup
+     * @param groupName
+     */
+    public void changeGroupActivity(int idGroup, boolean status)
+    {
+        PreparedStatement stm = null;
+        try
+        {
+            if (_connection == null || _connection.isClosed())
+            {
+                throw new RuntimeException("Connection must be estabilished before a statement");
+            }
+            stm = _connection.prepareStatement("Update PWEB.GROUPS SET ACTIVE=? where id_group=?");
+            stm.setBoolean(1, status);
+            stm.setInt(2, idGroup);
+            try
+            {
+                stm.executeUpdate();
+                Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
+                    "Group renaming successful");
+            }
+            catch (SQLException sqlex)
+            {
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                        "Error while executing update query", sqlex);
+            }
+        }
+        catch (SQLException | RuntimeException ex)
+        {
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    "Error while creating query or establishing database connection", ex);
+        }
+        finally
+        {
+            if (stm != null)
+            {
+                try
+                {
+                    stm.close();
+                }
+                catch (SQLException sex)
+                {
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                            "Error while closing connection", sex);
+                }
+            }
+        }
+    }
+
+    
+    
+    
     /**
      * Check if a User owns the given Group
      *

@@ -79,7 +79,7 @@
                     <h2>Welcome back!</h2>  Last login at <%= username.getFormatDate()%>
                     <div class="container">
                         <table id="tableGroups" class="dataTable table-striped">
-                            <thead><tr><th >Group name</th><th >Participants</th><th >Post number</th><th >Is a public group</th></tr></thead>
+                            <thead><tr><th >Group name</th><th >Participants</th><th >Post number</th><th>Is a public group</th><th>Delete</th></tr></thead>
                             <tbody>
                                 <c:forEach var="gruppo" items="${allGroups}">
                                     
@@ -88,7 +88,18 @@
                                             
                                             <td><c:out value="${gruppo.participantCount}" /></td>
                                             <td><c:out value="${gruppo.postCount}" /></td>
-                                            <td><c:out value="${gruppo.public}" /></td>
+                                            <c:if test="${gruppo.public == true}">
+                                                <td>Yes</td>
+                                            </c:if>
+                                            <c:if test="${gruppo.public == false }">
+                                                <td>No</td>
+                                            </c:if>
+                                            <c:if test="${gruppo.active == true}">
+                                                <td><a href="../CyberController?oper=doModerate&g=<c:out value="${gruppo.id}" />"><img width="100" src="../image/cybermen.jpg"/></td>
+                                            </c:if>
+                                            <c:if test="${gruppo.active == false}">
+                                                    <td>THIS GROUP HAS BEEN DELETED.<br>DELETE. DELETE. DELEETEE!</td>
+                                            </c:if>
                                         </tr>
                                     
                                 </c:forEach>
