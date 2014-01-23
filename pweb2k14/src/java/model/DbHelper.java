@@ -303,10 +303,10 @@ public class DbHelper implements Serializable
      * @param 
      * @return A list with all the existing groups. used for moderator accounts only
      */
-    public List<Group> getGroupsForAdmin()
+    public List<GroupToShow> getGroupsForAdmin()
     {
         PreparedStatement stm = null;
-        List<Group> groupList = new ArrayList<Group>();
+        List<GroupToShow> groupList = new ArrayList<>();
         try
         {
             if (_connection == null || _connection.isClosed())
@@ -314,7 +314,12 @@ public class DbHelper implements Serializable
                 throw new RuntimeException("Connection must be estabilished before a statement");
             }
             
-            stm = _connection.prepareStatement("select * from Groups ");
+            stm = _connection.prepareStatement("select Groups.ID_GROUP, \"NAME\", ACTIVE, IS_PUBLIC, ID_OWNER, LAST_ACTIVITY, "
+                    + "Howmany, utonti from Groups "
+                    + "INNER JOIN ( select count(ID_POST) as howmany, ID_GROUP from POST GROUP BY ID_GROUP) "
+                    + "as tab on Groups.ID_GROUP = tab.ID_GROUP "
+                    + "INNER JOIN (SELECT count (ID_USER) as utonti, ID_GROUP from GROUPUSER group by ID_GROUP) "
+                    + "as ut ON ut.ID_GROUP = GROUPS.ID_GROUP");
             
             ResultSet rs = null;
 
@@ -323,7 +328,7 @@ public class DbHelper implements Serializable
                 rs = stm.executeQuery();
                 while (rs.next())
                 {
-                    Group g = new Group();
+                    GroupToShow g = new GroupToShow();
                     //TODO potrebbe non essere una cosa cattiva farlo dal costruttore
 
                     //PER BLèKMIRKO, imposta tutti i valori e non solo il nome o si rompe tutto
@@ -333,6 +338,8 @@ public class DbHelper implements Serializable
                     g.setOwner(rs.getInt("ID_OWNER"));
                     g.setPublic(rs.getBoolean("IS_PUBLIC"));
                     g.setLast_activity(rs.getTimestamp("last_activity"));
+                    g.setPostCount(rs.getInt("howmany"));
+                    g.setParticipantCount(rs.getInt("utonti"));
                     groupList.add(g);
                 }
             }
@@ -1618,6 +1625,62 @@ public class DbHelper implements Serializable
         }
     }
 
+    
+     /**
+     * Updates group informations
+     *
+     * @param idGroup
+     * @param groupName
+     */
+    public void changeGroupActivity(int idGroup, boolean status)
+    {
+        PreparedStatement stm = null;
+        try
+        {
+            if (_connection == null || _connection.isClosed())
+            {
+                throw new RuntimeException("Connection must be estabilished before a statement");
+            }
+            stm = _connection.prepareStatement("Update PWEB.GROUPS SET ACTIVE=? where id_group=?");
+            stm.setBoolean(1, status);
+            stm.setInt(2, idGroup);
+            try
+            {
+                stm.executeUpdate();
+                Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
+                    "Group renaming successful");
+            }
+            catch (SQLException sqlex)
+            {
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                        "Error while executing update query", sqlex);
+            }
+        }
+        catch (SQLException | RuntimeException ex)
+        {
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    "Error while creating query or establishing database connection", ex);
+        }
+        finally
+        {
+            if (stm != null)
+            {
+                try
+                {
+                    stm.close();
+                }
+                catch (SQLException sex)
+                {
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                            "Error while closing connection", sex);
+                }
+            }
+        }
+    }
+
+    
+    
+    
     /**
      * Check if a User owns the given Group
      *

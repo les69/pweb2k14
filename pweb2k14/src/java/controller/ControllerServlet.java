@@ -49,6 +49,7 @@ public class ControllerServlet extends HttpServlet {
         
         switch(operation)
         {
+            case "doModerate": 
             case "getModerator": forward(request, response, "/ModeratorServlet"); break;
             case "getInvites": forward(request, response, "/InviteServlet"); break;
             case "getAccount": forward(request, response, "/EditUserServlet"); break;
@@ -82,7 +83,7 @@ public class ControllerServlet extends HttpServlet {
         SetUpDBConnection();
         
         switch(operation)
-        {
+        {            
             case "accRefInvite": forward(request, response, "/InviteServlet"); break;
             case "editAccount": forward(request,response,"/EditUserServlet"); break;
             case "doLogin": forward(request,response,"/Login"); break;
