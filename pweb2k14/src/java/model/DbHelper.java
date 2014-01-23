@@ -1842,4 +1842,68 @@ public class DbHelper implements Serializable
         }
         return retval;
     }
+    public List<Group> getPublicGroups()
+    {
+        PreparedStatement stm = null;
+        List<Group> groupList = new ArrayList<Group>();
+        try
+        {
+            if (_connection == null || _connection.isClosed())
+            {
+                throw new RuntimeException("Connection must be estabilished before a statement");
+            }
+            stm = _connection.prepareStatement("select * from Groups where is_public=true");
+            ResultSet rs = null;
+
+            try
+            {
+                rs = stm.executeQuery();
+                while (rs.next())
+                {
+                    Group g = new Group();
+                    g.setId(rs.getInt("ID_GROUP"));
+                    g.setName(rs.getString("NAME"));
+                    g.setActive(rs.getBoolean("ACTIVE"));
+                    g.setOwner(rs.getInt("ID_OWNER"));
+                    g.setPublic(rs.getBoolean("IS_PUBLIC"));
+                    g.setLast_activity(rs.getTimestamp("last_activity"));
+                    groupList.add(g);
+                }
+            }
+            catch (SQLException sqlex)
+            {
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                        "Error while executing query or parsing result data", sqlex);
+            }
+            finally
+            {
+                if (rs != null)
+                {
+                    rs.close();
+                }
+            }
+        }
+        catch (SQLException | RuntimeException ex)
+        {
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    "Error while creating query or establishing database connection", ex);
+        }
+        finally
+        {
+            if (stm != null)
+            {
+                try
+                {
+                    stm.close();
+                }
+                catch (SQLException sex)
+                {
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                            "Error while closing connection", sex);
+                }
+            }
+        }
+        return groupList;
+    }
+
 }
