@@ -42,6 +42,10 @@
         <servlet-name>ListMyGroupServlet</servlet-name>
         <servlet-class>controller.ListMyGroupServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ModeratorServlet</servlet-name>
+        <servlet-class>controller.ModeratorServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PasswordRecoverServlet</servlet-name>
         <url-pattern>/PassResetController</url-pattern>
@@ -98,6 +102,10 @@
         <servlet-name>ListMyGroupServlet</servlet-name>
         <url-pattern>/ListMyGroup</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ModeratorServlet</servlet-name>
+        <url-pattern>/ModeratorServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -112,4 +120,3 @@
         <param-value>jdbc:derby://localhost:1527/pweb2k14;user=pweb;password=pweb</param-value>
     </context-param>
 </web-app>
-
