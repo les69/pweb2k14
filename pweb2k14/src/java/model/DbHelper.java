@@ -298,6 +298,82 @@ public class DbHelper implements Serializable
     }
 
     /**
+     * Gets a List of all existing Groups 
+     *
+     * @param 
+     * @return A list with all the existing groups. used for moderator accounts only
+     */
+    public List<Group> getGroupsForAdmin()
+    {
+        PreparedStatement stm = null;
+        List<Group> groupList = new ArrayList<Group>();
+        try
+        {
+            if (_connection == null || _connection.isClosed())
+            {
+                throw new RuntimeException("Connection must be estabilished before a statement");
+            }
+            
+            stm = _connection.prepareStatement("select * from Groups ");
+            
+            ResultSet rs = null;
+
+            try
+            {
+                rs = stm.executeQuery();
+                while (rs.next())
+                {
+                    Group g = new Group();
+                    //TODO potrebbe non essere una cosa cattiva farlo dal costruttore
+
+                    //PER BLèKMIRKO, imposta tutti i valori e non solo il nome o si rompe tutto
+                    g.setId(rs.getInt("ID_GROUP"));
+                    g.setName(rs.getString("NAME"));
+                    g.setActive(rs.getBoolean("ACTIVE"));
+                    g.setOwner(rs.getInt("ID_OWNER"));
+                    g.setPublic(rs.getBoolean("IS_PUBLIC"));
+                    g.setLast_activity(rs.getTimestamp("last_activity"));
+                    groupList.add(g);
+                }
+            }
+            catch (SQLException sqlex)
+            {
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                        "Error while executing query or parsing result data", sqlex);
+            }
+            finally
+            {
+                if (rs != null)
+                {
+                    rs.close();
+                }
+            }
+        }
+        catch (SQLException | RuntimeException ex)
+        {
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    "Error while creating query or establishing database connection", ex);
+        }
+        finally
+        {
+            if (stm != null)
+            {
+                try
+                {
+                    stm.close();
+                }
+                catch (SQLException sex)
+                {
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                            "Error while closing connection", sex);
+                }
+            }
+        }
+        return groupList;
+    }
+    
+    
+    /**
      * Gets a List of Groups in which the user is owner.
      *
      * @param owner
@@ -406,6 +482,7 @@ public class DbHelper implements Serializable
                 {
                     usr = new User();
                     usr.setId(id_user);
+                    usr.setAvatar(rs.getString("avatar"));
                     usr.setPassword(rs.getString("password"));
                     usr.setUsername(rs.getString("username"));
                 }
@@ -477,6 +554,7 @@ public class DbHelper implements Serializable
                     usr.setUsername(rs.getString("username"));
                     usr.setEmail(rs.getString("email"));
                     usr.setAvatar(rs.getString("avatar"));
+                    usr.setIsmoderator(rs.getBoolean("ismoderator"));
                 }
             }
             catch (SQLException sqlex)
@@ -514,7 +592,7 @@ public class DbHelper implements Serializable
         }
         return usr;
     }
-
+    
     /**
      * Gets the Group associated with the id
      *

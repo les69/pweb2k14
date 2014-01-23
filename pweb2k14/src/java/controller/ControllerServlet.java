@@ -49,6 +49,7 @@ public class ControllerServlet extends HttpServlet {
         
         switch(operation)
         {
+            case "getModerator": forward(request, response, "/ModeratorServlet"); break;
             case "getInvites": forward(request, response, "/InviteServlet"); break;
             case "getAccount": forward(request, response, "/EditUserServlet"); break;
             case "getlogin": forward(request,response,"/login.jsp"); break;
