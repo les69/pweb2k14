@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.DbHelper;
 
 /**
  *
@@ -21,6 +22,12 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "PostServlet", urlPatterns = {"/PostServlet"})
 public class PostServlet extends HttpServlet {
 
+     private DbHelper helper;
+
+    @Override
+    public void init() throws ServletException {
+        this.helper = (DbHelper) super.getServletContext().getAttribute("dbmanager");
+    }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -33,18 +40,13 @@ public class PostServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet PostServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet PostServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        
+        int p = Integer.parseInt(request.getParameter("g"));
+        request.getSession().setAttribute("group", helper.getGroup(p));
+        request.getSession().setAttribute("postList", helper.getPostFromGroup(p));
+        
+        response.sendRedirect("/pweb2k14/Group/listPosts.jsp");
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

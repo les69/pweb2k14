@@ -25,14 +25,18 @@
         <title>Home Page</title>
     </head>
     <body>
-        <jsp:useBean id="username" class="model.User" scope="session" />
+        <jsp:useBean id="user" class="model.User" scope="session" />
         <c:set var="usr" value="${sessionScope.username}" />
         <%--<c:set var="groups" value="${sessionScope.updatedGroups}" /> --%>
         <% 
-            //user = (User) request.getSession().getAttribute("username");
-            if(username == null)
-                response.sendRedirect("/pweb2k14/login.jsp");
-            //String dateLogin = (String) request.getSession().getAttribute("last-login");
+            user = (User) request.getSession().getAttribute("username");
+            if(user == null)
+            {
+                user = new User();
+                user.setId(-1);
+                user.setUsername("Anonymous");
+                response.sendRedirect("/pweb2k14/login.jsp"); 
+            }
             HashMap updatedGroups = (HashMap) request.getSession().getAttribute("updatedGroups");
         
         %>
@@ -77,7 +81,7 @@
         <div class="row">
             
             <div class="col-lg-12" style="background-color: #fff;">
-                <h2>Welcome back!</h2>  Last login at <%= username.getFormatDate() %>
+                <h2>Welcome back!</h2>  Last login at <%= user.getFormatDate() %>
             <h4> What's hot?</h4>
             <%
                 if(updatedGroups != null && updatedGroups.size() > 0)

@@ -409,8 +409,13 @@ public class DbHelper implements Serializable
                 rs = stm.executeQuery();
                 while (rs.next())
                 {
-                    PostToShow pts = new PostToShow(rs.getString("DATE_POST"),
-                            rs.getString("message"), rs.getString("username"));
+                    //PostToShow pts = new PostToShow(rs.getString("DATE_POST"),
+                            //rs.getString("message"), rs.getString("username"));
+                    PostToShow pts = new PostToShow();
+                    pts.setAvatar(rs.getString("avatar"));
+                    pts.setDatePost(rs.getString("date_post"));
+                    pts.setMessage(rs.getString("message"));
+                    pts.setUsername(rs.getString("username"));
                     postList.add(pts);
                 }
             }

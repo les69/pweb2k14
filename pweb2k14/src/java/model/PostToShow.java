@@ -12,10 +12,7 @@ package model;
  */
 public class PostToShow {
 
-    public PostToShow(String _datePost, String _message, String _username) {
-        this._datePost = _datePost;
-        this._message = _message;
-        this._username = _username;
+    public PostToShow() {
     }
 
     public String getDatePost() {
@@ -47,4 +44,19 @@ public class PostToShow {
     private String _datePost;
     private String _message;
     private String _username;
+    private String _avatar;
+
+    /**
+     * @return the _avatar
+     */
+    public String getAvatar() {
+        return _avatar;
+    }
+
+    /**
+     * @param _avatar the _avatar to set
+     */
+    public void setAvatar(String _avatar) {
+        this._avatar = _avatar;
+    }
 }

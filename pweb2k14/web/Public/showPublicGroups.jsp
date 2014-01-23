@@ -69,7 +69,7 @@
                            <c:forEach items="${sessionScope.publicGroups}" var="group">
                                <tr>
                                    <td><c:out value="${group.id}" /></td>
-                                   <td><a href="/pweb2k14/CyberController?oper=showGroup&g=${group.id}"><c:out value="${group.name}" /></a></td>
+                                   <td><a href="/pweb2k14/CyberController?oper=getShowPost&g=${group.id}"><c:out value="${group.name}" /></a></td>
                                    <td><c:out value="${group.active}" /></td>
                                    <td><c:out value="${group.public}" /></td>
                                    <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${group.last_activity}" /></td>
