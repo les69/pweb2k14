@@ -54,6 +54,14 @@
         <servlet-name>NewGroupServlet</servlet-name>
         <servlet-class>controller.NewGroupServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditGroupServlet</servlet-name>
+        <servlet-class>controller.EditGroupServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SendInviteServlet</servlet-name>
+        <servlet-class>controller.SendInviteServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PasswordRecoverServlet</servlet-name>
         <url-pattern>/PassResetController</url-pattern>
@@ -121,6 +129,14 @@
     <servlet-mapping>
         <servlet-name>NewGroupServlet</servlet-name>
         <url-pattern>/NewGroupServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditGroupServlet</servlet-name>
+        <url-pattern>/EditGroupServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SendInviteServlet</servlet-name>
+        <url-pattern>/SendInviteServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
