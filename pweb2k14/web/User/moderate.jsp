@@ -130,9 +130,6 @@
 </body>
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#tableGroups').dataTable({"bPaginate": false});
-
-    });
         $('#tableGroups').dataTable({
             "bPaginate": false,
             "aoColumns": [ 
