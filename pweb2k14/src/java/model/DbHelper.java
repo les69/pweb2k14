@@ -1073,12 +1073,17 @@ public class DbHelper implements Serializable
                 throw new RuntimeException("Connection must be estabilished before a statement");
             }
 
-            stm = _connection.prepareStatement("INSERT INTO PWEB.POST (VISIBLE, DATE_POST, MESSAGE, ID_GROUP, ID_USER) VALUES (DEFAULT, CURRENT_TIMESTAMP, ?,?, ?)");
-            stm.setString(1, p.getMessage());
-            stm.setInt(2, p.getIdGroup());
-            stm.setInt(3, p.getIdUser());
+            stm = _connection.prepareStatement("INSERT INTO PWEB.POST (VISIBLE, DATE_POST, MESSAGE, ID_GROUP, ID_USER) VALUES (DEFAULT, ?, ?,?, ?)");
+            //use tmsptp tu mantain cohesistency between date_post in Post and last_activity in Grops
+            Timestamp tmstp = new Timestamp(new java.util.Date().getTime());
+            stm.setTimestamp(1, tmstp);
+            stm.setString(2, p.getMessage());
+            stm.setInt(3, p.getIdGroup());
+            stm.setInt(4, p.getIdUser());
 
             int res = stm.executeUpdate();
+            if(res > 0)
+                updateGroupActivity(p.getIdGroup(), tmstp);
 
             Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
                     "A new post has been added in group with ID {0}", p.getIdGroup());
@@ -2052,6 +2057,51 @@ public class DbHelper implements Serializable
             }
         }
         return groupList;
+    }
+    public void updateGroupActivity(int idGroup, Timestamp lastActivity)
+    {
+        PreparedStatement stm = null;
+        try
+        {
+            if (_connection == null || _connection.isClosed())
+            {
+                throw new RuntimeException("Connection must be estabilished before a statement");
+            }
+            stm = _connection.prepareStatement("Update PWEB.GROUPS SET last_activity=? where id_group=?");
+            stm.setTimestamp(1, lastActivity);
+            stm.setInt(2, idGroup);
+            try
+            {
+                stm.executeUpdate();
+                Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
+                    "Group renaming successful");
+            }
+            catch (SQLException sqlex)
+            {
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                        "Error while executing update query", sqlex);
+            }
+        }
+        catch (SQLException | RuntimeException ex)
+        {
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    "Error while creating query or establishing database connection", ex);
+        }
+        finally
+        {
+            if (stm != null)
+            {
+                try
+                {
+                    stm.close();
+                }
+                catch (SQLException sex)
+                {
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                            "Error while closing connection", sex);
+                }
+            }
+        }
     }
 
 }

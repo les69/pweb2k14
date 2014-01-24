@@ -207,7 +207,7 @@ public class ServletHelperClass {
                 }
             } else {
                 String hash = encryptPassword(m + g.getName()+usr.getUsername());
-                parsed = "<a href=\"DownloadServlet?file=" + hash + "&group=" + g.getId() + "\">" + m + "</a>";
+                parsed = "<a href=\"../CyberController?oper=getDownload&file=" + hash + "&group=" + g.getId() + "\">" + m + "</a>";
 
             }
             parsedStrings.add(parsed);

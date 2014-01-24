@@ -63,7 +63,7 @@ public class ControllerServlet extends HttpServlet {
             case "getPublicGroups":forward(request, response, "/ListPublicGroups"); break;
             case "getShowPost": forward(request, response, "/PostServlet"); break;
             case "getpost": forward(request,response,"/NotSupported.jsp"); break;
-            default: forward(request,response,"/NotSupported.jsp"); break;
+            default: forward(request,response,"/NotFound.jsp"); break;
         }
     }
 
@@ -94,7 +94,7 @@ public class ControllerServlet extends HttpServlet {
             case "doLogin": forward(request,response,"/Login"); break;
             case "addUser": forward(request, response, "/NewUserServlet"); break;
             case "getpost": forward(request,response,"/NotSupported.jsp"); break;
-            default: forward(request,response,"/NotSupported.jsp"); break;
+            default: forward(request,response,"/NotFound.jsp"); break;
         }
     }
 
