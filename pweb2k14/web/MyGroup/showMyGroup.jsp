@@ -95,7 +95,7 @@
                                    <td><c:out value="${group.active}" /></td>
                                    <td><c:out value="${group.public}" /></td>
                                    <td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${group.last_activity}" /></td>
-                                   <td><a href="/pweb2k14/CyberController?oper=getEditGroup&g=${group.id}">Edit</a></td>
+                                   <td><a href="/pweb2k14/CyberController?oper=getEditGroup&g=${group.id}">Manage</a></td>
                                </tr>
                             </c:forEach>
                       </tbody>

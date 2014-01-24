@@ -86,6 +86,7 @@ public class ControllerServlet extends HttpServlet {
         
         switch(operation)
         {            
+            case "doSendInvite": forward(request, response, "/SendInviteServlet"); break;
             case "doEditGroup": forward(request, response, "/EditGroupServlet"); break;
             case "doNewGroup" : forward(request, response, "/NewGroupServlet"); break;
             case "accRefInvite": forward(request, response, "/AccRecInviteServlet"); break;

@@ -76,8 +76,14 @@
                             <p class="form-control"><input type="checkbox" checked="<c:out value="${grp.public}" />" name="pubSelector" > Make this group public</p>
                             <button class="btn btn-lg btn-primary btn-block" type="submit">Confirm changes</button>
                         </form>
+                            <c:if test="${not empty param.succ}">
+                                <div class=" alert alert-success"><c:out value="${param.succ}" /></div>
+                            </c:if>
+                            <c:if test="${not empty param.err}">
+                                <div class=" alert alert-danger"><c:out value="${param.err}" /></div>
+                            </c:if>
                         <form class="form-group" role="form" method="post" action="../CyberController?oper=doSendInvite&g=<c:out value="${grp.id}" />">
-                            <h2 ></h2>
+                            <h3 >you can add multiple usernames by separating them with semicolon ';'</h3>
                             <input type="text" name="usrNames" class="form-control" placeholder="Send an invite to" required="" autofocus="">
                             <button class="btn btn-lg btn-primary btn-block" type="submit">Send invites!</button>
                         </form>

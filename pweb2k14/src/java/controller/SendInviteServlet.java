@@ -6,60 +6,29 @@
 
 package controller;
 
+import helpers.ServletHelperClass;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.DbHelper;
+import model.Group;
+import model.User;
 
 /**
  *
  * @author lorenzo
  */
 public class SendInviteServlet extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SendInviteServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SendInviteServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+private DbHelper helper;
+    
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    public void init() throws ServletException {
+        this.helper = (DbHelper) super.getServletContext().getAttribute("dbmanager");
     }
-
+    
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -71,7 +40,29 @@ public class SendInviteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        Integer id_group = Integer.parseInt(request.getParameter("g"));
+        String users = request.getParameter("usrNames");
+        Group g = helper.getGroup(id_group);
+        if(AddInvites(users.split(";"), g))
+            response.sendRedirect("MyGroup/editGroupForm.jsp?succ=Invite(s) have been sent successfully");
+        else
+            response.sendRedirect("MyGroup/editGroupForm.jsp?err=one or more of the invites could not be sent");
+
+    }
+    
+    private boolean AddInvites(String[] users, Group group)
+    {
+        boolean success = true;
+        User tmpUs = null;
+        for(String user : users )
+        {
+            tmpUs = helper.getUser(user.replaceAll(" ", ""));
+            if(tmpUs != null)
+                helper.addInvite(group, tmpUs);
+            else
+                success = false;
+        }
+        return success;
     }
 
     /**
