@@ -26,7 +26,7 @@ import model.User;
  *
  * @author lorenzo
  */
-public class InviteServlet extends HttpServlet {
+public class AccRecInviteServlet extends HttpServlet {
 
     private DbHelper helper;
 

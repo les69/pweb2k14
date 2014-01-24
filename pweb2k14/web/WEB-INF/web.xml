@@ -36,7 +36,7 @@
     </servlet>
     <servlet>
         <servlet-name>InviteServlet</servlet-name>
-        <servlet-class>controller.InviteServlet</servlet-class>
+        <servlet-class>controller.AccRecInviteServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ListMyGroupServlet</servlet-name>
@@ -49,6 +49,10 @@
     <servlet>
         <servlet-name>ModeratorServlet</servlet-name>
         <servlet-class>controller.ModeratorServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NewGroupServlet</servlet-name>
+        <servlet-class>controller.NewGroupServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PasswordRecoverServlet</servlet-name>
@@ -113,6 +117,10 @@
     <servlet-mapping>
         <servlet-name>ModeratorServlet</servlet-name>
         <url-pattern>/ModeratorServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewGroupServlet</servlet-name>
+        <url-pattern>/NewGroupServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

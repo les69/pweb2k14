@@ -1267,10 +1267,11 @@ public class DbHelper implements Serializable
             {
                 throw new RuntimeException("Connection must be estabilished before a statement");
             }
-            stm = _connection.prepareStatement("INSERT INTO PWEB.GROUPS(NAME,ACTIVE,ID_OWNER) VALUES (?, ?, ?)");
+            stm = _connection.prepareStatement("INSERT INTO PWEB.GROUPS(NAME,ACTIVE,IS_PUBLIC,ID_OWNER) VALUES (?, ?, ?, ?)");
             stm.setString(1, grp.getName());
             stm.setBoolean(2, true);
-            stm.setInt(3, grp.getOwner());
+            stm.setBoolean(3, grp.isPublic());
+            stm.setInt(4, grp.getOwner());
             int res = stm.executeUpdate();
             Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
                     "New group created successfully");
