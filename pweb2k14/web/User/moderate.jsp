@@ -85,7 +85,15 @@
 
            
                 <div class="col-lg-12" style="background-color: #fff;">
-                        <table id="tableGroups" class="dataTable table-striped">
+                    <h2>Moderate with moderation</h2>  
+
+                    <div class="panel panel-default">
+                  <!-- Default panel contents -->
+                  <div class="panel-heading">Moderators panel</div>
+                  <div class="panel-body">
+                    <p>This is the standard command center for moderators!</p>
+                  </div>
+                        <table id="tableGroups" class="dataTable table">
                             <thead><tr><th >Group name</th><th >Participants</th><th >Post number</th><th>Is a public group</th><th>Delete</th></tr></thead>
                             <tbody>
                                 <c:forEach var="gruppo" items="${allGroups}">
@@ -113,6 +121,8 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+        </div>
                 </div>
             </div>
         </div>
