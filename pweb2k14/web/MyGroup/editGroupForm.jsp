@@ -19,7 +19,7 @@
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="../bootstrap/js/bootstrap.min.js"></script>
 
-        <title>Group form</title>
+        <title>Group management</title>
     </head>
     <body>
         <jsp:useBean id="user" class="model.User" scope="session" />
@@ -70,17 +70,16 @@
                 <div class="col-lg-12" style="background-color: #fff;">
                     <h2>Please fill in the following form</h2>  
                     <div>
-                        <form class="form-group" role="form" method="post" action="../CyberController?oper=doShowMyGroup">
+                        <form class="form-group" role="form" method="post" action="../CyberController?oper=doEditGroup&g=<c:out value="${grp.id}" />">
                             <h2 >Edit group</h2>
-                            <input type="text" name="grpName" class="form-control" value="" placeholder="Group name" required="" autofocus="">
-                            <p class="form-control"><input type="checkbox" checked="" name="pubSelector" > Make this group public</p>
+                            <input type="text" name="grpName" class="form-control" value="<c:out value="${grp.name}" />" placeholder="Group name" required="" autofocus="">
+                            <p class="form-control"><input type="checkbox" checked="<c:out value="${grp.public}" />" name="pubSelector" > Make this group public</p>
                             <button class="btn btn-lg btn-primary btn-block" type="submit">Confirm changes</button>
                         </form>
-                        <form class="form-group" role="form" method="post" action="../CyberController?oper=doSendInvite">
+                        <form class="form-group" role="form" method="post" action="../CyberController?oper=doSendInvite&g=<c:out value="${grp.id}" />">
                             <h2 ></h2>
-                            <input type="text" name="grpName" class="form-control" placeholder="Group name" required="" autofocus="">
-                            <p class="form-control"><input type="checkbox" name="pubSelector" > Make this group public</p>
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">Confirm changes</button>
+                            <input type="text" name="usrNames" class="form-control" placeholder="Send an invite to" required="" autofocus="">
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Send invites!</button>
                         </form>
                     </div>
 

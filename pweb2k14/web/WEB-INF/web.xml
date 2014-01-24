@@ -56,7 +56,7 @@
     </servlet>
     <servlet>
         <servlet-name>EditGroupServlet</servlet-name>
-        <servlet-class>controller.EditGroupServlet</servlet-class>
+        <servlet-class>controller.ManageGroupServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SendInviteServlet</servlet-name>

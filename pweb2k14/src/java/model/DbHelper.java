@@ -1580,7 +1580,7 @@ public class DbHelper implements Serializable
      * @param idGroup
      * @param groupName
      */
-    public void updateGroup(int idGroup, String groupName)
+    public void updateGroup(int idGroup, String groupName, boolean isPublic)
     {
         PreparedStatement stm = null;
         try
@@ -1589,9 +1589,10 @@ public class DbHelper implements Serializable
             {
                 throw new RuntimeException("Connection must be estabilished before a statement");
             }
-            stm = _connection.prepareStatement("Update PWEB.GROUPS SET NAME=? where id_group=?");
+            stm = _connection.prepareStatement("Update PWEB.GROUPS SET NAME=?, IS_PUBLIC=? where id_group=?");
             stm.setString(1, groupName);
-            stm.setInt(2, idGroup);
+            stm.setBoolean(2, isPublic);
+            stm.setInt(3, idGroup);
             try
             {
                 stm.executeUpdate();
