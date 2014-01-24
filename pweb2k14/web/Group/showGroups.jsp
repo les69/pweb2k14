@@ -19,15 +19,27 @@
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="../bootstrap/js/bootstrap.min.js"></script>
         
-        <title>Home Page</title>
+        <title>Groups Page</title>
     </head>
     <body>
-        <jsp:useBean id="user" class="model.User" scope="session" />
-        <% 
-            user = (User) request.getSession().getAttribute("username");
-            if(user == null)
-                response.sendRedirect("/pweb2k14/login.jsp");        
-        %>
+         <c:set var="user" value="${sessionScope.username}" />
+
+        <c:choose>
+            <c:when test="${empty user}">
+                <%
+                    User usr = new User();
+                    usr.setAnonymous();
+                    pageContext.setAttribute("user", usr);
+                    response.sendRedirect("/pweb2k14/login.jsp"); 
+
+                %>
+             </c:when>
+             <c:otherwise>
+                <!-- Convert to c:if if not used -->
+             </c:otherwise>
+        </c:choose>
+        <div id="wrap">
+
         <div class="container">
         <div class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
@@ -44,12 +56,14 @@
             <li><a href="/pweb2k14/CyberController?oper=getMyGroups">My Groups</a></li>
             <li><a href="/pweb2k14/CyberController?oper=getGroups">Groups</a></li>
             <li><a href="/pweb2k14/CyberController?oper=getInvites">Invites</a></li>
-            
+            <c:if test="${user.ismoderator}">
+                <li><a href="/pweb2k14/CyberController?oper=getModerator">Moderate</a></li>
+            </c:if>
            
           </ul>
           <ul class="nav navbar-nav navbar-right">
              <li class="dropdown">
-                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= user.getUsername() %> <b class="caret"></b></a>
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <c:out value="${user.username}" /> <b class="caret"></b></a>
               <ul class="dropdown-menu">
               
                 <li class="dropdown-header">Account</li>
@@ -63,7 +77,6 @@
         </div><!--/.nav-collapse -->
       </div>
         
-        <div class="row">
             
             <div class="col-lg-12" style="background-color: #fff;">
                 <h2>The Groups you're following</h2>  

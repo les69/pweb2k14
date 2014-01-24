@@ -28,13 +28,23 @@
         <title>Moderate</title>
     </head>
     <body>
-        <jsp:useBean id="username" class="model.User" scope="session" />
-        
-        <%
-            if (username == null) {
-                response.sendRedirect("/pweb2k14/login.jsp");
-            }
-        %>
+        <c:set var="user" value="${sessionScope.username}" />
+
+        <c:choose>
+            <c:when test="${empty user}">
+                <%
+                    User usr = new User();
+                    usr.setAnonymous();
+                    pageContext.setAttribute("user", usr);
+                    response.sendRedirect("/pweb2k14/login.jsp"); 
+
+                %>
+             </c:when>
+             <c:otherwise>
+                <!-- Convert to c:if if not used -->
+             </c:otherwise>
+        </c:choose>
+        <div id="wrap">
         <div class="container">
             <div class="navbar navbar-default" role="navigation">
                 <div class="navbar-header">
@@ -73,11 +83,8 @@
                 </div><!--/.nav-collapse -->
             </div>
 
-            <div class="row">
-
+           
                 <div class="col-lg-12" style="background-color: #fff;">
-                    <h2>Welcome back!</h2>  Last login at <%= username.getFormatDate()%>
-                    <div class="container">
                         <table id="tableGroups" class="dataTable table-striped">
                             <thead><tr><th >Group name</th><th >Participants</th><th >Post number</th><th>Is a public group</th><th>Delete</th></tr></thead>
                             <tbody>

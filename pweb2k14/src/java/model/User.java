@@ -22,6 +22,7 @@ public class User {
     private Timestamp _lastLogin;
     private String _email;
     private boolean _ismoderator;
+    private String _formatDate;
 
     /**
      * @return the _id
@@ -123,6 +124,16 @@ public class User {
     public String getFormatDate()
     {
         return ServletHelperClass.formatDate(_lastLogin);
+    }
+    public void setAnonymous()
+    {
+        //This is only to allow the page to be redirected correctly
+        this.setId(-1);
+        this.setUsername("Anonymous");
+        this.setIsmoderator(false);
+        this.setLastLogin(new java.sql.Timestamp(0));
+        this.setAvatar("");
+        this.setPassword("");
     }
     
 }

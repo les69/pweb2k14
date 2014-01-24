@@ -5,7 +5,7 @@
 --%>
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page import="model.User" %>
 <%@page import="model.Group" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -22,17 +22,19 @@
         <title>Post Page</title>
     </head>
     <body>
-        <jsp:useBean id="user" class="model.User" scope="session" />
-        <% 
-            user = (User) request.getSession().getAttribute("username");
-            if(user == null)
-            {
-                user = new User();
-                user.setId(-1);
-                user.setUsername("Anonymous");
-            }
-        %>
-
+        <c:set var="user" value="${sessionScope.username}" />
+        <c:choose>
+            <c:when test="${empty user}">
+                <%
+                    User usr = new User();
+                    usr.setAnonymous();
+                    pageContext.setAttribute("user", usr);
+                %>
+             </c:when>
+             <c:otherwise>
+             </c:otherwise>
+        </c:choose>
+        <div id="wrap">
         <div class="container">
         <div class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
@@ -54,21 +56,20 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
              <li class="dropdown">
-                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <jsp:getProperty name="user" property="username" /> <b class="caret"></b></a>
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <c:out value="${user.username}" /><b class="caret"></b></a>
               <ul class="dropdown-menu">
-              
+              <c:if test="${user.username != 'Anonymous'}" >
                 <li class="dropdown-header">Account</li>
                 <li class="divider"></li>
                 <li><a href="/pweb2k14/CyberController?oper=getAccount">User settings</a></li>
                 <li><a href="/pweb2k14/CyberController?oper=getlogout">Log out</a></li>
-
+              </c:if>
               </ul>
             </li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
         
-        <div class="row">
             
             <div class="col-lg-12" style="background-color: #fff;">
                 <h2>Some Posts</h2>  
@@ -88,20 +89,28 @@
                                   <c:out value="${post.message}" />
                               </div>
                          </div>
-                        
+                            
                     </c:forEach>
-
-                </div>
-                    <c:if test="${usr.username != 'Anonymous'}" >
-                       <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="location.href='/pweb2k14/CyberController?oper=getNewPost'" >New Post</button>
-
-                    </c:if>
+                    </div>
+                    
+                
+                    
       </div>
                 
                
      
+        
+        <div class="col-lg-2" style="margin-bottom: 10px;">
+            <c:if test="${group.active && user.username != 'Anonymous'}" >
+              <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="location.href='/pweb2k14/CyberController?oper=getNewPost'" >New Post</button>
+           </c:if>
         </div>
+        <div class="col-lg-2">
+            <c:if test="${group.active && user.ismoderator}" >
+               <button class="btn btn-lg btn-danger btn-block" type="submit" onclick="location.href='/pweb2k14/CyberController?oper=getCloseThread'" >Close</button>
+            </c:if>  
         </div>
+                    </div>
         </div>
        
     </body>
