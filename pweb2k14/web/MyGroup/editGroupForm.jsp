@@ -70,11 +70,17 @@
                 <div class="col-lg-12" style="background-color: #fff;">
                     <h2>Please fill in the following form</h2>  
                     <div>
-                        <form class="form-group" role="form" method="post" action="../CyberController?oper=doNewGroup">
-                            <h2 >New group</h2>
+                        <form class="form-group" role="form" method="post" action="../CyberController?oper=doShowMyGroup">
+                            <h2 >Edit group</h2>
+                            <input type="text" name="grpName" class="form-control" value="" placeholder="Group name" required="" autofocus="">
+                            <p class="form-control"><input type="checkbox" checked="" name="pubSelector" > Make this group public</p>
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Confirm changes</button>
+                        </form>
+                        <form class="form-group" role="form" method="post" action="../CyberController?oper=doSendInvite">
+                            <h2 ></h2>
                             <input type="text" name="grpName" class="form-control" placeholder="Group name" required="" autofocus="">
                             <p class="form-control"><input type="checkbox" name="pubSelector" > Make this group public</p>
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">Add group</button>
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Confirm changes</button>
                         </form>
                     </div>
 
