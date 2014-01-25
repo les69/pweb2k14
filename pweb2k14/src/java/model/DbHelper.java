@@ -1282,7 +1282,8 @@ public class DbHelper implements Serializable
             stm.setBoolean(3, grp.isPublic());
             stm.setInt(4, grp.getOwner());
             int res = stm.executeUpdate();
-            addUserToGroup(grp, grp.getOwner());
+            
+            addUserToGroup(this.getGroup(grp.getName()), grp.getOwner());
             Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
                     "New group created successfully");
         }

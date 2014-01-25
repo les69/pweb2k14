@@ -38,8 +38,16 @@ public class ListPublicGroups extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getSession().setAttribute("publicGroups", helper.getPublicGroups());
-        response.sendRedirect("/pweb2k14/Public/showPublicGroups.jsp");
+        
+        if(helper ==  null)
+        {
+            response.sendRedirect("../NotFound.jsp");
+        }
+        else
+        {
+            request.getSession().setAttribute("publicGroups", helper.getPublicGroups());
+            response.sendRedirect("/pweb2k14/Public/showPublicGroups.jsp");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

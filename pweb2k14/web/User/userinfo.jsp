@@ -3,7 +3,7 @@
     Created on : Jan 21, 2014, 4:55:43 PM
     Author     : lorenzo
 --%>
-
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="model.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -18,9 +18,22 @@
         <title>Info Page</title>
     </head>
     <body>
-        <%
-            User user = (User) request.getSession().getAttribute("username");
-        %>
+        <c:set var="user" value="${sessionScope.username}" />
+
+        <c:choose>
+            <c:when test="${empty user}">
+                <%
+                    User usr = new User();
+                    usr.setAnonymous();
+                    pageContext.setAttribute("user", usr);
+                    response.sendRedirect("/pweb2k14/login.jsp"); 
+
+                %>
+             </c:when>
+             <c:otherwise>
+                <!-- Convert to c:if if not used -->
+             </c:otherwise>
+        </c:choose>
         <div id="wrap">
         <div class="container">
             <div class="navbar navbar-default" role="navigation">
@@ -31,19 +44,21 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Web Programming v2.0</a>
+                    <a class="navbar-brand" href="/pweb2k14/CyberController?oper=getHome">Web Programming v2.0</a>
                 </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="#">My Groups</a></li>
-                        <li><a href="#">Groups</a></li>
-                        <li><a href="#">Invites</a></li>
+                     <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                          <li><a href="/pweb2k14/CyberController?oper=getMyGroups">My Groups</a></li>
+                          <li><a href="/pweb2k14/CyberController?oper=getGroups">Groups</a></li>
+                          <li><a href="/pweb2k14/CyberController?oper=getInvites">Invites</a></li>
 
-
+                          <c:if test="${user.ismoderator}">
+                              <li><a href="/pweb2k14/CyberController?oper=getModerator">Moderate</a></li>
+                          </c:if>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= user.getUsername()%> <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><c:out value="${user.username}" /> <b class="caret"></b></a>
                             <ul class="dropdown-menu">
 
                                 <li class="dropdown-header">Account</li>
@@ -68,15 +83,15 @@
                     %>
                     <p>Here you can change your settings such as password and avatar</p>
 
-                    <h3>Settings for user <% out.println(user.getUsername());%></h3>
+                    <h3>Settings for user <c:out value="${user.username}" /></h3>
                     <form  action="../CyberController?oper=editAccount" enctype="multipart/form-data" method="post" role="form" class="form-group">
                         <p class="text-left form-control-static">
                             Your avatar:<br>
 
-                            <img width="240" src="<% out.println("../uploads/Avatars/" + user.getAvatar()); %>" alt="Your avatar" />
+                            <img width="240" src="../uploads/Avatars/${user.avatar}" alt="Your avatar" />
                             <input class="form-control" type="file" name="avatar">
                             <br>
-                            email: <% out.println(user.getEmail());%>
+                            email: <c:out value="${user.email}" />
                             <br>
                             New password<br>
                             <input class="form-control" type="password" name="newpass"> 

@@ -102,7 +102,7 @@
         
         <div class="col-lg-2" style="margin-bottom: 10px;">
             <c:if test="${group.active && user.username != 'Anonymous'}" >
-              <button class="btn  btn-primary " type="submit" onclick="location.href='../CyberController?oper=getNewPost'" >New Post</button>
+              <button class="btn  btn-primary " type="submit" onclick="location.href='../CyberController?oper=createPost'" >New Post</button>
            </c:if>
         </div>
         <div class="col-lg-2">

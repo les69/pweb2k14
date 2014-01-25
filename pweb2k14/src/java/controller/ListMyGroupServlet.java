@@ -42,9 +42,12 @@ public class ListMyGroupServlet extends HttpServlet {
         User usr = ServletHelperClass.getUserFromSession(request);
         
         if(usr == null)
-            response.sendRedirect("../login.jsp");
-        request.getSession().setAttribute("myGroup", helper.getGroupsByOwner(usr));
-        response.sendRedirect("/pweb2k14/MyGroup/showMyGroup.jsp");
+            response.sendRedirect("/pweb2k14/login.jsp");
+        else
+        {
+            request.getSession().setAttribute("myGroup", helper.getGroupsByOwner(usr));
+            response.sendRedirect("/pweb2k14/MyGroup/showMyGroup.jsp");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

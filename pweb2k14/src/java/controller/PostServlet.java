@@ -41,11 +41,21 @@ public class PostServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        int p = Integer.parseInt(request.getParameter("g"));
-        request.getSession().setAttribute("group", helper.getGroup(p));
-        request.getSession().setAttribute("postList", helper.getPostFromGroup(p));
         
-        response.sendRedirect("/pweb2k14/Group/listPosts.jsp");
+        
+        if(helper == null || request.getParameter("g") == null)
+        {
+            response.sendRedirect("../NotFound.jsp");
+        }
+        else
+        {
+            int p = Integer.parseInt(request.getParameter("g"));
+            request.getSession().setAttribute("group", helper.getGroup(p));
+            request.getSession().setAttribute("postList", helper.getPostFromGroup(p));
+            response.sendRedirect("/pweb2k14/Group/listPosts.jsp");
+
+        }
+        
         
     }
 
