@@ -102,12 +102,12 @@
         
         <div class="col-lg-2" style="margin-bottom: 10px;">
             <c:if test="${group.active && user.username != 'Anonymous'}" >
-              <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="location.href='../CyberController?oper=getNewPost'" >New Post</button>
+              <button class="btn  btn-primary " type="submit" onclick="location.href='../CyberController?oper=getNewPost'" >New Post</button>
            </c:if>
         </div>
         <div class="col-lg-2">
             <c:if test="${group.active && user.ismoderator}" >
-               <button class="btn btn-lg btn-danger btn-block" type="submit" onclick="location.href='../CyberController?oper=doModerate&g=<c:out value="${group.id}" />'" >Close</button>
+               <button class="btn  btn-danger " type="submit" onclick="location.href='../CyberController?oper=doModerate&g=<c:out value="${group.id}" />'" >Close</button>
             </c:if>  
         </div>
                     </div>

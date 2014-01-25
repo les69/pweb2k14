@@ -22,12 +22,23 @@
         <title>MyGroup Page</title>
     </head>
     <body>
-        <jsp:useBean id="user" class="model.User" scope="session" />
-        <% 
-            user = (User) request.getSession().getAttribute("username");
-            if(user == null)
-                response.sendRedirect("/pweb2k14/login.jsp");        
-        %>
+    <c:set var="user" value="${sessionScope.username}" />
+
+        <c:choose>
+            <c:when test="${empty user}">
+                <%
+                    User usr = new User();
+                    usr.setAnonymous();
+                    pageContext.setAttribute("user", usr);
+                    response.sendRedirect("../login.jsp"); 
+
+                %>
+             </c:when>
+             <c:otherwise>
+                <!-- Convert to c:if if not used -->
+             </c:otherwise>
+        </c:choose>
+        <div id="wrap">
         <div class="container">
         <div class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
@@ -49,7 +60,7 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
              <li class="dropdown">
-                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= user.getUsername() %> <b class="caret"></b></a>
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <c:out value="${user.username}" /> <b class="caret"></b></a>
               <ul class="dropdown-menu">
               
                 <li class="dropdown-header">Account</li>
@@ -63,7 +74,7 @@
         </div><!--/.nav-collapse -->
       </div>
         
-        <div class="row">
+        
             
             <div class="col-lg-12" style="background-color: #fff;">
                 <h2>The Groups where you're Admin</h2>  
@@ -100,9 +111,10 @@
                             </c:forEach>
                       </tbody>
                   </table>
-                          <button class="btn btn-lg btn-primary btn-block" type="submit" onclick="location.href='/pweb2k14/CyberController?oper=getNewGroup'" >New Group</button>
-
+                         
                 </div>
+                <button style="margin-bottom: 10px" class="btn btn-primary " type="submit" onclick="location.href='/pweb2k14/CyberController?oper=getNewGroup'" >New Group</button>
+
               
         </div>
 

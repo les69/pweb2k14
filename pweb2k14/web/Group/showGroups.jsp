@@ -30,7 +30,7 @@
                     User usr = new User();
                     usr.setAnonymous();
                     pageContext.setAttribute("user", usr);
-                    response.sendRedirect("/pweb2k14/login.jsp"); 
+                    response.sendRedirect("../login.jsp"); 
 
                 %>
              </c:when>

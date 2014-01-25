@@ -37,7 +37,7 @@ public class LoginFilter implements Filter {
     private FilterConfig filterConfig = null;
 
     public LoginFilter() {
-        exclusions = new ArrayList<>(Arrays.asList("bootstrap","Public","listPosts.jsp","index.jsp","CyberController","NotSupported.jsp","NotFound.jsp","NotSupported.jsp"));
+        exclusions = new ArrayList<>(Arrays.asList("bootstrap","Public","listPosts.jsp","","NotSupported.jsp","NotFound.jsp","NotSupported.jsp"));
 
     }
 

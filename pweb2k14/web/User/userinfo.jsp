@@ -15,12 +15,13 @@
         <link href="../bootstrap/css/pages.css" type="text/css" rel="stylesheet" />
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="../bootstrap/js/bootstrap.min.js"></script>
-        <title>JSP Page</title>
+        <title>Info Page</title>
     </head>
     <body>
         <%
             User user = (User) request.getSession().getAttribute("username");
         %>
+        <div id="wrap">
         <div class="container">
             <div class="navbar navbar-default" role="navigation">
                 <div class="navbar-header">
@@ -56,7 +57,6 @@
                 </div><!--/.nav-collapse -->
             </div>
 
-            <div class="row">
 
                 <div class="col-lg-12" style="background-color: #fff;">
                     <h2>Welcome to you settings!</h2>  
