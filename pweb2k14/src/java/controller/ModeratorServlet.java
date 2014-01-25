@@ -46,7 +46,7 @@ public class ModeratorServlet extends HttpServlet
     {
         //re-makes get to prevent users from changing ismoderator value in the session
         if(!helper.getUser(usr.getUsername()).isIsmoderator())
-            response.sendRedirect("/NotSupported.jsp");
+            response.sendRedirect("../NotSupported.jsp");
                    
     }
 

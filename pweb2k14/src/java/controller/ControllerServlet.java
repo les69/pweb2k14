@@ -43,7 +43,7 @@ public class ControllerServlet extends HttpServlet {
         
         String operation = request.getParameter("oper");
         if(operation == null)
-            forward(request,response,"/login.jsp");
+            forward(request,response,"/NotFound.jsp");
         
         SetUpDBConnection();
         

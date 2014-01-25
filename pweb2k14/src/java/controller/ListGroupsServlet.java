@@ -42,10 +42,10 @@ public class ListGroupsServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
          User usr = ServletHelperClass.getUserFromSession(request);
          if (usr == null) {
-                  response.sendRedirect("/NotSupported.jsp");
+                  response.sendRedirect("../login.jsp");
          }
         if (this.helper == null) {
-            response.sendRedirect("/NotSupported.jsp");
+            response.sendRedirect("../NotSupported.jsp");
             }
         //List<Group> groups = helper.getUserGroups(usr);
         request.getSession().setAttribute("groups", helper.getUserGroups(usr));

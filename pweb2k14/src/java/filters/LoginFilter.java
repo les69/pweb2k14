@@ -37,7 +37,7 @@ public class LoginFilter implements Filter {
     private FilterConfig filterConfig = null;
 
     public LoginFilter() {
-        exclusions = new ArrayList<>(Arrays.asList("bootstrap"));
+        exclusions = new ArrayList<>(Arrays.asList("bootstrap","Public","listPosts.jsp","index.jsp","CyberController","NotSupported.jsp","NotFound.jsp","NotSupported.jsp"));
 
     }
 
@@ -128,12 +128,11 @@ public class LoginFilter implements Filter {
             String uri = ((HttpServletRequest) request).getRequestURI();
             if (!isPathExcluded(uri)) {
                 if (!isUserLogged((HttpServletRequest) request)) {
-                    //change if adding control to login servlet
-                    if (!((HttpServletRequest) request).getRequestURI().contains("login.jsp")) {
+                    if (!uri.contains("login.jsp")) {
                         ((HttpServletResponse) response).sendRedirect("/pweb2k14/login.jsp");
                     }
                 } else {
-                    if (((HttpServletRequest) request).getRequestURI().contains("login.jsp")) {
+                    if (uri.contains("login.jsp")) {
                         ((HttpServletResponse) response).sendRedirect("/pweb2k14/User/home.jsp");
                     }
                 }

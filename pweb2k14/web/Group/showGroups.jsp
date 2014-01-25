@@ -22,7 +22,7 @@
         <title>Groups Page</title>
     </head>
     <body>
-         <c:set var="user" value="${sessionScope.username}" />
+        <c:set var="user" value="${sessionScope.username}" />
 
         <c:choose>
             <c:when test="${empty user}">

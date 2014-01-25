@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.DbHelper;
+import model.User;
 
 /**
  *
@@ -38,8 +39,11 @@ public class ListMyGroupServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        User usr = ServletHelperClass.getUserFromSession(request);
         
-        request.getSession().setAttribute("myGroup", helper.getGroupsByOwner(ServletHelperClass.getUserFromSession(request)));
+        if(usr == null)
+            response.sendRedirect("../login.jsp");
+        request.getSession().setAttribute("myGroup", helper.getGroupsByOwner(usr));
         response.sendRedirect("/pweb2k14/MyGroup/showMyGroup.jsp");
     }
 
