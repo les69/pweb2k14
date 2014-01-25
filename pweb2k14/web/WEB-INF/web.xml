@@ -70,6 +70,16 @@
         <servlet-name>PostServlet</servlet-name>
         <servlet-class>controller.PostServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>NewPostServlet</servlet-name>
+        <servlet-class>controller.NewPostServlet</servlet-class>
+        <multipart-config>
+            <location>/tmp</location>
+            <max-file-size>20848820</max-file-size>
+            <max-request-size>418018841</max-request-size>
+            <file-size-threshold>1048576</file-size-threshold>
+        </multipart-config>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PasswordRecoverServlet</servlet-name>
         <url-pattern>/PassResetController</url-pattern>
@@ -153,6 +163,10 @@
     <servlet-mapping>
         <servlet-name>PostServlet</servlet-name>
         <url-pattern>/Group/PostServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewPostServlet</servlet-name>
+        <url-pattern>/Group/NewPost</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

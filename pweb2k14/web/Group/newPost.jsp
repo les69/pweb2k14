@@ -85,8 +85,10 @@
                             Upload a file:<br>
                             <input class="form-control" type="file" name="avatar">
                             <br>
-     
-                             
+                            <c:set var="group" value="${sessionScope.group}" />
+                            <c:if test="${!empty group}" >
+                                <input type="hidden" value="${group.id}" name="group" />
+                            </c:if>
                         </p>
 
                         <p>
