@@ -55,7 +55,7 @@ public class ControllerServlet extends HttpServlet {
             case "getModerator": forward(request, response, "/ModeratorServlet"); break;
             case "getInvites": forward(request, response, "/InviteServlet"); break;
             case "getAccount": forward(request, response, "/EditUserServlet"); break;
-            case "getlogin": forward(request,response,"../login.jsp"); break;
+            case "getlogin": forward(request,response,"/login.jsp"); break;
             case "getlogout": forward(request,response,"/Logout"); break;
             case "getHome": response.sendRedirect("/pweb2k14/User/home.jsp");  break;
             case "getGroups": forward(request, response, "/ListGroups"); break;
@@ -63,8 +63,8 @@ public class ControllerServlet extends HttpServlet {
             case "getPublicGroups":forward(request, response, "/ListPublicGroups"); break;
             case "getShowPost":forward(request, response, "/Group/PostServlet"); break;
             case "createPost": response.sendRedirect("/pweb2k14/Group/newPost.jsp");break;
-            case "getpost": forward(request,response,"../NotSupported.jsp"); break;
-            default: forward(request,response,"../NotFound.jsp"); break;
+            case "getpost": forward(request,response,"/NotSupported.jsp"); break;
+            default: forward(request,response,"/NotFound.jsp"); break;
         }
     }
 
@@ -95,6 +95,7 @@ public class ControllerServlet extends HttpServlet {
             case "doLogin": forward(request,response,"/Login"); break;
             case "addUser": forward(request, response, "/NewUserServlet"); break;
             case "getpost": forward(request,response,"/NotSupported.jsp"); break;
+            case "newPost": forward(request, response, "/Group/NewPost");break;
             default: forward(request,response,"/NotFound.jsp"); break;
         }
     }

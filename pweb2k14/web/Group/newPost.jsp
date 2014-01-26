@@ -77,13 +77,13 @@
                     <h2>Add a new Post!</h2>  
                     <p>Here you can add a new message and upload a file!</p>
 
-                    <form  action="../CyberController?oper=newPost" enctype="multipart/form-data" method="post" role="form" class="form-group">
+                    <form  action="/pweb2k14/CyberController?oper=newPost" enctype="multipart/form-data" method="post" role="form" class="form-group">
                         <p class="text-left form-control-static">
                             Message Text<br>
                             <input class="form-control" type="text" name="message">
                             <br/>
                             Upload a file:<br>
-                            <input class="form-control" type="file" name="avatar">
+                            <input class="form-control" type="file" name="uploadFile">
                             <br>
                             <c:set var="group" value="${sessionScope.group}" />
                             <c:if test="${!empty group}" >

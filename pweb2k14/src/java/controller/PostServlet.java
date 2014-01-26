@@ -45,7 +45,7 @@ public class PostServlet extends HttpServlet {
         
         if(helper == null || request.getParameter("g") == null)
         {
-            response.sendRedirect("../NotFound.jsp");
+            response.sendRedirect("/NotFound.jsp");
         }
         else
         {

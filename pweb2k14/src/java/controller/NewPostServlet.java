@@ -5,6 +5,7 @@
  */
 package controller;
 
+import helpers.FileManager;
 import model.DbHelper;
 import model.User;
 import java.io.IOException;
@@ -14,8 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import helpers.ServletHelperClass;
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import model.Group;
 import model.Post;
 import java.io.File;
@@ -23,19 +22,18 @@ import java.rmi.ServerException;
 import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author Lorenzo
  */
-public class NewPostServlet extends HttpServlet
-{
+public class NewPostServlet extends HttpServlet {
 
     private DbHelper helper;
 
     @Override
-    public void init() throws ServletException
-    {
+    public void init() throws ServletException {
         this.helper = (DbHelper) super.getServletContext().getAttribute("dbmanager");
     }
 
@@ -49,8 +47,7 @@ public class NewPostServlet extends HttpServlet
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
 
     }
 
@@ -65,8 +62,7 @@ public class NewPostServlet extends HttpServlet
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         processRequest(request, response);
 
     }
@@ -81,73 +77,47 @@ public class NewPostServlet extends HttpServlet
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try
-        {
-            PrintWriter out = response.getWriter();
-
-            User usr = helper.getUser(ServletHelperClass.getUsername(request, false));
-            String relativeWebPath = "../uploads";
-            Integer maxSize = Integer.parseInt((String) getServletConfig().getInitParameter("maxLengthSize"));
+   
+            User usr = ServletHelperClass.getUserFromSession(request);
+            String relativeWebPath = "/uploads/";
 
             checkPath(relativeWebPath);
             String absoluteFilePath = getServletContext().getRealPath(relativeWebPath) + File.separator;
 
-            try
-            {
-                MultipartRequest multi = new MultipartRequest(request, absoluteFilePath, maxSize, "utf-8", new DefaultFileRenamePolicy());
-
-                String group = (String) multi.getParameter("group");
+            try {
+                String group = (String) request.getParameter("group");
 
                 Group g = helper.getGroup(Integer.parseInt(group));
-                if (g == null)
-                {
-                    throw new ServerException("Bad Error: group is null");
+                if (g == null) {
+                    response.sendRedirect("/NotAllowed.jsp");
+                    return;
                 }
                 absoluteFilePath += g.getName();
                 checkPath(absoluteFilePath);
 
-                Enumeration file_list = multi.getFileNames();
+                Part part = request.getPart("uploadFile");
+                if (part.getSize() > 0) {
+                    String fileName = FileManager.getFileName(part);
 
-                while (file_list.hasMoreElements())
-                {
-                    String name = (String) file_list.nextElement();
-                    String filename = multi.getFilesystemName(name);
-                    String originalname = multi.getOriginalFileName(name);
-                    String type = multi.getContentType(name);
-                    File f = multi.getFile(name);
-
-                    if (f == null)
-                    {
-                        continue;
-                    }
-                    if (helper.isAGroupFile(g, originalname) != null)
-                    {
-                        out.println("<h1>This file already exists</h1><br/><h6>Your post was not submitted.</h6>");
-                        out.println("<a href=\"PostServlet?group=" + g.getId() + "\">Come back to post list</a>");
-                        f.delete();
+                    if (helper.isAGroupFile(g, fileName) != null) {
+                        //TODO redirect to error page
+                       // out.println("<h1>This file already exists</h1><br/><h6>Your post was not submitted.</h6>");
+                       // out.println("<a href=\"PostServlet?group=" + g.getId() + "\">Come back to post list</a>");
+                        response.sendRedirect("/pweb2k14/Group/listPosts.jsp");
                         return;
                     }
-                    String hash = ServletHelperClass.encryptPassword(originalname + g.getName() + usr.getUsername());
-                    File renameFile = new File(absoluteFilePath + "/" + hash);
-                    if (!renameFile.exists())
-                    {
-                        f.renameTo(renameFile);
-                    }
+                    String hash = FileManager.SaveFile(part, g.getName(), usr.getUsername(), absoluteFilePath, response, helper);
                     model.FileDB file = new model.FileDB();
                     file.setHashed_name(hash);
-                    file.setType(type);
-                    file.setOriginal_name(originalname);
+                    file.setType(fileName.substring(fileName.lastIndexOf('.')));
+                    file.setOriginal_name(fileName);
                     file.setId_user(usr.getId());
                     file.setId_group(g.getId());
                     helper.addFile(file);
                 }
-
-                Enumeration params = multi.getParameterNames();
-
-                String text = (String) multi.getParameter("text");
+                String text = (String) request.getParameter("message");
 
                 String message = ServletHelperClass.parseText(g, text, helper);
                 Post p = new Post();
@@ -156,23 +126,18 @@ public class NewPostServlet extends HttpServlet
                 p.setMessage(message);
                 helper.addPost(p);
 
-                //response.sendRedirect("PostServlet?g="+g.getId());
-                request.getRequestDispatcher("/Group/PostServlet?group=" + g.getId()).forward(request, response);
+                //request.getRequestDispatcher("/CyberController?oper=getShowPost&g="+g.getId()).forward(request, response);
+                request.getSession().setAttribute("postList", helper.getPostFromGroup(g.getId()));
+                response.sendRedirect("/pweb2k14/Group/listPosts.jsp");
 
-            }
-            catch (IOException ioex)
-            {
-                Logger.getLogger(getClass().getName()).log(Level.SEVERE, 
+            } catch (IOException ioex) {
+                Logger.getLogger(getClass().getName()).log(Level.SEVERE,
                         "Error while saving file to disk", ioex);
 
             }
 
-        }
-        catch (IOException | NumberFormatException | ServletException ex)
-        {
-            Logger.getLogger(getClass().getName()).severe(ex.toString());
-
-        }
+ 
+        
     }
 
     /**
@@ -181,17 +146,14 @@ public class NewPostServlet extends HttpServlet
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo()
-    {
+    public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
 
-    private void checkPath(String path)
-    {
+    private void checkPath(String path) {
         File dir = new File(path);
 
-        if (!dir.exists())
-        {
+        if (!dir.exists()) {
             dir.mkdir();
         }
     }
