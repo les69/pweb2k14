@@ -27,15 +27,12 @@
     <body>
         <jsp:useBean id="user" class="model.User" scope="session" />
         <c:set var="usr" value="${sessionScope.username}" />
-        <%--<c:set var="groups" value="${sessionScope.updatedGroups}" /> --%>
-        <% 
-            user = (User) request.getSession().getAttribute("username");
-            if(user == null)
-                response.sendRedirect("/pweb2k14/login.jsp");
-            //String dateLogin = (String) request.getSession().getAttribute("last-login");
-            HashMap updatedGroups = (HashMap) request.getSession().getAttribute("updatedGroups");
         
-        %>
+        <%--<c:set var="groups" value="${sessionScope.updatedGroups}" /> --%>
+        <c:if test="${empty sessionScope.username.username}">
+            <c:redirect url="/login.jsp" />
+        </c:if>
+        
         <div class="container">
         <div class="navbar navbar-default" role="navigation">
         <div class="navbar-header">

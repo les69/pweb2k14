@@ -22,14 +22,12 @@
         <title>Group form</title>
     </head>
     <body>
-        <jsp:useBean id="user" class="model.User" scope="session" />
+        
         <jsp:useBean id="grp" class="model.Group" scope="session" />
-        <%
-            user = (User) request.getSession().getAttribute("username");
-            if (user == null) {
-                response.sendRedirect("/pweb2k14/login.jsp");
-            }
-        %>
+        
+        <c:if test="${empty sessionScope.username.username}">
+            <c:redirect url="/login.jsp" />
+        </c:if>
         <div class="container">
             <div class="navbar navbar-default" role="navigation">
                 <div class="navbar-header">
@@ -51,7 +49,7 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= user.getUsername()%> <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <c:out value="${sessionScope.username.username}" /><b class="caret"> </b></a>
                             <ul class="dropdown-menu">
 
                                 <li class="dropdown-header">Account</li>
