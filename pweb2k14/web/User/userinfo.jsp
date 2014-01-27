@@ -23,52 +23,49 @@
             <c:redirect url="/login.jsp" />
         </c:if>
         <div id="wrap">
-        <div class="container">
-            <div class="navbar navbar-default" role="navigation">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="/pweb2k14/CyberController?oper=getHome">Web Programming v2.0</a>
-                </div>
-                     <div class="navbar-collapse collapse">
+            <div class="container">
+                <div class="navbar navbar-default" role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="/pweb2k14/CyberController?oper=getHome">Web Programming v2.0</a>
+                    </div>
+                    <div class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                          <li><a href="/pweb2k14/CyberController?oper=getMyGroups">My Groups</a></li>
-                          <li><a href="/pweb2k14/CyberController?oper=getGroups">Groups</a></li>
-                          <li><a href="/pweb2k14/CyberController?oper=getInvites">Invites</a></li>
+                            <li><a href="/pweb2k14/CyberController?oper=getMyGroups">My Groups</a></li>
+                            <li><a href="/pweb2k14/CyberController?oper=getGroups">Groups</a></li>
+                            <li><a href="/pweb2k14/CyberController?oper=getInvites">Invites</a></li>
 
-                          <c:if test="${user.ismoderator}">
-                              <li><a href="/pweb2k14/CyberController?oper=getModerator">Moderate</a></li>
-                          </c:if>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><c:out value="${user.username}" /> <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
+                            <c:if test="${user.ismoderator}">
+                                <li><a href="/pweb2k14/CyberController?oper=getModerator">Moderate</a></li>
+                                </c:if>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><c:out value="${user.username}" /> <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
 
-                                <li class="dropdown-header">Account</li>
-                                <li class="divider"></li>
-                                <li><a href="/pweb2k14/CyberController?oper=getAccount">User settings</a></li>
-                                <li><a href="/pweb2k14/CyberController?oper=getlogout">Log out</a></li>
+                                    <li class="dropdown-header">Account</li>
+                                    <li class="divider"></li>
+                                    <li><a href="/pweb2k14/CyberController?oper=getAccount">User settings</a></li>
+                                    <li><a href="/pweb2k14/CyberController?oper=getlogout">Log out</a></li>
 
-                            </ul>
-                        </li>
-                    </ul>
-                </div><!--/.nav-collapse -->
-            </div>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
 
 
                 <div class="col-lg-12" style="background-color: #fff;">
                     <h2>Welcome to you settings!</h2>  
-                    <%  String error = request.getParameter("error");
-                    if (error != null)
-                   {
-                       out.println("<div class=\"alert alert-danger\"><strong>Oh snap! </strong>"+error+".</div>");
-                   }
-                    %>
+                    <c:if test="${not empty param.error}">
+                        <div class="alert alert-danger"><strong>Oh snap! </strong><c:out value="${param.error}" />.</div>
+                    </c:if>  
                     <p>Here you can change your settings such as password and avatar</p>
 
                     <h3>Settings for user <c:out value="${user.username}" /></h3>
