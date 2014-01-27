@@ -24,12 +24,9 @@
     <body>
         <jsp:useBean id="user" class="model.User" scope="session" />
         <jsp:useBean id="grp" class="model.Group" scope="session" />
-        <%
-            user = (User) request.getSession().getAttribute("username");
-            if (user == null) {
-                response.sendRedirect("/pweb2k14/login.jsp");
-            }
-        %>
+        <c:if test="${empty sessionScope.username }">
+            <c:redirect url="/pweb2k14/login.jsp" />
+        </c:if>
         <div class="container">
             <div class="navbar navbar-default" role="navigation">
                 <div class="navbar-header">
