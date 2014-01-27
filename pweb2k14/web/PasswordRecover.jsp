@@ -19,7 +19,7 @@
                 <div class="alert alert-danger"><strong>Oh snap! </strong><c:out value="${param.error}" />.</div>
             </c:if>         
              <c:if test="${not empty param.success}">
-                <div class="alert alert-danger"><strong>Success! </strong><c:out value="${param.success}" />.</div>
+                <div class="alert alert-success"><strong>Success! </strong><c:out value="${param.success}" />.</div>
             </c:if>  
         <h2 class="form-signin-heading">Forgot your password?</h2>
         <p class="text-info center-block">Insert username</p>
