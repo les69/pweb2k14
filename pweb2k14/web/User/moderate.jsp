@@ -27,7 +27,7 @@
         <title>Moderate</title>
     </head>
     <body>
-        <jsp:useBean id="user" class="model.User" scope="session" />
+        <c:set var="user" value="${sessionScope.user}" />
         <c:if test="${empty user}">
             <c:redirect url="/login.jsp" />
         </c:if>

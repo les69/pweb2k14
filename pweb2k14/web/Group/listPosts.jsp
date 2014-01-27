@@ -22,7 +22,7 @@
         <title>Post Page</title>
     </head>
     <body>
-        <c:set var="user" value="${sessionScope.username}" />
+        <c:set var="user" value="${sessionScope.user}" />
      
             <c:if test="${empty user}">
                 <%
