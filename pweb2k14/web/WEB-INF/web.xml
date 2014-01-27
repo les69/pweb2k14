@@ -35,7 +35,7 @@
         <servlet-class>controller.ListGroupsServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>InviteServlet</servlet-name>
+        <servlet-name>AccRecInviteServlet</servlet-name>
         <servlet-class>controller.AccRecInviteServlet</servlet-class>
     </servlet>
     <servlet>
@@ -129,8 +129,8 @@
         <url-pattern>/ListGroups</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>InviteServlet</servlet-name>
-        <url-pattern>/InviteServlet</url-pattern>
+        <servlet-name>AccRecInviteServlet</servlet-name>
+        <url-pattern>/AccRecInviteServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ListMyGroupServlet</servlet-name>

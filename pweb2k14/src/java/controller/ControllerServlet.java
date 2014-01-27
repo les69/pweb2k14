@@ -53,7 +53,7 @@ public class ControllerServlet extends HttpServlet {
             case "getNewGroup": forward(request, response, "/NewGroupServlet"); break;
             case "doModerate": 
             case "getModerator": forward(request, response, "/ModeratorServlet"); break;
-            case "getInvites": forward(request, response, "/InviteServlet"); break;
+            case "getInvites": forward(request, response, "/AccRecInviteServlet"); break;
             case "getAccount": forward(request, response, "/EditUserServlet"); break;
             case "getlogin": forward(request,response,"/login.jsp"); break;
             case "getlogout": forward(request,response,"/Logout"); break;
