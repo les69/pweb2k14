@@ -143,7 +143,7 @@ public class GroupFilter implements Filter {
                 else
                 {
                     Group g = (Group)((HttpServletRequest) request).getSession().getAttribute("group");
-                    if(!helper.doesUserBelongsToGroup(usr, g))
+                    if(!helper.doesUserBelongsToGroup(usr, g) && !g.isPublic())
                     {
                         if(usr != null && usr.isIsmoderator())
                             ((HttpServletRequest) request).setAttribute("readonly",true);
@@ -157,6 +157,7 @@ public class GroupFilter implements Filter {
             }
             if(uri.contains("newPost.jsp"))
             {}
+
             
             chain.doFilter(request, response);
         } catch (Throwable t) {

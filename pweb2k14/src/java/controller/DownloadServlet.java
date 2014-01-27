@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package controller;
 
 import model.DbHelper;
@@ -23,22 +22,25 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.User;
 
 /**
  *
  * @author les
  */
 public class DownloadServlet extends HttpServlet {
+
     static final long serialVersionUID = 1L;
-    private static final int BUFSIZE = 1024*1024*10;
+    private static final int BUFSIZE = 1024 * 1024 * 10;
     private String filePath;
-    
+
     private DbHelper helper;
 
     @Override
     public void init() throws ServletException {
         this.helper = (DbHelper) super.getServletContext().getAttribute("dbmanager");
     }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -50,7 +52,7 @@ public class DownloadServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -65,52 +67,57 @@ public class DownloadServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        boolean proceed = false;
         String relativeWebPath = "/uploads";
-        
         String file_hash = request.getParameter("file");
-        String group_id =request.getParameter("group");
-        Enumeration vals =request.getParameterNames();
+        String group_id = request.getParameter("group");
+        Enumeration vals = request.getParameterNames();
         Group g = helper.getGroup(Integer.parseInt(group_id));
-        filePath = getServletContext().getRealPath(relativeWebPath)+File.separator+g.getName()+File.separator;
-        
-        try{
+        filePath = getServletContext().getRealPath(relativeWebPath) + File.separator + g.getName() + File.separator;
+        User usr = ServletHelperClass.getUserFromSession(request);
+
+        if ((usr == null || usr.getUsername().equals("Anonymous")) && g.isPublic()) {
+            proceed = true;
+        } else if (helper.doesUserBelongsToGroup(usr, g)) {
+            proceed = true;
+        }
+        if (proceed) {
+            try {
             //PrintWriter out = response.getWriter();
-            //ServletHelperClass.printHead(out);
-            File tmpFile = new File(filePath+file_hash);
-            if(!tmpFile.exists())
-                response.sendRedirect("/NotFound.jsp");
+                //ServletHelperClass.printHead(out);
+                File tmpFile = new File(filePath + file_hash);
+                if (!tmpFile.exists()) {
+                    response.sendRedirect("/NotFound.jsp");
+                }
                 //printError(response, "File not found", g.getId());
                 //out.println("The request file was not found!");
-            
-            FileDB file = helper.getFile(g, file_hash);
-            
-            response.setContentType(file.getType());
-            response.setContentLength((int)tmpFile.length());
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getOriginal_name() + "\"");
-            byte[] byteBuffer = new byte[BUFSIZE];
-            DataInputStream in = new DataInputStream(new FileInputStream(tmpFile));
-            ServletOutputStream outStream = response.getOutputStream();
 
-            // reads the file's bytes and writes them to the response stream
-            int length = 0;
-            while ((in != null) && ((length = in.read(byteBuffer)) != -1))
-            {
-                outStream.write(byteBuffer,0,length);
+                FileDB file = helper.getFile(g, file_hash);
+
+                response.setContentType(file.getType());
+                response.setContentLength((int) tmpFile.length());
+                response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getOriginal_name() + "\"");
+                byte[] byteBuffer = new byte[BUFSIZE];
+                DataInputStream in = new DataInputStream(new FileInputStream(tmpFile));
+                ServletOutputStream outStream = response.getOutputStream();
+
+                // reads the file's bytes and writes them to the response stream
+                int length = 0;
+                while ((in != null) && ((length = in.read(byteBuffer)) != -1)) {
+                    outStream.write(byteBuffer, 0, length);
+                }
+
+                in.close();
+                outStream.close();
+
+            } catch (IOException ex) {
+                Logger.getLogger(getClass().getName()).log(Level.SEVERE,
+                        "Error while retrieving file for download", ex);
             }
-
-            in.close();
-            outStream.close();
-            
-        }
-        catch(IOException ex)
-        {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, 
-                    "Error while retrieving file for download", ex);
         }
 
     }
-    
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
