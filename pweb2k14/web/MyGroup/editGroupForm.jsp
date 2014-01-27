@@ -22,7 +22,7 @@
         <title>Group management</title>
     </head>
     <body>
-        <jsp:useBean id="user" class="model.User" scope="session" />
+        <c:set var="user" value="${sessionScope.user}" />
         <jsp:useBean id="grp" class="model.Group" scope="session" />
         <c:if test="${empty user}">
             <c:redirect url="/login.jsp" />

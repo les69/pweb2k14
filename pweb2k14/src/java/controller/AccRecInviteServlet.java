@@ -46,15 +46,21 @@ public class AccRecInviteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         User usr = ServletHelperClass.getUserFromSession(request);
-        List<Invite> inv = helper.getUserInvites(usr);
-        List<InviteToShow> invites = new ArrayList<>();
-        for (Invite i : inv) //the line below is ugly to the eye.
+        if(usr == null || helper ==null)
+            response.sendRedirect("/login.jsp");
+        else
         {
-            invites.add(InviteToShow.ITSfromInvite(i, helper.getGroup(i.getIdGroup()).getName()));
+            List<Invite> inv = helper.getUserInvites(usr);
+            List<InviteToShow> invites = new ArrayList<>();
+            for (Invite i : inv) //the line below is ugly to the eye.
+            {
+                invites.add(InviteToShow.ITSfromInvite(i, helper.getGroup(i.getIdGroup()).getName()));
+            }
+            request.setAttribute("invites", invites);
+            request.getRequestDispatcher("/pweb2k14/User/invites.jsp").forward(request, response);
         }
-        request.setAttribute("invites", invites);
-        request.getRequestDispatcher("User/invites.jsp").forward(request, response);
     }
 
     /**
