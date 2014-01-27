@@ -58,7 +58,7 @@ public class AccRecInviteServlet extends HttpServlet {
             {
                 invites.add(InviteToShow.ITSfromInvite(i, helper.getGroup(i.getIdGroup()).getName()));
             }
-            request.setAttribute("invites", invites);
+            request.getSession().setAttribute("invites", invites);
             response.sendRedirect("/pweb2k14/User/invites.jsp");
         }
     }
@@ -77,14 +77,19 @@ public class AccRecInviteServlet extends HttpServlet {
         User usr = ServletHelperClass.getUserFromSession(request);
         boolean operation = request.getParameter("action").equals("Accept");
         processInvites(request.getParameterMap(), usr, operation);
-        List<Invite> inv = helper.getUserInvites(usr);
-        List<InviteToShow> invites = new ArrayList<>();
-        for (Invite i : inv) //the line below is ugly to the eye.
+        if(usr == null || helper ==null)
+            response.sendRedirect("/login.jsp");
+        else
         {
-            invites.add(InviteToShow.ITSfromInvite(i, helper.getGroup(i.getIdGroup()).getName()));
+            List<Invite> inv = helper.getUserInvites(usr);
+            List<InviteToShow> invites = new ArrayList<>();
+            for (Invite i : inv) //the line below is ugly to the eye.
+            {
+                invites.add(InviteToShow.ITSfromInvite(i, helper.getGroup(i.getIdGroup()).getName()));
+            }
+            request.getSession().setAttribute("invites", invites);
+            response.sendRedirect("/pweb2k14/User/invites.jsp");
         }
-        request.setAttribute("invites", invites);
-        request.getRequestDispatcher("User/invites.jsp").forward(request, response);
     }
 
     private void processInvites(Map params, User usr, boolean accept) {

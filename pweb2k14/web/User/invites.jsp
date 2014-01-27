@@ -71,13 +71,13 @@
             
             <div class="col-lg-12" style="background-color: #fff;">
                 <h2>Your pending invites</h2>
-                <form action="CyberController?oper=accRefInvite" method="post">
+                <form action="../CyberController?oper=accRefInvite" method="post">
                     <table class="table table-striped form-group">
                         <thead>
                             <tr><th>Group name</th><th>Received on</th><th>Select</th></tr>
                         </thead>
-                        <c:if test="${!empty invites}" >
-                            <c:forEach var="invite" items="${invites}">
+                        <c:if test="${!empty sessionScope.invites}" >
+                            <c:forEach var="invite" items="${sessionScope.invites}">
                                 <tr>
                                     <td><c:out value="${invite.groupName}" /></td>
                                     <td><c:out value="${invite.inviteDate}" /></td>

@@ -22,15 +22,10 @@
         <title>Post Page</title>
     </head>
     <body>
-        <c:set var="user" value="${sessionScope.user}" />
-     
-            <c:if test="${empty user}">
-                <%
-                    User usr = new User();
-                    usr.setAnonymous();
-                    pageContext.setAttribute("user", usr);
-                %>
-            </c:if>c
+       <c:set var="user" value="${sessionScope.user}" />
+        <c:if test="${empty user}">
+            <c:redirect url="/login.jsp" />
+        </c:if>
         <div id="wrap">
         <div class="container">
         <div class="navbar navbar-default" role="navigation">
@@ -48,7 +43,7 @@
             <li><a href="/pweb2k14/CyberController?oper=getMyGroups">My Groups</a></li>
             <li><a href="/pweb2k14/CyberController?oper=getGroups">Groups</a></li>
             <li><a href="/pweb2k14/CyberController?oper=getInvites">Invites</a></li>
-            <c:if test="${username.ismoderator}">
+            <c:if test="${user.ismoderator}">
                 <li><a href="/pweb2k14/CyberController?oper=getModerator">Moderate</a></li>
             </c:if>
            
@@ -78,6 +73,7 @@
                         <h3 class="panel-title"><c:out value="${group.name}" /></h3>
                     </div>
                 <div class="panel-body">
+                    <c:if test="${!empty sessionScope.postList}">
                     <c:forEach items="${sessionScope.postList}" var="post">
                         <div class="media">
                             <a class="pull-left" href="#">
@@ -90,6 +86,7 @@
                          </div>
                             
                     </c:forEach>
+                    </c:if>
                     </div>
                     
                 

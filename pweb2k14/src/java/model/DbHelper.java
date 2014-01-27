@@ -863,7 +863,7 @@ public class DbHelper implements Serializable
             {
                 throw new RuntimeException("Connection must be estabilished before a statement");
             }
-            stm = _connection.prepareStatement("ALTER table Invite set visible = ? where id_user=? and id_group=?");
+            stm = _connection.prepareStatement("update Invite set visible = ? where id_user=? and id_group=?");
             stm.setBoolean(1, false);
             stm.setInt(2, usr.getId());
             stm.setInt(3, g.getId());
