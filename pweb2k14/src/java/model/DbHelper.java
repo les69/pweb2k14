@@ -761,8 +761,9 @@ public class DbHelper implements Serializable
             {
                 throw new RuntimeException("Connection must be estabilished before a statement");
             }
-            stm = _connection.prepareStatement("select * from Invite where id_user=?");
+            stm = _connection.prepareStatement("select * from Invite where id_user=? and visible = ?");
             stm.setInt(1, id_user);
+            stm.setBoolean(2, true);
             ResultSet rs = null;
 
             try
@@ -834,7 +835,7 @@ public class DbHelper implements Serializable
     {
         try
         {
-            this.removeInvite(g, usr);
+            this.hideInvite(g, usr);
             this.addUserToGroup(g, usr);
             Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
                     "User {0} accepted an invitation", usr.getUsername());
@@ -843,6 +844,55 @@ public class DbHelper implements Serializable
         {
             Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
                     "An error occurred while accepting an invite", ex);
+        }
+    }
+    
+    /**
+     * Decline an invite from a group to a user
+     *
+     * @param g
+     * @param user
+     */
+    public void hideInvite(Group g, User usr)
+    {
+
+        PreparedStatement stm = null;
+        try
+        {
+            if (_connection == null || _connection.isClosed())
+            {
+                throw new RuntimeException("Connection must be estabilished before a statement");
+            }
+            stm = _connection.prepareStatement("ALTER table Invite set visible = ? where id_user=? and id_group=?");
+            stm.setBoolean(1, false);
+            stm.setInt(2, usr.getId());
+            stm.setInt(3, g.getId());
+
+            int res = stm.executeUpdate();
+            
+            Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
+                    "User {0} declined an invitation", usr.getUsername());
+            
+        }
+        catch (SQLException | RuntimeException ex)
+        {
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    "Error while creating query or establishing database connection", ex);
+        }
+        finally
+        {
+            if (stm != null)
+            {
+                try
+                {
+                    stm.close();
+                }
+                catch (SQLException sex)
+                {
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                            "Error while closing connection", sex);
+                }
+            }
         }
     }
 
