@@ -23,7 +23,7 @@
     </head>
     <body>        
         <c:set var="user" value="${sessionScope.user}" />
-        <c:if test="${empty username}">
+        <c:if test="${empty user}">
             <c:redirect url="/login.jsp" />
         </c:if>
         <div id="wrap">
@@ -88,7 +88,7 @@
                           </tr>
                       </thead>
                       <tbody>
-                          <c:if test="${empty sessionScope.groups}">
+                          <c:if test="${!empty sessionScope.groups}">
                            <c:forEach items="${sessionScope.groups}" var="group">
                                <tr>
                                    <td><c:out value="${group.id}" /></td>

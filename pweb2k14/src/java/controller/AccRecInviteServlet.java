@@ -59,7 +59,7 @@ public class AccRecInviteServlet extends HttpServlet {
                 invites.add(InviteToShow.ITSfromInvite(i, helper.getGroup(i.getIdGroup()).getName()));
             }
             request.setAttribute("invites", invites);
-            request.getRequestDispatcher("/pweb2k14/User/invites.jsp").forward(request, response);
+            response.sendRedirect("/pweb2k14/User/invites.jsp");
         }
     }
 
