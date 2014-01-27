@@ -60,7 +60,7 @@ public class PasswordRecoverServlet extends HttpServlet {
             String newpassword = generateRandomPassword();
             helper.setUserPassword(username,newpassword);
             ServletHelperClass.sendMail(ServletHelperClass.webMasterMail, email, "Password reset on pweb", 
-                    "The password for the "+username+" account on pweb has been resetted."
+                    "The password for the "+username+" account on pweb has been reset."
             + "The new password is: "+newpassword
             );
             forward(request, response, "/PasswordRecover.jsp?success=An email with a new password sent to " + email);

@@ -292,6 +292,6 @@ public class ServletHelperClass {
     }
     public static User getUserFromSession(HttpServletRequest request)
     {
-        return (User)request.getSession().getAttribute("username");
+        return (User)request.getSession().getAttribute("user");
     }
 }

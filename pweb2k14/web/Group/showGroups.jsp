@@ -21,23 +21,11 @@
         
         <title>Groups Page</title>
     </head>
-    <body>
-        <c:set var="user" value="${sessionScope.username}" />
-
-        <c:choose>
-            <c:when test="${empty user}">
-                <%
-                    User usr = new User();
-                    usr.setAnonymous();
-                    pageContext.setAttribute("user", usr);
-                    response.sendRedirect("../login.jsp"); 
-
-                %>
-             </c:when>
-             <c:otherwise>
-                <!-- Convert to c:if if not used -->
-             </c:otherwise>
-        </c:choose>
+    <body>        
+        <jsp:useBean id="username" class="model.User" scope="session" />
+        <c:if test="${empty username}">
+            <c:redirect url="/login.jsp" />
+        </c:if>
         <div id="wrap">
 
         <div class="container">
@@ -56,14 +44,14 @@
             <li><a href="/pweb2k14/CyberController?oper=getMyGroups">My Groups</a></li>
             <li><a href="/pweb2k14/CyberController?oper=getGroups">Groups</a></li>
             <li><a href="/pweb2k14/CyberController?oper=getInvites">Invites</a></li>
-            <c:if test="${user.ismoderator}">
+            <c:if test="${username.ismoderator}">
                 <li><a href="/pweb2k14/CyberController?oper=getModerator">Moderate</a></li>
             </c:if>
            
           </ul>
           <ul class="nav navbar-nav navbar-right">
              <li class="dropdown">
-                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <c:out value="${user.username}" /> <b class="caret"></b></a>
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <c:out value="${username.username}" /> <b class="caret"></b></a>
               <ul class="dropdown-menu">
               
                 <li class="dropdown-header">Account</li>

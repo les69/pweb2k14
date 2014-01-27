@@ -22,22 +22,10 @@
         <title>MyGroup Page</title>
     </head>
     <body>
-    <c:set var="user" value="${sessionScope.username}" />
-
-        <c:choose>
-            <c:when test="${empty user}">
-                <%
-                    User usr = new User();
-                    usr.setAnonymous();
-                    pageContext.setAttribute("user", usr);
-                    response.sendRedirect("../login.jsp"); 
-
-                %>
-             </c:when>
-             <c:otherwise>
-                <!-- Convert to c:if if not used -->
-             </c:otherwise>
-        </c:choose>
+    <jsp:useBean id="user" class="model.User" scope="session" />
+        <c:if test="${empty user}">
+            <c:redirect url="/login.jsp" />
+        </c:if>
         <div id="wrap">
         <div class="container">
         <div class="navbar navbar-default" role="navigation">

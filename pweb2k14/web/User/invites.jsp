@@ -25,11 +25,8 @@
         <title>Invites</title>
     </head>
     <body>
-        <jsp:useBean id="user" class="model.User" scope="session" />
-        <c:set var="usr" value="${sessionScope.username}" />
-        
-        <%--<c:set var="groups" value="${sessionScope.updatedGroups}" /> --%>
-        <c:if test="${empty sessionScope.username.username}">
+       <jsp:useBean id="user" class="model.User" scope="session" />
+        <c:if test="${empty user}">
             <c:redirect url="/login.jsp" />
         </c:if>
         
@@ -54,7 +51,7 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
              <li class="dropdown">
-                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <c:out value="${usr.username}" /> <b class="caret"></b></a>
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <c:out value="${user.username}" /> <b class="caret"></b></a>
               <ul class="dropdown-menu">
               
                 <li class="dropdown-header">Account</li>

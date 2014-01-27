@@ -24,8 +24,8 @@
     <body>
         <jsp:useBean id="user" class="model.User" scope="session" />
         <jsp:useBean id="grp" class="model.Group" scope="session" />
-        <c:if test="${empty sessionScope.username }">
-            <c:redirect url="/pweb2k14/login.jsp" />
+        <c:if test="${empty user}">
+            <c:redirect url="/login.jsp" />
         </c:if>
         <div class="container">
             <div class="navbar navbar-default" role="navigation">
@@ -48,7 +48,7 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <%= user.getUsername()%> <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <c:out value="${user.username}" /> <b class="caret"></b></a>
                             <ul class="dropdown-menu">
 
                                 <li class="dropdown-header">Account</li>

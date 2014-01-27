@@ -63,7 +63,7 @@ public class EditUserServlet extends HttpServlet {
         String absoluteFilePath = getServletContext().getRealPath(relativeWebPath) + File.separator;
         
         
-        User newUser = (User) request.getSession().getAttribute("username");
+        User newUser = (User) request.getSession().getAttribute("user");
         String password = request.getParameter("oldpass"); 
 
             if(helper.authenticate(newUser.getUsername(), password)!= null)
@@ -81,7 +81,7 @@ public class EditUserServlet extends HttpServlet {
                     newUser.setPassword(password);
             
                 if(helper.editUser(newUser))
-                    request.getSession().setAttribute("username", newUser);
+                    request.getSession().setAttribute("user", newUser);
                 else
                     response.sendRedirect("User/userinfo.jsp?error=invalid data provided");
                 response.sendRedirect("User/userinfo.jsp");
