@@ -23,17 +23,14 @@
     </head>
     <body>
         <c:set var="user" value="${sessionScope.username}" />
-        <c:choose>
-            <c:when test="${empty user}">
+     
+            <c:if test="${empty user}">
                 <%
                     User usr = new User();
                     usr.setAnonymous();
                     pageContext.setAttribute("user", usr);
                 %>
-             </c:when>
-             <c:otherwise>
-             </c:otherwise>
-        </c:choose>
+            </c:if>c
         <div id="wrap">
         <div class="container">
         <div class="navbar navbar-default" role="navigation">
