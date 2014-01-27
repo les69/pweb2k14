@@ -25,7 +25,7 @@ public class FileManager {
         InputStream filecontent = filePart.getInputStream();
         String fileName = getFileName(filePart);
         String fileExtension = fileName.substring(fileName.lastIndexOf('.'));
-        String hash = ServletHelperClass.encryptPassword(fileName+groupName+username)+fileExtension;
+        String hash = ServletHelperClass.encryptPassword(fileName+groupName+username);
         File avatarFile = new File(absoluteFilePath + "/" + hash);
         OutputStream fos = null;
         //Uncomment line below if we want to preserve old avatars

@@ -157,16 +157,16 @@
         <url-pattern>/SendInviteServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>DownloadServlet</servlet-name>
-        <url-pattern>/Download</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>PostServlet</servlet-name>
         <url-pattern>/Group/PostServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>NewPostServlet</servlet-name>
         <url-pattern>/Group/NewPost</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DownloadServlet</servlet-name>
+        <url-pattern>/Group/Download</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

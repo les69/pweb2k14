@@ -86,7 +86,7 @@
                               </a>
                               <div class="media-body">
                                   <h4 class="media-heading"><c:out value="${post.username}" />     <p style="font-size: 14px;font-style: italic;"><c:out value="${post.datePost}" /></p> </h4>
-                                  <c:out value="${post.message}" />
+                                  <c:out value="${post.message}" escapeXml="false" />
                               </div>
                          </div>
                             
