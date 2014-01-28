@@ -27,6 +27,7 @@
         <c:if test="${empty user}">
             <c:redirect url="/login.jsp" />
         </c:if>
+        <div id="wrap">
         <div class="container">
             <div class="navbar navbar-default" role="navigation">
                 <div class="navbar-header">
@@ -43,7 +44,9 @@
                         <li><a href="/pweb2k14/CyberController?oper=getMyGroups">My Groups</a></li>
                         <li><a href="/pweb2k14/CyberController?oper=getGroups">Groups</a></li>
                         <li><a href="/pweb2k14/CyberController?oper=getInvites">Invites</a></li>
-
+                        <c:if test="${user.ismoderator}">
+                                <li><a href="/pweb2k14/CyberController?oper=getModerator">Moderate</a></li>
+                        </c:if>
 
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
@@ -62,7 +65,7 @@
                 </div><!--/.nav-collapse -->
             </div>
 
-            <div class="row">
+            
 
                 <div class="col-lg-12" style="background-color: #fff;">
                     <h2>Please fill in the following form</h2>  
@@ -71,7 +74,7 @@
                             <h2 >Edit group</h2>
                             <input type="text" name="grpName" class="form-control" value="<c:out value="${grp.name}" />" placeholder="Group name" required="" autofocus="">
                             <p class="form-control"><input type="checkbox" checked="<c:out value="${grp.public}" />" name="pubSelector" > Make this group public</p>
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">Confirm changes</button>
+                            <button class="btn  btn-primary " type="submit">Confirm changes</button>
                         </form>
                             <c:if test="${not empty param.succ}">
                                 <div class=" alert alert-success"><c:out value="${param.succ}" /></div>
@@ -82,7 +85,7 @@
                         <form class="form-group" role="form" method="post" action="../CyberController?oper=doSendInvite&g=<c:out value="${grp.id}" />">
                             <h3 >you can add multiple usernames by separating them with semicolon ';'</h3>
                             <input type="text" name="usrNames" class="form-control" placeholder="Send an invite to" required="" autofocus="">
-                            <button class="btn btn-lg btn-primary btn-block" type="submit">Send invites!</button>
+                            <button class="btn  btn-primary " type="submit">Send invites!</button>
                         </form>
                     </div>
 
