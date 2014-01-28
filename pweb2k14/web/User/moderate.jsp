@@ -22,7 +22,6 @@
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="../bootstrap/js/bootstrap.min.js"></script>
         <script src="../datatables/js/jquery.dataTables.min.js"></script>
-
         <title>Moderate</title>
     </head>
     <body>
@@ -47,32 +46,25 @@
                             <li><a href="/pweb2k14/CyberController?oper=getMyGroups">My Groups</a></li>
                             <li><a href="/pweb2k14/CyberController?oper=getGroups">Groups</a></li>
                             <li><a href="/pweb2k14/CyberController?oper=getInvites">Invites</a></li>
-
                             <c:if test="${user.ismoderator}">
                                 <li><a href="/pweb2k14/CyberController?oper=getModerator">Moderate</a></li>
-                                </c:if>
-
+                            </c:if>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <c:out value="${user.username}" /> <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-
                                     <li class="dropdown-header">Account</li>
                                     <li class="divider"></li>
                                     <li><a href="/pweb2k14/CyberController?oper=getAccount">User settings</a></li>
                                     <li><a href="/pweb2k14/CyberController?oper=getlogout">Log out</a></li>
-
                                 </ul>
                             </li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>
-
-
                 <div class="col-lg-12" style="background-color: #fff;">
                     <h2>Moderate with moderation</h2>  
-
                     <div class="panel panel-default">
                         <!-- Default panel contents -->
                         <div class="panel-heading">Moderators panel</div>
@@ -83,10 +75,8 @@
                             <thead><tr><th >Group name</th><th >Participants</th><th >Post number</th><th>Is a public group</th><th>Delete</th></tr></thead>
                             <tbody>
                                 <c:forEach var="gruppo" items="${allGroups}">
-
                                     <tr>
                                         <td><a href="/pweb2k14/CyberController?oper=getShowPost&g=${gruppo.id}"><c:out value="${gruppo.name}" /></a></td>
-
                                         <td><c:out value="${gruppo.participantCount}" /></td>
                                         <td><c:out value="${gruppo.postCount}" /></td>
                                         <c:if test="${gruppo.public == true}">
@@ -100,9 +90,8 @@
                                                 </c:if>
                                                 <c:if test="${gruppo.active == false}">
                                             <td>THIS GROUP HAS BEEN DELETED.<br>DELETE. DELETE. DELEETEE!</td>
-                                            </c:if>
+                                        </c:if>
                                     </tr>
-
                                 </c:forEach>
                             </tbody>
                         </table>
@@ -110,18 +99,18 @@
                 </div>
             </div>
         </div>
-</body>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#tableGroups').dataTable({
-            "bPaginate": false,
-            "aoColumns": [
-                {"bSearchable": true},
-                {"bSearchable": false},
-                {"bSearchable": false},
-                {"bSearchable": false},
-                {"bSearchable": false}
-            ]});
-    });
-</script>
+    </body>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#tableGroups').dataTable({
+                "bPaginate": false,
+                "aoColumns": [
+                    {"bSearchable": true},
+                    {"bSearchable": false},
+                    {"bSearchable": false},
+                    {"bSearchable": false},
+                    {"bSearchable": false}
+                ]});
+        });
+    </script>
 </html>

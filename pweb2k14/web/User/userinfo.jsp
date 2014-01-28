@@ -42,37 +42,31 @@
 
                             <c:if test="${user.ismoderator}">
                                 <li><a href="/pweb2k14/CyberController?oper=getModerator">Moderate</a></li>
-                                </c:if>
+                            </c:if>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><c:out value="${user.username}" /> <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-
                                     <li class="dropdown-header">Account</li>
                                     <li class="divider"></li>
                                     <li><a href="/pweb2k14/CyberController?oper=getAccount">User settings</a></li>
                                     <li><a href="/pweb2k14/CyberController?oper=getlogout">Log out</a></li>
-
                                 </ul>
                             </li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>
-
-
                 <div class="col-lg-12" style="background-color: #fff;">
                     <h2>Welcome to you settings!</h2>  
                     <c:if test="${not empty param.error}">
                         <div class="alert alert-danger"><strong>Oh snap! </strong><c:out value="${param.error}" />.</div>
                     </c:if>  
                     <p>Here you can change your settings such as password and avatar</p>
-
                     <h3>Settings for user <c:out value="${user.username}" /></h3>
                     <form  action="../CyberController?oper=editAccount" enctype="multipart/form-data" method="post" role="form" class="form-group">
                         <p class="text-left form-control-static">
                             Your avatar:<br>
-
                             <img width="240" src="../uploads/Avatars/${user.avatar}" alt="Your avatar" />
                             <input class="form-control" type="file" name="avatar">
                             <br>
@@ -81,7 +75,6 @@
                             New password<br>
                             <input class="form-control" type="password" name="newpass"> 
                         </p>
-
                         <p class="text-danger form-control-static"> 
                             Please provide your old password in order to apply changes<br>
                             <input class="form-control" type="password" name="oldpass" required=""> 
@@ -93,6 +86,5 @@
                 </div>
             </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>

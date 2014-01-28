@@ -18,11 +18,9 @@
         <link href="../bootstrap/css/pages.css" type="text/css" rel="stylesheet" />
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="../bootstrap/js/bootstrap.min.js"></script>
-
         <title>Group form</title>
     </head>
     <body>
-        
         <jsp:useBean id="grp" class="model.Group" scope="session" />
         <c:set var="user" value="${sessionScope.user}" />
         <c:if test="${empty user}">
@@ -45,28 +43,23 @@
                         <li><a href="/pweb2k14/CyberController?oper=getGroups">Groups</a></li>
                         <li><a href="/pweb2k14/CyberController?oper=getInvites">Invites</a></li>
                         <c:if test="${user.ismoderator}">
-                                <li><a href="/pweb2k14/CyberController?oper=getModerator">Moderate</a></li>
+                            <li><a href="/pweb2k14/CyberController?oper=getModerator">Moderate</a></li>
                         </c:if>
-
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"> <c:out value="${user.username}" /><b class="caret"> </b></a>
                             <ul class="dropdown-menu">
-
                                 <li class="dropdown-header">Account</li>
                                 <li class="divider"></li>
                                 <li><a href="/pweb2k14/CyberController?oper=getAccount">User settings</a></li>
                                 <li><a href="/pweb2k14/CyberController?oper=getlogout">Log out</a></li>
-
                             </ul>
                         </li>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
-
             <div class="row">
-
                 <div class="col-lg-12" style="background-color: #fff;">
                     <h2>Please fill in the following form</h2>  
                     <div>
@@ -77,12 +70,8 @@
                             <button class="btn btn-lg btn-primary btn-block" type="submit">Add group</button>
                         </form>
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
     </body>
 </html>
