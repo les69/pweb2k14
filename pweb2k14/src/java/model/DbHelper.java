@@ -6,7 +6,6 @@
 //TODO[Lotto] implement logging in the right way
 package model;
 
-import helpers.ServletHelperClass;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Date;
@@ -46,7 +45,7 @@ public class DbHelper implements Serializable
         }
         catch (ClassNotFoundException | SQLException e)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating DBHelper object", e);
             throw new RuntimeException(e.toString(), e);
         }
@@ -64,7 +63,7 @@ public class DbHelper implements Serializable
         }
         catch (SQLException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while closing DB connection for helper object destruction", ex);
         }
     }
@@ -109,7 +108,7 @@ public class DbHelper implements Serializable
             }
             catch (SQLException sqlex)
             {
-                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                         "Error while executing query or parsing result data", sqlex);
             }
             finally
@@ -121,8 +120,8 @@ public class DbHelper implements Serializable
             }
         }
         catch (SQLException | RuntimeException ex)
-        {         
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+        {
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -135,7 +134,7 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
 
                 }
@@ -189,7 +188,7 @@ public class DbHelper implements Serializable
             }
             catch (SQLException sqlex)
             {
-                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                         "Error while executing query or parsing result data", sqlex);
             }
             finally
@@ -202,7 +201,7 @@ public class DbHelper implements Serializable
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -215,7 +214,7 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
@@ -263,7 +262,7 @@ public class DbHelper implements Serializable
             }
             catch (SQLException sqlex)
             {
-                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                         "Error while executing query or parsing result data", sqlex);
             }
             finally
@@ -276,7 +275,7 @@ public class DbHelper implements Serializable
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -289,7 +288,7 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
@@ -298,10 +297,11 @@ public class DbHelper implements Serializable
     }
 
     /**
-     * Gets a List of all existing Groups 
+     * Gets a List of all existing Groups
      *
-     * @param 
-     * @return A list with all the existing groups. used for moderator accounts only
+     * @param
+     * @return A list with all the existing groups. used for moderator accounts
+     * only
      */
     public List<GroupToShow> getGroupsForAdmin()
     {
@@ -313,14 +313,14 @@ public class DbHelper implements Serializable
             {
                 throw new RuntimeException("Connection must be estabilished before a statement");
             }
-            
+
             stm = _connection.prepareStatement("select Groups.ID_GROUP, \"NAME\", ACTIVE, IS_PUBLIC, ID_OWNER, LAST_ACTIVITY, "
                     + "Howmany, utonti from Groups "
                     + "INNER JOIN ( select count(ID_POST) as howmany, ID_GROUP from POST GROUP BY ID_GROUP) "
                     + "as tab on Groups.ID_GROUP = tab.ID_GROUP "
                     + "INNER JOIN (SELECT count (ID_USER) as utonti, ID_GROUP from GROUPUSER group by ID_GROUP) "
                     + "as ut ON ut.ID_GROUP = GROUPS.ID_GROUP");
-            
+
             ResultSet rs = null;
 
             try
@@ -345,7 +345,7 @@ public class DbHelper implements Serializable
             }
             catch (SQLException sqlex)
             {
-                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                         "Error while executing query or parsing result data", sqlex);
             }
             finally
@@ -358,7 +358,7 @@ public class DbHelper implements Serializable
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -371,15 +371,14 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
         }
         return groupList;
     }
-    
-    
+
     /**
      * Gets a List of Groups in which the user is owner.
      *
@@ -417,7 +416,7 @@ public class DbHelper implements Serializable
                 while (rs.next())
                 {
                     //PostToShow pts = new PostToShow(rs.getString("DATE_POST"),
-                            //rs.getString("message"), rs.getString("username"));
+                    //rs.getString("message"), rs.getString("username"));
                     PostToShow pts = new PostToShow();
                     pts.setAvatar(rs.getString("avatar"));
                     pts.setDatePost(rs.getString("date_post"));
@@ -428,7 +427,7 @@ public class DbHelper implements Serializable
             }
             catch (SQLException sqlex)
             {
-                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                         "Error while executing query or parsing result data", sqlex);
             }
             finally
@@ -441,7 +440,7 @@ public class DbHelper implements Serializable
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -454,7 +453,7 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
@@ -501,7 +500,7 @@ public class DbHelper implements Serializable
             }
             catch (SQLException sqlex)
             {
-                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                         "Error while executing query or parsing result data", sqlex);
             }
             finally
@@ -514,7 +513,7 @@ public class DbHelper implements Serializable
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -527,7 +526,7 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
@@ -571,7 +570,7 @@ public class DbHelper implements Serializable
             }
             catch (SQLException sqlex)
             {
-                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                         "Error while executing query or parsing result data", sqlex);
             }
             finally
@@ -584,7 +583,7 @@ public class DbHelper implements Serializable
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -597,14 +596,14 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
         }
         return usr;
     }
-    
+
     /**
      * Gets the Group associated with the id
      *
@@ -641,7 +640,7 @@ public class DbHelper implements Serializable
             }
             catch (SQLException sqlex)
             {
-                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                         "Error while executing query or parsing result data", sqlex);
             }
             finally
@@ -654,7 +653,7 @@ public class DbHelper implements Serializable
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -667,7 +666,7 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
@@ -711,7 +710,7 @@ public class DbHelper implements Serializable
             }
             catch (SQLException sqlex)
             {
-                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                         "Error while executing query or parsing result data", sqlex);
             }
             finally
@@ -724,7 +723,7 @@ public class DbHelper implements Serializable
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -737,7 +736,7 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
@@ -754,7 +753,7 @@ public class DbHelper implements Serializable
     public List<Invite> getUserInvites(Integer id_user)
     {
         PreparedStatement stm = null;
-        List<Invite> invites = new ArrayList<Invite>();
+        List<Invite> invites = new ArrayList<>();
         try
         {
             if (_connection == null || _connection.isClosed())
@@ -780,7 +779,7 @@ public class DbHelper implements Serializable
             }
             catch (SQLException sqlex)
             {
-                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                         "Error while executing query or parsing result data", sqlex);
             }
             finally
@@ -793,7 +792,7 @@ public class DbHelper implements Serializable
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -806,7 +805,7 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
@@ -837,16 +836,16 @@ public class DbHelper implements Serializable
         {
             this.hideInvite(g, usr);
             this.addUserToGroup(g, usr);
-            Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.INFO,
                     "User {0} accepted an invitation", usr.getUsername());
         }
         catch (Exception ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "An error occurred while accepting an invite", ex);
         }
     }
-    
+
     /**
      * Decline an invite from a group to a user
      *
@@ -869,14 +868,14 @@ public class DbHelper implements Serializable
             stm.setInt(3, g.getId());
 
             int res = stm.executeUpdate();
-            
-            Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
+
+            Logger.getLogger(DbHelper.class.getName()).log(Level.INFO,
                     "User {0} declined an invitation", usr.getUsername());
-            
+
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -889,7 +888,7 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
@@ -917,14 +916,14 @@ public class DbHelper implements Serializable
             stm.setInt(2, g.getId());
 
             int res = stm.executeUpdate();
-            
-            Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
+
+            Logger.getLogger(DbHelper.class.getName()).log(Level.INFO,
                     "User {0} declined an invitation", usr.getUsername());
-            
+
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -937,7 +936,7 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
@@ -954,6 +953,7 @@ public class DbHelper implements Serializable
     {
         addUserToGroup(g, usr.getId());
     }
+
     public void addUserToGroup(Group g, int id_usr)
     {
         PreparedStatement stm = null;
@@ -969,14 +969,14 @@ public class DbHelper implements Serializable
             stm.setInt(2, id_usr);
 
             int res = stm.executeUpdate();
-            
-            Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
+
+            Logger.getLogger(DbHelper.class.getName()).log(Level.INFO,
                     "User  was added to a group");
 
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -989,7 +989,7 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
@@ -1019,13 +1019,13 @@ public class DbHelper implements Serializable
             stm.setString(5, file.getType());
 
             int res = stm.executeUpdate();
-            Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.INFO,
                     "A new file has been successfully uploaded");
 
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -1038,7 +1038,7 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
@@ -1078,7 +1078,7 @@ public class DbHelper implements Serializable
             }
             catch (SQLException sqlex)
             {
-                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                         "Error while executing query or parsing result data", sqlex);
             }
             finally
@@ -1091,7 +1091,7 @@ public class DbHelper implements Serializable
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -1104,7 +1104,7 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
@@ -1136,15 +1136,17 @@ public class DbHelper implements Serializable
             stm.setInt(4, p.getIdUser());
 
             int res = stm.executeUpdate();
-            if(res > 0)
+            if (res > 0)
+            {
                 updateGroupActivity(p.getIdGroup(), tmstp);
+            }
 
-            Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.INFO,
                     "A new post has been added in group with ID {0}", p.getIdGroup());
         }
         catch (RuntimeException | SQLException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -1157,7 +1159,7 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
@@ -1201,7 +1203,7 @@ public class DbHelper implements Serializable
             }
             catch (SQLException sqlex)
             {
-                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                         "Error while executing query or parsing result data", sqlex);
             }
             finally
@@ -1214,7 +1216,7 @@ public class DbHelper implements Serializable
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -1227,7 +1229,7 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
@@ -1278,7 +1280,7 @@ public class DbHelper implements Serializable
             }
             catch (SQLException sqlex)
             {
-                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                         "Error while executing query or parsing result data", sqlex);
             }
             finally
@@ -1291,7 +1293,7 @@ public class DbHelper implements Serializable
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -1304,7 +1306,7 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
@@ -1332,14 +1334,14 @@ public class DbHelper implements Serializable
             stm.setBoolean(3, grp.isPublic());
             stm.setInt(4, grp.getOwner());
             int res = stm.executeUpdate();
-            
+
             addUserToGroup(this.getGroup(grp.getName()), grp.getOwner());
-            Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.INFO,
                     "New group created successfully");
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -1352,13 +1354,13 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
         }
     }
-    
+
     public void addUser(User usr)
     {
         PreparedStatement stm = null;
@@ -1375,14 +1377,13 @@ public class DbHelper implements Serializable
             stm.setString(3, usr.getEmail());
             stm.setString(4, usr.getAvatar());
 
-            
             int res = stm.executeUpdate();
-            Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.INFO,
                     "New user created successfully");
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -1395,13 +1396,13 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
         }
     }
-    
+
     public boolean editUser(User usr)
     {
         boolean success = false;
@@ -1414,22 +1415,22 @@ public class DbHelper implements Serializable
             }
             stm = _connection.prepareStatement("UPDATE PWEB.USERS SET PASSWORD = ?, AVATAR = ? "
                     + "WHERE ID_USER = ?");
-            
-            stm.setString(1, usr.getPassword());            
+
+            stm.setString(1, usr.getPassword());
             stm.setString(2, usr.getAvatar());
             stm.setInt(3, usr.getId());
-            
+
             int res = stm.executeUpdate();
-            Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.INFO,
                     "New user created successfully");
-            
+
             success = true;
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
-            
+
         }
         finally
         {
@@ -1441,7 +1442,7 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
@@ -1481,7 +1482,7 @@ public class DbHelper implements Serializable
             }
             catch (SQLException sqlex)
             {
-                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                         "Error while executing query or parsing result data", sqlex);
             }
             finally
@@ -1494,7 +1495,7 @@ public class DbHelper implements Serializable
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -1507,7 +1508,7 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
@@ -1548,7 +1549,7 @@ public class DbHelper implements Serializable
             }
             catch (SQLException sqlex)
             {
-                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                         "Error while executing query or parsing result data", sqlex);
             }
             finally
@@ -1561,7 +1562,7 @@ public class DbHelper implements Serializable
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -1574,7 +1575,7 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
@@ -1609,13 +1610,13 @@ public class DbHelper implements Serializable
             stm.setInt(2, usr.getId());
 
             int res = stm.executeUpdate();
-            
-            Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
+
+            Logger.getLogger(DbHelper.class.getName()).log(Level.INFO,
                     "A new invitation has been sent");
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -1628,7 +1629,7 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
@@ -1657,18 +1658,18 @@ public class DbHelper implements Serializable
             try
             {
                 stm.executeUpdate();
-                Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
-                    "Group renaming successful");
+                Logger.getLogger(DbHelper.class.getName()).log(Level.INFO,
+                        "Group renaming successful");
             }
             catch (SQLException sqlex)
             {
-                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                         "Error while executing update query", sqlex);
             }
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -1681,15 +1682,14 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
         }
     }
 
-    
-     /**
+    /**
      * Updates group informations
      *
      * @param idGroup
@@ -1710,18 +1710,18 @@ public class DbHelper implements Serializable
             try
             {
                 stm.executeUpdate();
-                Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
-                    "Group renaming successful");
+                Logger.getLogger(DbHelper.class.getName()).log(Level.INFO,
+                        "Group renaming successful");
             }
             catch (SQLException sqlex)
             {
-                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                         "Error while executing update query", sqlex);
             }
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -1734,16 +1734,13 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
         }
     }
 
-    
-    
-    
     /**
      * Check if a User owns the given Group
      *
@@ -1787,7 +1784,7 @@ public class DbHelper implements Serializable
             }
             catch (SQLException sqlex)
             {
-                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                         "Error while executing query or parsing result data", sqlex);
             }
             finally
@@ -1800,7 +1797,7 @@ public class DbHelper implements Serializable
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -1813,14 +1810,14 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
         }
         return false;
     }
-    
+
     public void setUserLastLogin(User u, Timestamp date)
     {
         PreparedStatement stm = null;
@@ -1836,18 +1833,18 @@ public class DbHelper implements Serializable
             try
             {
                 stm.executeUpdate();
-                Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
-                    "User date login update successful");
+                Logger.getLogger(DbHelper.class.getName()).log(Level.INFO,
+                        "User date login update successful");
             }
             catch (SQLException sqlex)
             {
-                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                         "Error while executing update query", sqlex);
             }
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -1860,15 +1857,14 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
         }
     }
-    
-    
-        public void setUserPassword(String username, String password)
+
+    public void setUserPassword(String username, String password)
     {
         PreparedStatement stm = null;
         try
@@ -1880,22 +1876,22 @@ public class DbHelper implements Serializable
             stm = _connection.prepareStatement("Update PWEB.USERS SET password=? where username=?");
             stm.setString(1, password);
             stm.setString(2, username);
-            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            
             try
             {
                 stm.executeUpdate();
-                Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
-                    "User date login update successful");
+                Logger.getLogger(DbHelper.class.getName()).log(Level.INFO,
+                        "User date login update successful");
             }
             catch (SQLException sqlex)
             {
-                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                         "Error while executing update query", sqlex);
             }
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -1908,13 +1904,12 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
         }
     }
-        
 
     public HashMap updatedGroups(User u, Timestamp tmstp)
     {
@@ -1927,9 +1922,9 @@ public class DbHelper implements Serializable
             {
                 throw new RuntimeException("Connection must be estabilished before a statement");
             }
-            stm = _connection.prepareStatement("select * \n" +
-                                               "from GROUPUSER inner join GROUPS on (GROUPUSER.ID_GROUP = GROUPS.ID_GROUP)\n" +
-                                               "WHERE GROUPUSER.ID_USER = ? and LAST_ACTIVITY > ? ");
+            stm = _connection.prepareStatement("select * \n"
+                    + "from GROUPUSER inner join GROUPS on (GROUPUSER.ID_GROUP = GROUPS.ID_GROUP)\n"
+                    + "WHERE GROUPUSER.ID_USER = ? and LAST_ACTIVITY > ? ");
             stm.setInt(1, u.getId());
             stm.setTimestamp(2, tmstp);
             ResultSet rs = null;
@@ -1948,13 +1943,13 @@ public class DbHelper implements Serializable
                     g.setPublic(rs.getBoolean("is_public"));
                     g.setLast_activity(rs.getTimestamp("last_activity"));
                     //groupList.add(g);
-                    map.put(g,getPostCountSinceDate(g, tmstp));
-                           
+                    map.put(g, getPostCountSinceDate(g, tmstp));
+
                 }
             }
             catch (SQLException sqlex)
             {
-                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                         "Error while executing query or parsing result data", sqlex);
             }
             finally
@@ -1967,7 +1962,7 @@ public class DbHelper implements Serializable
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -1980,7 +1975,7 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
@@ -1988,12 +1983,12 @@ public class DbHelper implements Serializable
         //return groupList;
         return map;
     }
-    
+
     public int getPostCountSinceDate(Group g, Timestamp tmstp)
     {
         return getPostCountSinceDate(g.getId(), tmstp);
     }
-    
+
     public int getPostCountSinceDate(Integer id_group, Timestamp tmstp)
     {
         PreparedStatement stm = null;
@@ -2006,19 +2001,21 @@ public class DbHelper implements Serializable
             }
             stm = _connection.prepareStatement("select count(*) as tot_post from post join users on post.ID_USER = USERS.ID_USER where id_group = ? and date_post > ?");
             stm.setInt(1, id_group);
-            stm.setTimestamp(2,tmstp);
+            stm.setTimestamp(2, tmstp);
             ResultSet rs = null;
 
             try
             {
                 rs = stm.executeQuery();
                 if (rs.next())
-                    retval=rs.getInt("tot_post");
-                
+                {
+                    retval = rs.getInt("tot_post");
+                }
+
             }
             catch (SQLException sqlex)
             {
-                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                         "Error while executing query or parsing result data", sqlex);
             }
             finally
@@ -2031,7 +2028,7 @@ public class DbHelper implements Serializable
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -2044,13 +2041,14 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
         }
         return retval;
     }
+
     public List<Group> getPublicGroups()
     {
         PreparedStatement stm = null;
@@ -2081,7 +2079,7 @@ public class DbHelper implements Serializable
             }
             catch (SQLException sqlex)
             {
-                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                         "Error while executing query or parsing result data", sqlex);
             }
             finally
@@ -2094,7 +2092,7 @@ public class DbHelper implements Serializable
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -2107,13 +2105,14 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
         }
         return groupList;
     }
+
     public void updateGroupActivity(int idGroup, Timestamp lastActivity)
     {
         PreparedStatement stm = null;
@@ -2129,18 +2128,18 @@ public class DbHelper implements Serializable
             try
             {
                 stm.executeUpdate();
-                Logger.getLogger(DbHelper.class.getName()).log(Level.INFO, 
-                    "Group renaming successful");
+                Logger.getLogger(DbHelper.class.getName()).log(Level.INFO,
+                        "Group renaming successful");
             }
             catch (SQLException sqlex)
             {
-                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                         "Error while executing update query", sqlex);
             }
         }
         catch (SQLException | RuntimeException ex)
         {
-            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+            Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                     "Error while creating query or establishing database connection", ex);
         }
         finally
@@ -2153,7 +2152,7 @@ public class DbHelper implements Serializable
                 }
                 catch (SQLException sex)
                 {
-                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE, 
+                    Logger.getLogger(DbHelper.class.getName()).log(Level.SEVERE,
                             "Error while closing connection", sex);
                 }
             }
