@@ -23,8 +23,13 @@
     <body>
         <c:set var="user" value="${sessionScope.user}" />
         <c:if test="${empty user}">
-            <c:redirect url="/login.jsp" />
+            <%
+                User u = new User();
+                u.setAnonymous();
+                pageContext.setAttribute("user", u);
+            %>
         </c:if>
+        
         <div id="wrap">
             <div class="container">
                 <div class="navbar navbar-default" role="navigation">
