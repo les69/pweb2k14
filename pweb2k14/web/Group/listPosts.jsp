@@ -97,7 +97,7 @@
      
         
         <div class="col-lg-2" style="margin-bottom: 10px;">
-            <c:if test="${group.active && user.username != 'Anonymous'}" >
+            <c:if test="${group.active && user.username != 'Anonymous' && sessionScope.readonly == false}" >
               <button class="btn  btn-primary " type="submit" onclick="location.href='../CyberController?oper=createPost'" >New Post</button>
            </c:if>
         </div>
@@ -108,6 +108,6 @@
         </div>
                     </div>
         </div>
-       
+        </div>
     </body>
 </html>

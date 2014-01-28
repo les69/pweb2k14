@@ -19,7 +19,6 @@
         <link href="../bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet" />
         <link href="../bootstrap/css/pages.css" type="text/css" rel="stylesheet" />
         <link href="../datatables/css/jquery.dataTables.css" type="text/css" rel="stylesheet" />
-
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="../bootstrap/js/bootstrap.min.js"></script>
         <script src="../datatables/js/jquery.dataTables.min.js"></script>
@@ -86,7 +85,7 @@
                                 <c:forEach var="gruppo" items="${allGroups}">
 
                                     <tr>
-                                        <td><a href=""><c:out value="${gruppo.name}" /></a></td>
+                                        <td><a href="/pweb2k14/CyberController?oper=getShowPost&g=${gruppo.id}"><c:out value="${gruppo.name}" /></a></td>
 
                                         <td><c:out value="${gruppo.participantCount}" /></td>
                                         <td><c:out value="${gruppo.postCount}" /></td>
