@@ -6,6 +6,7 @@
 
 package controller;
 
+import helpers.ServletHelperClass;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.DbHelper;
 import model.Group;
+import model.User;
 
 /**
  *
@@ -40,8 +42,13 @@ public class ManageGroupServlet extends HttpServlet {
             throws ServletException, IOException {
         int idGroup = Integer.parseInt(request.getParameter("g"));
         Group grp = helper.getGroup(idGroup);
-        request.getSession().setAttribute("grp", grp);
-        response.sendRedirect("MyGroup/editGroupForm.jsp");
+        User usr = ServletHelperClass.getUserFromSession(request);
+        if(grp.getOwner() == usr.getId()) {            
+            request.getSession().setAttribute("grp", grp);
+            response.sendRedirect("MyGroup/editGroupForm.jsp");
+        }
+        else
+            response.sendRedirect("/pweb2k14/NotAllowed.jsp");
     }
 
     /**
