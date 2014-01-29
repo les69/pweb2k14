@@ -22,6 +22,7 @@
     </head>
     <body>
         <c:set var="user" value="${sessionScope.user}" />
+        <c:set var="group" value="${sessionScope.group}" />
         <c:if test="${empty user}">
             <%
                 User u = new User();
@@ -70,7 +71,7 @@
                     <h2>Some Posts</h2>  
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <c:set var="group" value="${sessionScope.group}" />
+                            
                             <h3 class="panel-title"><c:out value="${group.name}" /></h3>
                         </div>
                         <div class="panel-body">
@@ -90,7 +91,7 @@
                         </div>
                     </div>
                     <div class="col-lg-2" style="margin-bottom: 10px;">
-                        <c:if test="${group.active && user.username != 'Anonymous' && sessionScope.readonly == false}" >
+                        <c:if test="${group.active && user.username != 'Anonymous' && readonly == false}" >
                             <button class="btn  btn-primary " type="submit" onclick="location.href = '../CyberController?oper=createPost'" >New Post</button>
                         </c:if>
                     </div>
