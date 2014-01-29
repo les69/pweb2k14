@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package controller;
 
 import helpers.ServletHelperClass;
@@ -20,15 +19,27 @@ import model.User;
  *
  * @author lorenzo
  */
-public class ManageGroupServlet extends HttpServlet {
+public class ManageGroupServlet extends HttpServlet
+{
 
     private DbHelper helper;
 
     @Override
-    public void init() throws ServletException {
+    public void init() throws ServletException
+    {
         this.helper = (DbHelper) super.getServletContext().getAttribute("dbmanager");
     }
-    
+
+    protected void permOrGTFO(HttpServletRequest request, HttpServletResponse response) throws IOException
+    {
+        int idGroup = Integer.parseInt(request.getParameter("g"));
+        Group grp = helper.getGroup(idGroup);
+        User usr = ServletHelperClass.getUserFromSession(request);
+        if (grp.getOwner() != usr.getId()) {
+            response.sendRedirect("/pweb2k14/NotAllowed.jsp");
+        }
+    }
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -39,16 +50,15 @@ public class ManageGroupServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException
+    {
+        permOrGTFO(request, response);
         int idGroup = Integer.parseInt(request.getParameter("g"));
         Group grp = helper.getGroup(idGroup);
-        User usr = ServletHelperClass.getUserFromSession(request);
-        if(grp.getOwner() == usr.getId()) {            
-            request.getSession().setAttribute("grp", grp);
-            response.sendRedirect("MyGroup/editGroupForm.jsp");
-        }
-        else
-            response.sendRedirect("/pweb2k14/NotAllowed.jsp");
+
+        request.getSession().setAttribute("grp", grp);
+        response.sendRedirect("MyGroup/editGroupForm.jsp");
+
     }
 
     /**
@@ -61,14 +71,17 @@ public class ManageGroupServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException
+    {
         int idGroup = Integer.parseInt(request.getParameter("g"));
+        permOrGTFO(request, response);
         String groupName = request.getParameter("grpName");
-        boolean pgroup = (request.getParameterValues("pubSelector")!= null);
+        boolean pgroup = (request.getParameterValues("pubSelector") != null);
         helper.updateGroup(idGroup, groupName, pgroup);
         request.getSession().removeAttribute("grp");
         request.getSession().removeAttribute("myGroup");
         response.sendRedirect("/pweb2k14/CyberController?oper=getMyGroups");
+
     }
 
     /**
@@ -77,7 +90,8 @@ public class ManageGroupServlet extends HttpServlet {
      * @return a String containing servlet description
      */
     @Override
-    public String getServletInfo() {
+    public String getServletInfo()
+    {
         return "Short description";
     }
 
