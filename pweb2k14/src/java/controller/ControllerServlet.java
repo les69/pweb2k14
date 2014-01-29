@@ -43,7 +43,7 @@ public class ControllerServlet extends HttpServlet {
         
         String operation = request.getParameter("oper");
         if(operation == null)
-            forward(request,response,"/NotFound.jsp");
+            forward(request,response,"/pweb2k14/NotFound.jsp");
         
         SetUpDBConnection();
         
@@ -65,6 +65,7 @@ public class ControllerServlet extends HttpServlet {
             case "createPost": response.sendRedirect("/pweb2k14/Group/newPost.jsp");break;
             case "getDownload": forward(request, response, "/Group/Download"); break;
             case "getpost": forward(request,response,"/NotSupported.jsp"); break;
+            case "error": response.sendRedirect("/pweb2k14/error.jsp");break;
             default: forward(request,response,"/NotFound.jsp"); break;
         }
     }
@@ -82,7 +83,7 @@ public class ControllerServlet extends HttpServlet {
             throws ServletException, IOException {
        String operation = request.getParameter("oper");
         if(operation == null)
-            forward(request,response,"/login.jsp");
+            forward(request,response,"/pweb2k14/login.jsp");
         
         SetUpDBConnection();
         
@@ -97,7 +98,7 @@ public class ControllerServlet extends HttpServlet {
             case "addUser": forward(request, response, "/NewUserServlet"); break;
             case "getpost": forward(request,response,"/NotSupported.jsp"); break;
             case "newPost": forward(request, response, "/Group/NewPost");break;
-            default: forward(request,response,"/NotFound.jsp"); break;
+            default: forward(request,response,"/pweb2k14/NotFound.jsp"); break;
         }
     }
 

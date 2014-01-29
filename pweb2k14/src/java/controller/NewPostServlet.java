@@ -59,7 +59,7 @@ public class NewPostServlet extends HttpServlet {
 
                 Group g = helper.getGroup(Integer.parseInt(group));
                 if (g == null) {
-                    response.sendRedirect("/NotAllowed.jsp");
+                    response.sendRedirect("/pweb2k14/NotAllowed.jsp");
                     return;
                 }
                 absoluteFilePath += g.getName();
@@ -73,17 +73,22 @@ public class NewPostServlet extends HttpServlet {
                         //TODO redirect to error page
                        // out.println("<h1>This file already exists</h1><br/><h6>Your post was not submitted.</h6>");
                        // out.println("<a href=\"PostServlet?group=" + g.getId() + "\">Come back to post list</a>");
-                        response.sendRedirect("/pweb2k14/Group/listPosts.jsp");
+                        request.getSession().setAttribute("message", "File already exists");
+                        response.sendRedirect("/pweb2k14/CyberController?oper=error");
                         return;
+                        
                     }
-                    String hash = FileManager.SaveFile(part, g.getName(), usr.getUsername(), absoluteFilePath, response, helper);
-                    model.FileDB file = new model.FileDB();
-                    file.setHashed_name(hash);
-                    file.setType(fileName.substring(fileName.lastIndexOf('.')));
-                    file.setOriginal_name(fileName);
-                    file.setId_user(usr.getId());
-                    file.setId_group(g.getId());
-                    helper.addFile(file);
+                    else
+                    {
+                        String hash = FileManager.SaveFile(part, g.getName(), usr.getUsername(), absoluteFilePath, response, helper);
+                        model.FileDB file = new model.FileDB();
+                        file.setHashed_name(hash);
+                        file.setType(fileName.substring(fileName.lastIndexOf('.')));
+                        file.setOriginal_name(fileName);
+                        file.setId_user(usr.getId());
+                        file.setId_group(g.getId());
+                        helper.addFile(file);
+                    }
                 }
                 String text = (String) request.getParameter("message");
 
