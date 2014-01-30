@@ -68,11 +68,13 @@
                     </div><!--/.nav-collapse -->
                 </div>
                 <div class="col-lg-12" style="background-color: #fff;">
-                    <h2>Some Posts</h2>  
+                    <h2>Some Posts </h2>  
+                    
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             
-                            <h3 class="panel-title"><c:out value="${group.name}" /></h3>
+                            <h3 class="panel-title"><c:out value="${group.name}" /> <a class="pull-right" href="http://localhost:8080/pweb2k14/CyberController?oper=getShowPost&g=<c:out value="${group.id}"/>" class="right"><img src="../image/update.png" width="24" alt="update page"/></a></h3>
+                            
                         </div>
                         <div class="panel-body">
                             <c:if test="${!empty sessionScope.postList}">
