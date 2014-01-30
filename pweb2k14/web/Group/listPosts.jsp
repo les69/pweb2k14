@@ -79,7 +79,7 @@
                                 <c:forEach items="${sessionScope.postList}" var="post">
                                     <div class="media">
                                         <a class="pull-left" href="#">
-                                            <img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 64px; height: 64px;" src="../uploads/Avatars/${post.avatar}">
+                                            <img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 64px; height: 64px;" src="../Avatars/${post.avatar}">
                                         </a>
                                         <div class="media-body">
                                             <h4 class="media-heading"><c:out value="${post.username}" />     <p style="font-size: 14px;font-style: italic;"><c:out value="${post.datePost}" /></p> </h4>

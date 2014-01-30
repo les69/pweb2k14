@@ -67,7 +67,7 @@
                     <form  action="../CyberController?oper=editAccount" enctype="multipart/form-data" method="post" role="form" class="form-group">
                         <p class="text-left form-control-static">
                             Your avatar:<br>
-                            <img width="240" src="../uploads/Avatars/${user.avatar}" alt="Your avatar" />
+                            <img width="240" src="../Avatars/${user.avatar}" alt="Your avatar" />
                             <input class="form-control" type="file" name="avatar">
                             <br>
                             email: <c:out value="${user.email}" />
