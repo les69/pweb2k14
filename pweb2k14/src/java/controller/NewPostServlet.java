@@ -100,6 +100,7 @@ public class NewPostServlet extends HttpServlet {
                 helper.addPost(p);
 
                 //request.getRequestDispatcher("/CyberController?oper=getShowPost&g="+g.getId()).forward(request, response);
+                request.getSession().setAttribute("group", g);
                 request.getSession().setAttribute("postList", helper.getPostFromGroup(g.getId()));
                 response.sendRedirect("/pweb2k14/Group/listPosts.jsp");
 

@@ -67,9 +67,9 @@
                             Upload a file:<br>
                             <input class="form-control" type="file" name="uploadFile">
                             <br>
-                            <c:set var="group" value="${sessionScope.group}" />
-                            <c:if test="${!empty group}" >
-                                <input type="hidden" value="${group.id}" name="group" />
+                            <c:set var="group" value="${param.g}" />
+                            <c:if test="${not empty group}" >
+                                <input type="hidden" value="${group}" name="group" />
                             </c:if>
                         </p>
                         <p>

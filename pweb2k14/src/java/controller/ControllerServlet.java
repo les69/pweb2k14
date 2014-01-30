@@ -62,7 +62,7 @@ public class ControllerServlet extends HttpServlet {
             case "getMyGroups":forward(request, response, "/ListMyGroup"); break;
             case "getPublicGroups":forward(request, response, "/ListPublicGroups"); break;
             case "getShowPost":forward(request, response, "/Group/PostServlet"); break;
-            case "createPost": response.sendRedirect("/pweb2k14/Group/newPost.jsp");break;
+            case "createPost": response.sendRedirect("/pweb2k14/Group/newPost.jsp?g=" + request.getParameter("g"));break;
             case "getDownload": forward(request, response, "/Group/Download"); break;
             case "getpost": forward(request,response,"/NotSupported.jsp"); break;
             case "error": response.sendRedirect("/pweb2k14/error.jsp");break;
