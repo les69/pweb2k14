@@ -86,10 +86,10 @@
                                             <td>No</td>
                                         </c:if>
                                         <c:if test="${gruppo.active == true}">
-                                            <td><a href="../CyberController?oper=doModerate&g=<c:out value="${gruppo.id}" />"><img width="100" src="../image/cybermen.jpg"/></td>
+                                            <td><a href="../CyberController?oper=doModerate&g=<c:out value="${gruppo.id}" />"><img  src="../image/delete.png"/></td>
                                                 </c:if>
                                                 <c:if test="${gruppo.active == false}">
-                                            <td>THIS GROUP HAS BEEN DELETED.<br>DELETE. DELETE. DELEETEE!</td>
+                                            <td>This Group has been Deleted.</td>
                                         </c:if>
                                     </tr>
                                 </c:forEach>
