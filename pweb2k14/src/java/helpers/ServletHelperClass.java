@@ -283,8 +283,8 @@ public class ServletHelperClass {
     public static void sendMail(String to, String subject, String line) {
         try {
 
-            final String username = "abdullah.kebab@gmail.com";
-            final String password = "kebabbuono";
+            final String username = "webcoso@gmail.com";
+            final String password = "progettowebcoso";
 
             Properties props = new Properties();
             props.put("mail.smtp.host", "smtp.gmail.com");
@@ -298,7 +298,7 @@ public class ServletHelperClass {
             mSession = Session.getDefaultInstance(props, null);
 
             Message message = new MimeMessage(mSession);
-            message.setFrom(new InternetAddress("abdullah.kebab@gmail.com"));
+            message.setFrom(new InternetAddress(username));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(to));
             message.setSubject(subject);
