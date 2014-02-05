@@ -21,6 +21,7 @@
         <title>Public Groups</title>
     </head>
     <body>
+        <div id="wrap">
         <div class="container">
             <div class="navbar navbar-default" role="navigation">
                 <div class="navbar-header">
@@ -37,7 +38,7 @@
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
-            <div class="row">
+            
                 <div class="col-lg-12" style="background-color: #fff;">
                     <h2>Public Groups</h2>  
                     <div class="panel panel-default">

@@ -49,7 +49,7 @@ public class AccRecInviteServlet extends HttpServlet {
         
         User usr = ServletHelperClass.getUserFromSession(request);
         if(usr == null || helper ==null)
-            response.sendRedirect("/index.jsp");
+            response.sendRedirect("/pweb2k14/index.jsp");
         else
         {
             List<Invite> inv = helper.getUserInvites(usr);

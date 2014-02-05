@@ -73,7 +73,7 @@ public class DownloadServlet extends HttpServlet {
                 //ServletHelperClass.printHead(out);
                 File tmpFile = new File(filePath + file_hash);
                 if (!tmpFile.exists()) {
-                    response.sendRedirect("/NotFound.jsp");
+                    response.sendRedirect("/pweb2k14/NotFound.jsp");
                 }
                 //printError(response, "File not found", g.getId());
                 //out.println("The request file was not found!");
@@ -101,6 +101,8 @@ public class DownloadServlet extends HttpServlet {
                         "Error while retrieving file for download", ex);
             }
         }
+        else
+            response.sendRedirect("/pweb2k14/NotAllowed.jsp");
 
     }
 
