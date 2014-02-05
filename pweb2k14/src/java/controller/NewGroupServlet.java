@@ -62,7 +62,7 @@ private DbHelper helper;
         newG.setPublic(pgroup);
         newG.setOwner(user.getId());
         helper.addGroup(newG);
-        helper.addUserToGroup(newG, user);
+       // helper.addUserToGroup(newG, user); already implemented
         response.sendRedirect("CyberController?oper=getMyGroups");
     }
 
