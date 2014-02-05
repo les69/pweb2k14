@@ -23,7 +23,7 @@
     <body>        
         <c:set var="user" value="${sessionScope.user}" />
         <c:if test="${empty user}">
-            <c:redirect url="/login.jsp" />
+            <c:redirect url="/index.jsp" />
         </c:if>
         <div id="wrap">
             <div class="container">

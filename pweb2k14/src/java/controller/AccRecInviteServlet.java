@@ -49,7 +49,7 @@ public class AccRecInviteServlet extends HttpServlet {
         
         User usr = ServletHelperClass.getUserFromSession(request);
         if(usr == null || helper ==null)
-            response.sendRedirect("/login.jsp");
+            response.sendRedirect("/index.jsp");
         else
         {
             List<Invite> inv = helper.getUserInvites(usr);
@@ -78,7 +78,7 @@ public class AccRecInviteServlet extends HttpServlet {
         boolean operation = request.getParameter("action").equals("Accept");
         processInvites(request.getParameterMap(), usr, operation);
         if(usr == null || helper ==null)
-            response.sendRedirect("/login.jsp");
+            response.sendRedirect("/index.jsp");
         else
         {
             List<Invite> inv = helper.getUserInvites(usr);

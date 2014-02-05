@@ -55,7 +55,7 @@ public class ControllerServlet extends HttpServlet {
             case "getModerator": forward(request, response, "/ModeratorServlet"); break;
             case "getInvites": forward(request, response, "/AccRecInviteServlet"); break;
             case "getAccount": forward(request, response, "/EditUserServlet"); break;
-            case "getlogin": forward(request,response,"/login.jsp"); break;
+            case "getlogin": forward(request,response,"/index.jsp"); break;
             case "getlogout": forward(request,response,"/Logout"); break;
             case "getHome": response.sendRedirect("/pweb2k14/User/home.jsp");  break;
             case "getGroups": forward(request, response, "/ListGroups"); break;
@@ -83,7 +83,7 @@ public class ControllerServlet extends HttpServlet {
             throws ServletException, IOException {
        String operation = request.getParameter("oper");
         if(operation == null)
-            forward(request,response,"/pweb2k14/login.jsp");
+            forward(request,response,"/pweb2k14/index.jsp");
         
         SetUpDBConnection();
         

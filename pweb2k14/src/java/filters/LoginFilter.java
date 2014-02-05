@@ -128,11 +128,11 @@ public class LoginFilter implements Filter {
             String uri = ((HttpServletRequest) request).getRequestURI();
             if (!isPathExcluded(uri)) {
                 if (!isUserLogged((HttpServletRequest) request)) {
-                    if (!uri.contains("login.jsp")) {
-                        ((HttpServletResponse) response).sendRedirect("/pweb2k14/login.jsp");
+                    if (!uri.contains("index.jsp")) {
+                        ((HttpServletResponse) response).sendRedirect("/pweb2k14/index.jsp");
                     }
                 } else {
-                    if (uri.contains("login.jsp")) {
+                    if (uri.contains("index.jsp")) {
                         ((HttpServletResponse) response).sendRedirect("/pweb2k14/User/home.jsp");
                     }
                 }

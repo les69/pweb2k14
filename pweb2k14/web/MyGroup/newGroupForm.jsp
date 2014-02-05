@@ -24,7 +24,7 @@
         <jsp:useBean id="grp" class="model.Group" scope="session" />
         <c:set var="user" value="${sessionScope.user}" />
         <c:if test="${empty user}">
-            <c:redirect url="/login.jsp" />
+            <c:redirect url="/index.jsp" />
         </c:if>
         <div class="container">
             <div class="navbar navbar-default" role="navigation">

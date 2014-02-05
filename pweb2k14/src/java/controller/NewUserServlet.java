@@ -70,7 +70,7 @@ public class NewUserServlet extends HttpServlet {
             
             helper.addUser(newUser);
             
-            response.sendRedirect("login.jsp?success=Account created successfully! you can now login");
+            response.sendRedirect("index.jsp?success=Account created successfully! you can now login");
         }
         else
         {

@@ -31,7 +31,7 @@ public class LogoutServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.getSession().invalidate();
-        response.sendRedirect("/pweb2k14/login.jsp");
+        response.sendRedirect("/pweb2k14/index.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

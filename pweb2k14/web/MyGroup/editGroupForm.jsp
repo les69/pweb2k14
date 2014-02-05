@@ -24,7 +24,7 @@
         <c:set var="user" value="${sessionScope.user}" />
         <jsp:useBean id="grp" class="model.Group" scope="session" />
         <c:if test="${empty user}">
-            <c:redirect url="/login.jsp" />
+            <c:redirect url="/index.jsp" />
         </c:if>
         <div id="wrap">
             <div class="container">

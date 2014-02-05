@@ -45,13 +45,13 @@ public class LoginServlet extends HttpServlet {
         String password = (String) request.getParameter("password");
         try {
             if (username == null || password == null) {
-                response.sendRedirect("login.jsp?error=Missing credenditals");
+                response.sendRedirect("index.jsp?error=Missing credenditals");
             } else {
                 User user = this.helper.authenticate(username, password);
 
                 if (user == null) {
                     
-                    response.sendRedirect("login.jsp?error=Wrong Username/Password combination");
+                    response.sendRedirect("index.jsp?error=Wrong Username/Password combination");
 
                 } else {
                                

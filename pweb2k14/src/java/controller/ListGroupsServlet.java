@@ -41,7 +41,7 @@ public class ListGroupsServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
          User usr = ServletHelperClass.getUserFromSession(request);
          if (usr == null) {
-             response.sendRedirect("/pweb2k14/login.jsp");
+             response.sendRedirect("/pweb2k14/index.jsp");
              return;
          }
         if (this.helper == null) {
