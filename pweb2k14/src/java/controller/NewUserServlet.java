@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package controller;
 
 import java.io.File;
@@ -21,7 +20,6 @@ import model.User;
  *
  * @author lorenzo
  */
-
 public class NewUserServlet extends HttpServlet {
 
     private DbHelper helper;
@@ -42,43 +40,44 @@ public class NewUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String relativeWebPath = "/Avatars";
         String absoluteFilePath = getServletContext().getRealPath(relativeWebPath) + File.separator;
         checkPath(absoluteFilePath);
-        
+
         String username = request.getParameter("username");
-        
-        User newUser = helper.getUser(username);
-        
-        if(newUser == null){
-            String password = request.getParameter("password"); 
-            String email = request.getParameter("email"); 
-            Part filePart = request.getPart("avatar");              
-            newUser = new User();
-            String hash;
-            if(filePart.getSubmittedFileName() != "")
-                 hash = AvatarManager.SaveAvatar(filePart, username, absoluteFilePath, response);
-            else
-                 hash = "default.png";
-                
-            
-            newUser.setUsername(username);
-            newUser.setAvatar(hash);
-            newUser.setEmail(email);
-            newUser.setPassword(password);            
-            
-            helper.addUser(newUser);
-            
-            response.sendRedirect("index.jsp?success=Account created successfully! you can now login");
-        }
-        else
-        {
-            response.sendRedirect("addUser.jsp?error=An user with the same username already exists");
+        String password = request.getParameter("password");
+        String email = request.getParameter("email");
+
+        if (username.equals("") || password.equals("") || email.equals("")) {
+            response.sendRedirect("addUser.jsp?error=Empty fields");
+        } else {
+            User newUser = helper.getUser(username);
+
+            if (newUser == null) {
+
+                Part filePart = request.getPart("avatar");
+                newUser = new User();
+                String hash;
+                if (filePart.getSubmittedFileName() != "") {
+                    hash = AvatarManager.SaveAvatar(filePart, username, absoluteFilePath, response);
+                } else {
+                    hash = "default.png";
+                }
+
+                newUser.setUsername(username);
+                newUser.setAvatar(hash);
+                newUser.setEmail(email);
+                newUser.setPassword(password);
+
+                helper.addUser(newUser);
+
+                response.sendRedirect("index.jsp?success=Account created successfully! you can now login");
+            } else {
+                response.sendRedirect("addUser.jsp?error=An user with the same username already exists");
+            }
         }
     }
-
-    
 
     /**
      * Returns a short description of the servlet.
@@ -89,15 +88,11 @@ public class NewUserServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }
-    
-    
-    
-    private void checkPath(String path)
-    {
+
+    private void checkPath(String path) {
         File dir = new File(path);
 
-        if (!dir.exists())
-        {
+        if (!dir.exists()) {
             dir.mkdir();
         }
     }
