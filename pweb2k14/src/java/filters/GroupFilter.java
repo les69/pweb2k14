@@ -155,8 +155,7 @@ public class GroupFilter implements Filter {
                         ((HttpServletRequest) request).setAttribute("readonly",false);
                 }
             }
-            if(uri.contains("newPost.jsp"))
-            {}
+
 
             
             chain.doFilter(request, response);
